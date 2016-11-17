@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#EFFFFFFF"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/klist_img"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:layout_toRightOf="@id/klist_img"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_height="65dp">
+        <TextView
+            android:id="@+id/klist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:text="电台名"/>
+
+        <TextView
+            android:id="@+id/klist_desc"
+            android:paddingTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:singleLine="true"
+            android:textColor="#50000000"
+            android:text="电台描述"/>
+    </LinearLayout>
+        </RelativeLayout>
+</RelativeLayout>

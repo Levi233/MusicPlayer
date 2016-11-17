@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi-v4\\play_page_bg.jpg",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\play_page_bg.jpg"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi-v4\\ic_launcher.jpg",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.jpg"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi-v4\\cartoon_splach.jpg",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\cartoon_splach.jpg"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi-v4\\play_del_bg.jpg",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\play_del_bg.jpg"
+    }
+]

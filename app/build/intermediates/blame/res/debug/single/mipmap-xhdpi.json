@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\lateral_dropdown.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xhdpi\\lateral_dropdown.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\actionbar_music_selected.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xhdpi\\actionbar_music_selected.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\actionbar_discover_normal.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xhdpi\\actionbar_discover_normal.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\actionbar_music_normal.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xhdpi\\actionbar_music_normal.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\actionbar_discover_selected.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xhdpi\\actionbar_discover_selected.png"
+    }
+]

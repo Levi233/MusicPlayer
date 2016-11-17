@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#EFFFFFFF"
+    android:orientation="horizontal"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <RelativeLayout
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <com.chenhao.musicplayer.view.SquareImageView
+            android:id="@+id/pic_img_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher" />
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/listencnt_rl_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_listener">
+
+            <TextView
+                android:id="@+id/listencnt_1"
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@mipmap/hear_img"
+                android:drawablePadding="3dp"
+                android:gravity="right"
+                android:text="11万"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/name_text_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pic_img_1"
+            android:maxLines="2"
+            android:paddingTop="8dp"
+            android:text="11月最新单曲"
+            android:textColor="#000000"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <com.chenhao.musicplayer.view.SquareImageView
+            android:id="@+id/pic_img_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher" />
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/listencnt_rl_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_listener">
+
+            <TextView
+                android:id="@+id/listencnt_2"
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@mipmap/hear_img"
+                android:drawablePadding="3dp"
+                android:gravity="right"
+                android:text="11万"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/name_text_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pic_img_2"
+            android:maxLines="2"
+            android:text="11月最新单曲"
+            android:paddingTop="8dp"
+            android:textColor="#000000"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <com.chenhao.musicplayer.view.SquareImageView
+            android:id="@+id/pic_img_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher" />
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/listencnt_rl_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_listener">
+
+            <TextView
+                android:id="@+id/listencnt_3"
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@mipmap/hear_img"
+                android:drawablePadding="3dp"
+                android:gravity="right"
+                android:text="11万"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/name_text_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pic_img_3"
+            android:maxLines="2"
+            android:text="11月最新单曲"
+            android:paddingTop="8dp"
+            android:textColor="#000000"
+            android:textSize="13sp" />
+    </RelativeLayout>
+</LinearLayout>

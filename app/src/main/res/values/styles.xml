@@ -1,0 +1,19 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!-- 拖动到边缘渐变颜色 -->
+        <item name="colorPrimary">@color/seekBarProgress</item>
+        <!--状态栏颜色-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--控制各个控件的颜色-->
+        <item name="colorAccent">@color/seekBarProgress</item>
+    </style>
+
+    <style name="SplashTheme" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:windowBackground">@color/colorTransparency</item>
+        <item name="android:windowNoTitle">true</item> 
+    </style>
+
+</resources>

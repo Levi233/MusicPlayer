@@ -1,0 +1,90 @@
+[
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_pause.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_pause.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\scan_bg.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\scan_bg.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\playbar_btn_play.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\playbar_btn_play.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\playbar_btn_pause.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\playbar_btn_pause.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\play_cd_bg.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\play_cd_bg.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_play.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_play.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_more.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_more.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\playbar_btn_playlist.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\playbar_btn_playlist.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_back.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_back.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\right_btn.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\right_btn.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_list.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_list.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_random.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_random.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\hear_img.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\hear_img.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\local_music_img.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\local_music_img.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\back_img.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\back_img.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\scan_img.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\scan_img.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_front.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_front.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\play_cd.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\play_cd.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_music_list.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_music_list.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\playbar_btn_next.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\playbar_btn_next.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_next.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_next.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_single.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\MusicPlayer\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_single.png"
+    }
+]
