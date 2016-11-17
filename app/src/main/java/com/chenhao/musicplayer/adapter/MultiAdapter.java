@@ -102,6 +102,8 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 for (OnlineInfo infos:onlineInfos) {
                     addAdapter(new ListItemAdapter(getContext(),infos,section.getItemViewType(),getHandler()));
                 }
+            }else {
+
             }
         }
     }
