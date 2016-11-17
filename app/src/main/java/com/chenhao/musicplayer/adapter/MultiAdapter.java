@@ -103,7 +103,6 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                     addAdapter(new ListItemAdapter(getContext(),infos,section.getItemViewType(),getHandler()));
                 }
             }else {
-
             }
         }
     }
