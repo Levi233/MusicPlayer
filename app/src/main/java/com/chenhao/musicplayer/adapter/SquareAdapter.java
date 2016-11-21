@@ -3,6 +3,7 @@ package com.chenhao.musicplayer.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,13 @@ public class SquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.e("chenhaolog", mSimpleName + " [onCreateViewHolder] viewType ::: " + viewType);
         return new SquareHolder(LayoutInflater.from(getContext()).inflate(R.layout.square_item,parent,false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        long start = System.currentTimeMillis();
         Glide.with(getContext())
                 .load(getItem().get(0).getImg())
                 .placeholder(R.mipmap.ic_launcher)
@@ -64,6 +67,9 @@ public class SquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>> 
             ((SquareHolder)holder).listencnt_rl_2.setVisibility(View.GONE);
             ((SquareHolder)holder).listencnt_rl_3.setVisibility(View.GONE);
         }
+        long end = System.currentTimeMillis();
+        Log.i("chenhaolog", mSimpleName + " [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
+
     }
 
     private static class SquareHolder extends RecyclerView.ViewHolder{

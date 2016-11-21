@@ -7,10 +7,14 @@ import com.chenhao.musicplayer.bean.AdArInfo;
 import com.chenhao.musicplayer.bean.AdInfo;
 import com.chenhao.musicplayer.bean.BannerSection;
 import com.chenhao.musicplayer.bean.BibiInfo;
+import com.chenhao.musicplayer.bean.BillboardInfo;
+import com.chenhao.musicplayer.bean.BillboardSection;
+import com.chenhao.musicplayer.bean.HitbillboardInfo;
 import com.chenhao.musicplayer.bean.KlistSection;
 import com.chenhao.musicplayer.bean.KomnibusInfo;
 import com.chenhao.musicplayer.bean.KproductionInfo;
 import com.chenhao.musicplayer.bean.KsquareSection;
+import com.chenhao.musicplayer.bean.KubillboardInfo;
 import com.chenhao.musicplayer.bean.ListSection;
 import com.chenhao.musicplayer.bean.MvInfo;
 import com.chenhao.musicplayer.bean.MvSquareSection;
@@ -24,6 +28,7 @@ import com.chenhao.musicplayer.bean.Show2Info;
 import com.chenhao.musicplayer.bean.SongListInfo;
 import com.chenhao.musicplayer.bean.SongListRcm2Info;
 import com.chenhao.musicplayer.bean.SquareSection;
+import com.chenhao.musicplayer.bean.TabInfo;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -195,6 +200,129 @@ public class XmlParse {
             e.printStackTrace();
         }
         return mRootInfo;
+    }
+
+    public static RootInfo parseBillboardXml(String datas){
+        Section section = null;
+        RootInfo rootInfo = null;
+        OnlineInfo onlineInfo =null;
+        TabInfo tabInfo = null;
+        XmlPullParser parser = Xml.newPullParser();
+        try {
+            InputStream is = new ByteArrayInputStream(datas.getBytes());
+            int type = parser.getEventType();
+            parser.setInput(is, "utf-8");
+            while (type != XmlPullParser.END_DOCUMENT) {
+                switch (type) {
+                    case XmlPullParser.START_TAG:
+                        if(ROOT.equals(parser.getName())){
+                            rootInfo = new RootInfo();
+                        }else if(SECTION.equals(parser.getName())){
+                            section = new BillboardSection();
+                        }else if("kubillboard".equals(parser.getName())){
+                            KubillboardInfo kubillboardInfo = new KubillboardInfo();
+                            parseOnlineInfo(parser, kubillboardInfo);
+                            String name1 = getFormatAttributeValue(parser, "name1");
+                            String name2 = getFormatAttributeValue(parser, "name2");
+                            String name3 = getFormatAttributeValue(parser, "name3");
+                            String artist1 = getFormatAttributeValue(parser, "artist1");
+                            String artist2 = getFormatAttributeValue(parser, "artist2");
+                            String artist3 = getFormatAttributeValue(parser, "artist3");
+                            String kuimg = getFormatAttributeValue(parser, "kuimg");
+                            kubillboardInfo.setName1(name1);
+                            kubillboardInfo.setName2(name2);
+                            kubillboardInfo.setName3(name3);
+                            kubillboardInfo.setArtist1(artist1);
+                            kubillboardInfo.setArtist2(artist2);
+                            kubillboardInfo.setArtist3(artist3);
+                            kubillboardInfo.setKuimg(kuimg);
+                            onlineInfo = kubillboardInfo;
+                        }else if("billboard".equals(parser.getName())){
+                            BillboardInfo billboardInfo = new BillboardInfo();
+                            parseOnlineInfo(parser, billboardInfo);
+                            long radio_id = getDefaultLong(parser, "radio_id", 0);
+                            String name1 = getFormatAttributeValue(parser, "name1");
+                            String name2 = getFormatAttributeValue(parser, "name2");
+                            String name3 = getFormatAttributeValue(parser, "name3");
+                            String artist1 = getFormatAttributeValue(parser, "artist1");
+                            String artist2 = getFormatAttributeValue(parser, "artist2");
+                            String artist3 = getFormatAttributeValue(parser, "artist3");
+                            billboardInfo.setName1(name1);
+                            billboardInfo.setName2(name2);
+                            billboardInfo.setName3(name3);
+                            billboardInfo.setArtist1(artist1);
+                            billboardInfo.setArtist2(artist2);
+                            billboardInfo.setArtist3(artist3);
+                            billboardInfo.setRadio_id(radio_id);
+                            onlineInfo = billboardInfo;
+                        }else if("hitbillboard".equals(parser.getName())){
+                            HitbillboardInfo hitbillboardInfo = new HitbillboardInfo();
+                            parseOnlineInfo(parser, hitbillboardInfo);
+                            String name1 = getFormatAttributeValue(parser, "name1");
+                            String url = getFormatAttributeValue(parser, "url");
+                            hitbillboardInfo.setName1(name1);
+                            hitbillboardInfo.setUrl(url);
+                            onlineInfo = hitbillboardInfo;
+                        }else if("tab".equals(parser.getName())){
+                            tabInfo = new TabInfo();
+                            long id = getDefaultLong(parser, "id",-1);
+                            String desc = getFormatAttributeValue(parser, "desc");
+                            String publish = getFormatAttributeValue(parser, "publish");
+                            String img = getFormatAttributeValue(parser, "img");
+                            String url = getFormatAttributeValue(parser, "url");
+                            String name = getFormatAttributeValue(parser, "name");
+                            String name1 = getFormatAttributeValue(parser, "name1");
+                            String name2 = getFormatAttributeValue(parser, "name2");
+                            String name3 = getFormatAttributeValue(parser, "name3");
+                            String artist1 = getFormatAttributeValue(parser, "artist1");
+                            String artist2 = getFormatAttributeValue(parser, "artist2");
+                            String artist3 = getFormatAttributeValue(parser, "artist3");
+                            tabInfo.setId(id);
+                            tabInfo.setName(name);
+                            tabInfo.setDesc(desc);
+                            tabInfo.setPublish(publish);
+                            tabInfo.setImg(img);
+                            tabInfo.setUrl(url);
+                            tabInfo.setName1(name1);
+                            tabInfo.setName2(name2);
+                            tabInfo.setName3(name3);
+                            tabInfo.setArtist1(artist1);
+                            tabInfo.setArtist2(artist2);
+                            tabInfo.setArtist3(artist3);
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if(SECTION.equals(parser.getName())){
+                            rootInfo.add(section);
+                        }else if("kubillboard".equals(parser.getName())){
+                            if(section != null){
+                                section.add(onlineInfo);
+                            }
+                        }else if("billboard".equals(parser.getName())){
+                            if(section != null){
+                                section.add(onlineInfo);
+                            }
+                        }else if("hitbillboard".equals(parser.getName())){
+                            if(section != null){
+                                section.add(onlineInfo);
+                            }
+                        }else if(ROOT.equals(parser.getName())){
+
+                        }else if("tab".equals(parser.getName())){
+                            onlineInfo.add(tabInfo);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                type = parser.next();
+            }
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return rootInfo;
     }
 
     private static void getSection(XmlPullParser parser) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.chenhao.musicplayer.bean.BannerSection;
+import com.chenhao.musicplayer.bean.BillboardSection;
 import com.chenhao.musicplayer.bean.ItemViewType;
 import com.chenhao.musicplayer.bean.KlistSection;
 import com.chenhao.musicplayer.bean.KsquareSection;
@@ -89,7 +90,7 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 labelInfos.add("去k歌");
                 addAdapter(new LabelHeadAdapter(getContext(),labelInfos, ItemViewType.TYPE_HEAD.ordinal(),getHandler()));
                 for (OnlineInfo infos:onlineInfos) {
-                    addAdapter(new ListItemAdapter(getContext(),infos,section.getItemViewType(),getHandler()));
+                    addAdapter(new KListItemAdapter(getContext(),infos,section.getItemViewType(),getHandler()));
                 }
             }else if(section instanceof ListSection){
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
@@ -102,7 +103,11 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 for (OnlineInfo infos:onlineInfos) {
                     addAdapter(new ListItemAdapter(getContext(),infos,section.getItemViewType(),getHandler()));
                 }
-            }else {
+            }else if(section instanceof BillboardSection){
+                ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
+                for (OnlineInfo onineinfo:onlineInfos) {
+                    addAdapter(new BillboardAdapter(getContext(),onineinfo,section.getItemViewType(),getHandler()));
+                }
             }
         }
     }

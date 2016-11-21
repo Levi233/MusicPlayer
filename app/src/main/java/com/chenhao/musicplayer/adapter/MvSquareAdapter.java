@@ -3,6 +3,7 @@ package com.chenhao.musicplayer.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,24 +28,29 @@ public class MvSquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MvSquareHolder(LayoutInflater.from(getContext()).inflate(R.layout.mv_square_item,parent,false));
+        Log.e("chenhaolog", mSimpleName + " [onCreateViewHolder] viewType ::: " + viewType);
+        return new MvSquareHolder(LayoutInflater.from(getContext()).inflate(R.layout.mv_square_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        long start = System.currentTimeMillis();
         Glide.with(getContext())
                 .load(getItem().get(0).getImg())
                 .placeholder(R.mipmap.ic_launcher)
-                .into(((MvSquareHolder)holder).mv_pic_1);
+                .into(((MvSquareHolder) holder).mv_pic_1);
         Glide.with(getContext())
                 .load(getItem().get(1).getImg())
                 .placeholder(R.mipmap.ic_launcher)
-                .into(((MvSquareHolder)holder).mv_pic_2);
-        ((MvSquareHolder)holder).mv_name_1.setText(getItem().get(0).getName());
-        ((MvSquareHolder)holder).mv_name_2.setText(getItem().get(1).getName());
+                .into(((MvSquareHolder) holder).mv_pic_2);
+        ((MvSquareHolder) holder).mv_name_1.setText(getItem().get(0).getName());
+        ((MvSquareHolder) holder).mv_name_2.setText(getItem().get(1).getName());
+        long end = System.currentTimeMillis();
+        Log.i("chenhaolog", mSimpleName + " [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
+
     }
 
-    private static class MvSquareHolder extends RecyclerView.ViewHolder{
+    private static class MvSquareHolder extends RecyclerView.ViewHolder {
         ImageView mv_pic_2;
         ImageView mv_pic_1;
         TextView mv_name_1;

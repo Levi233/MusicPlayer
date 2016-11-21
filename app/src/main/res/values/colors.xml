@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorYellow">#FFFF00</color>
     <color name="seekBarBackground">#A9A9A9</color>
+    <color name="gray">#999999</color>
     <color name="seekBarProgress">#EE2C2C</color>
     <color name="colorTransparency">#00000000</color>
 </resources>

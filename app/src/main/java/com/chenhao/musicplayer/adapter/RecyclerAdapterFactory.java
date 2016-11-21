@@ -3,7 +3,6 @@ package com.chenhao.musicplayer.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -47,6 +46,7 @@ public abstract class RecyclerAdapterFactory<T> extends RecyclerView.Adapter {
         for (SingleRecyclerAdapter<?> adapter:mAdapters) {
             if(adapter.getItemViewType() == viewType){
                 holder = adapter.onCreateViewHolder(parent, viewType);
+                break;
             }
         }
         return holder;
@@ -59,7 +59,7 @@ public abstract class RecyclerAdapterFactory<T> extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        Log.e("chenhaolog","size : "+mAdapters.size());
+//        Log.e("chenhaolog","size : "+mAdapters.size());
         return mAdapters.size();
     }
 

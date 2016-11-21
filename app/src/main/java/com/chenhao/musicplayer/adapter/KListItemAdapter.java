@@ -15,11 +15,12 @@ import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.OnlineInfo;
 
 /**
- * Created by chenhao on 2016/11/17.
+ * Created by chenhao on 2016/11/21.
  */
 
-public class ListItemAdapter extends SingleRecyclerAdapter<OnlineInfo> {
-    public ListItemAdapter(Context context, OnlineInfo onlineInfo, int type, Handler handler) {
+public class KListItemAdapter extends SingleRecyclerAdapter<OnlineInfo> {
+
+    public KListItemAdapter(Context context, OnlineInfo onlineInfo, int type, Handler handler) {
         super(context, onlineInfo, type, handler);
     }
 
@@ -27,7 +28,7 @@ public class ListItemAdapter extends SingleRecyclerAdapter<OnlineInfo> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         long start = System.currentTimeMillis();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.multi_list_item, parent, false);
-        ListItemHolder holder = new ListItemHolder(view);
+        KListItemHolder holder = new KListItemHolder(view);
         long end = System.currentTimeMillis();
         Log.e("chenhaolog", mSimpleName + " [onCreateViewHolder] viewType ::: " + viewType+" cost :: "+(end - start));
         return holder;
@@ -39,19 +40,19 @@ public class ListItemAdapter extends SingleRecyclerAdapter<OnlineInfo> {
         Glide.with(getContext())
                 .load(getItem().getImg())
                 .placeholder(R.mipmap.ic_launcher)
-                .into(((ListItemHolder)holder).klistImg);
-        ((ListItemHolder)holder).klistName.setText(getItem().getName());
-        ((ListItemHolder)holder).klistDesc.setText(getItem().getDesc());
+                .into(((KListItemHolder)holder).klistImg);
+        ((KListItemHolder)holder).klistName.setText(getItem().getName());
+        ((KListItemHolder)holder).klistDesc.setText(getItem().getDesc());
         long end = System.currentTimeMillis();
         Log.i("chenhaolog", mSimpleName + " [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
     }
 
-    private static class ListItemHolder extends RecyclerView.ViewHolder{
+    private static class KListItemHolder extends RecyclerView.ViewHolder{
 
         ImageView klistImg;
         TextView klistName;
         TextView klistDesc;
-        public ListItemHolder(View itemView) {
+        public KListItemHolder(View itemView) {
             super(itemView);
             klistImg = (ImageView) itemView.findViewById(R.id.klist_img);
             klistName = (TextView) itemView.findViewById(R.id.klist_name);

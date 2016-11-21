@@ -1,5 +1,7 @@
 package com.chenhao.musicplayer.bean;
 
+import java.util.ArrayList;
+
 /**
  * Created by chenhao on 2016/11/16.
  */
@@ -11,6 +13,19 @@ public class OnlineInfo {
     private String publish;
     private String extend;
     private String img;
+
+    private ArrayList<TabInfo> tabInfos = new ArrayList<>();
+
+    public void add(TabInfo info){
+        tabInfos.add(info);
+    }
+    public ArrayList<TabInfo> getTabInfos() {
+        return tabInfos;
+    }
+
+    public void setTabInfos(ArrayList<TabInfo> tabInfos) {
+        this.tabInfos = tabInfos;
+    }
 
     public long getId() {
         return id;

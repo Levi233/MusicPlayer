@@ -3,6 +3,7 @@ package com.chenhao.musicplayer.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,23 +25,28 @@ public class LabelHeadAdapter extends SingleRecyclerAdapter<ArrayList<String>> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new LabelHolder(LayoutInflater.from(getContext()).inflate(R.layout.label_head_item,parent,false));
+        Log.e("chenhaolog", mSimpleName + "--------- [onCreateViewHolder] viewType ::: " + viewType);
+        return new LabelHolder(LayoutInflater.from(getContext()).inflate(R.layout.label_head_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(getItem().size() != 2){
-            ((LabelHolder)holder).moreTextView.setVisibility(View.GONE);
-        }else{
-            ((LabelHolder)holder).moreTextView.setVisibility(View.VISIBLE);
-            ((LabelHolder)holder).moreTextView.setText(getItem().get(1));
+        long start = System.currentTimeMillis();
+        if (getItem().size() != 2) {
+            ((LabelHolder) holder).moreTextView.setVisibility(View.GONE);
+        } else {
+            ((LabelHolder) holder).moreTextView.setVisibility(View.VISIBLE);
+            ((LabelHolder) holder).moreTextView.setText(getItem().get(1));
         }
-        ((LabelHolder)holder).labelTextView.setText(getItem().get(0));
+        ((LabelHolder) holder).labelTextView.setText(getItem().get(0));
+        long end = System.currentTimeMillis();
+        Log.i("chenhaolog", mSimpleName + " [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
     }
 
-    private static class LabelHolder extends RecyclerView.ViewHolder{
+    private static class LabelHolder extends RecyclerView.ViewHolder {
         TextView moreTextView;
         TextView labelTextView;
+
         public LabelHolder(View itemView) {
             super(itemView);
             labelTextView = (TextView) itemView.findViewById(R.id.label_text);

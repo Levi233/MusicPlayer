@@ -3,6 +3,7 @@ package com.chenhao.musicplayer.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +28,13 @@ public class KSquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>>
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.e("chenhaolog", mSimpleName + " [onCreateViewHolder] viewType ::: " + viewType);
         return new KSquareHolder(LayoutInflater.from(getContext()).inflate(R.layout.square_item,parent,false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        long start = System.currentTimeMillis();
         Glide.with(getContext())
                 .load(getItem().get(0).getImg())
                 .placeholder(R.mipmap.ic_launcher)
@@ -47,6 +50,9 @@ public class KSquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>>
         ((KSquareHolder)holder).nameTextView1.setText(getItem().get(0).getName());
         ((KSquareHolder)holder).nameTextView2.setText(getItem().get(1).getName());
         ((KSquareHolder)holder).nameTextView3.setText(getItem().get(2).getName());
+        long end = System.currentTimeMillis();
+        Log.i("chenhaolog", mSimpleName + " [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
+
     }
 
     private static class KSquareHolder extends RecyclerView.ViewHolder{

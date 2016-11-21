@@ -11,6 +11,7 @@ import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.OnlineInfo;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by chenhao on 2016/11/16.
@@ -20,7 +21,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private ArrayList<OnlineInfo> mInfos;
-
+    private LinkedList<ImageView> mImgs = new LinkedList<ImageView>();
     public ViewPagerAdapter(Context context, ArrayList<OnlineInfo> infos){
         this.mContext = context;
         this.mInfos = infos;
@@ -32,7 +33,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mInfos.size();
+        return Integer.MAX_VALUE;
     }
 
     @Override
@@ -42,10 +43,15 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ImageView imageView = new ImageView(mContext);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        ImageView imageView;
+        if(mImgs.size() > 0){
+            imageView = mImgs.removeFirst();
+        }else{
+            imageView = new ImageView(mContext);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
         Glide.with(mContext)
-                .load(mInfos.get(position).getImg())
+                .load(mInfos.get(position%mInfos.size()).getImg())
                 .placeholder(R.mipmap.ic_launcher)
                 .into(imageView);
         container.addView(imageView);
@@ -54,6 +60,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
+        mImgs.add((ImageView) object);
         container.removeView((View)object);
     }
 }
