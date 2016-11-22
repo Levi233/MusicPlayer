@@ -3,6 +3,7 @@ package com.chenhao.musicplayer.adapter;
 import android.content.Context;
 import android.os.Handler;
 
+import com.chenhao.musicplayer.bean.ArtistSection;
 import com.chenhao.musicplayer.bean.BannerSection;
 import com.chenhao.musicplayer.bean.BillboardSection;
 import com.chenhao.musicplayer.bean.ItemViewType;
@@ -107,6 +108,14 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
                 for (OnlineInfo onineinfo:onlineInfos) {
                     addAdapter(new BillboardAdapter(getContext(),onineinfo,section.getItemViewType(),getHandler()));
+                }
+            }else if(section instanceof ArtistSection){
+                ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
+                ArrayList<String> labelInfos = new ArrayList<>();
+                labelInfos.add("热门歌手");
+                addAdapter(new LabelHeadAdapter(getContext(),labelInfos, ItemViewType.TYPE_HEAD.ordinal(),getHandler()));
+                for (OnlineInfo onlineInfo:onlineInfos) {
+                    addAdapter(new ArtistAdapter(getContext(),onlineInfo,section.getItemViewType(),getHandler()));
                 }
             }
         }

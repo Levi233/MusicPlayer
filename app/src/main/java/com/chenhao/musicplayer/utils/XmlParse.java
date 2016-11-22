@@ -5,6 +5,8 @@ import android.util.Xml;
 
 import com.chenhao.musicplayer.bean.AdArInfo;
 import com.chenhao.musicplayer.bean.AdInfo;
+import com.chenhao.musicplayer.bean.ArtistInfo;
+import com.chenhao.musicplayer.bean.ArtistSection;
 import com.chenhao.musicplayer.bean.BannerSection;
 import com.chenhao.musicplayer.bean.BibiInfo;
 import com.chenhao.musicplayer.bean.BillboardInfo;
@@ -174,6 +176,20 @@ public class XmlParse {
                             PictorialInfo pictorialInfo = new PictorialInfo();
                             parseOnlineInfo(parser, pictorialInfo);
                             mOnlineInfo = pictorialInfo;
+                        } else if("artist".equals(parser.getName())){
+                            ArtistInfo artistInfo = new ArtistInfo();
+                            parseOnlineInfo(parser, artistInfo);
+                            int followers = getDefaultInteger(parser, "followers", -1);
+                            int musiccnt = getDefaultInteger(parser, "musiccnt", -1);
+                            int albumcnt = getDefaultInteger(parser, "albumcnt", -1);
+                            long radio_id = getDefaultLong(parser, "radio_id", 0);
+                            int mvcnt = getDefaultInteger(parser, "mvcnt", -1);
+                            artistInfo.setFollowers(followers);
+                            artistInfo.setMusiccnt(musiccnt);
+                            artistInfo.setAlbumcnt(albumcnt);
+                            artistInfo.setRadio_id(radio_id);
+                            artistInfo.setMvcnt(mvcnt);
+                            mOnlineInfo = artistInfo;
                         }
                         break;
                     case XmlPullParser.END_TAG:
@@ -341,6 +357,8 @@ public class XmlParse {
             mSection = new KlistSection();
         } else if (LIST.equals(type)) {
             mSection = new ListSection();
+        }else if("artist".equals(type)){
+            mSection = new ArtistSection();
         } else if ("business".equals(type)) {
             mSection = null;
             return;
