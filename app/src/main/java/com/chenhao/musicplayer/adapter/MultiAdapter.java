@@ -110,6 +110,7 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                     addAdapter(new BillboardAdapter(getContext(),onineinfo,section.getItemViewType(),getHandler()));
                 }
             }else if(section instanceof ArtistSection){
+                addAdapter(new ArtistHeadAdapter(getContext(),null,ItemViewType.TYPE_ARTIST_HEAD.ordinal(),getHandler()));
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
                 ArrayList<String> labelInfos = new ArrayList<>();
                 labelInfos.add("热门歌手");
