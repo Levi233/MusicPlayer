@@ -6,6 +6,7 @@ import android.os.Handler;
 import com.chenhao.musicplayer.bean.ArtistSection;
 import com.chenhao.musicplayer.bean.BannerSection;
 import com.chenhao.musicplayer.bean.BillboardSection;
+import com.chenhao.musicplayer.bean.ClassifySection;
 import com.chenhao.musicplayer.bean.ItemViewType;
 import com.chenhao.musicplayer.bean.KlistSection;
 import com.chenhao.musicplayer.bean.KsquareSection;
@@ -117,6 +118,11 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 addAdapter(new LabelHeadAdapter(getContext(),labelInfos, ItemViewType.TYPE_HEAD.ordinal(),getHandler()));
                 for (OnlineInfo onlineInfo:onlineInfos) {
                     addAdapter(new ArtistAdapter(getContext(),onlineInfo,section.getItemViewType(),getHandler()));
+                }
+            }else if(section instanceof ClassifySection){
+                ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
+                if(onlineInfos.size() > 0){
+                    addAdapter(new ClassifyMainAdapter(getContext(),(ClassifySection)section,section.getItemViewType(),getHandler()));
                 }
             }
         }

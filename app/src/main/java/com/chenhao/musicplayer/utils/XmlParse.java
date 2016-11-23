@@ -11,12 +11,14 @@ import com.chenhao.musicplayer.bean.BannerSection;
 import com.chenhao.musicplayer.bean.BibiInfo;
 import com.chenhao.musicplayer.bean.BillboardInfo;
 import com.chenhao.musicplayer.bean.BillboardSection;
+import com.chenhao.musicplayer.bean.ClassifySection;
 import com.chenhao.musicplayer.bean.HitbillboardInfo;
 import com.chenhao.musicplayer.bean.KlistSection;
 import com.chenhao.musicplayer.bean.KomnibusInfo;
 import com.chenhao.musicplayer.bean.KproductionInfo;
 import com.chenhao.musicplayer.bean.KsquareSection;
 import com.chenhao.musicplayer.bean.KubillboardInfo;
+import com.chenhao.musicplayer.bean.ListInfo;
 import com.chenhao.musicplayer.bean.ListSection;
 import com.chenhao.musicplayer.bean.MvInfo;
 import com.chenhao.musicplayer.bean.MvSquareSection;
@@ -164,19 +166,19 @@ public class XmlParse {
                             String purl = getFormatAttributeValue(parser, "purl");
                             bibiInfo.setPurl(purl);
                             mOnlineInfo = bibiInfo;
-                        } else if("show2".equals(parser.getName())){
+                        } else if ("show2".equals(parser.getName())) {
                             Show2Info show2Info = new Show2Info();
                             parseOnlineInfo(parser, show2Info);
                             mOnlineInfo = show2Info;
-                        } else if("songlist_rcm2".equals(parser.getName())){
+                        } else if ("songlist_rcm2".equals(parser.getName())) {
                             SongListRcm2Info songlistRcm2Info = new SongListRcm2Info();
                             songlistRcm2Info.setName("发现好歌");
                             mOnlineInfo = songlistRcm2Info;
-                        } else if("pictorial".equals(parser.getName())){
+                        } else if ("pictorial".equals(parser.getName())) {
                             PictorialInfo pictorialInfo = new PictorialInfo();
                             parseOnlineInfo(parser, pictorialInfo);
                             mOnlineInfo = pictorialInfo;
-                        } else if("artist".equals(parser.getName())){
+                        } else if ("artist".equals(parser.getName())) {
                             ArtistInfo artistInfo = new ArtistInfo();
                             parseOnlineInfo(parser, artistInfo);
                             int followers = getDefaultInteger(parser, "followers", -1);
@@ -194,13 +196,13 @@ public class XmlParse {
                         break;
                     case XmlPullParser.END_TAG:
                         if (SECTION.equals(parser.getName())) {
-                            if(mSection != null){
+                            if (mSection != null) {
                                 mRootInfo.add(mSection);
                             }
                         } else if (ROOT.equals(parser.getName())) {
 
-                        }else {
-                            if(mSection != null){
+                        } else {
+                            if (mSection != null) {
                                 mSection.add(mOnlineInfo);
                             }
                         }
@@ -218,10 +220,10 @@ public class XmlParse {
         return mRootInfo;
     }
 
-    public static RootInfo parseBillboardXml(String datas){
+    public static RootInfo parseBillboardXml(String datas) {
         Section section = null;
         RootInfo rootInfo = null;
-        OnlineInfo onlineInfo =null;
+        OnlineInfo onlineInfo = null;
         TabInfo tabInfo = null;
         XmlPullParser parser = Xml.newPullParser();
         try {
@@ -231,11 +233,11 @@ public class XmlParse {
             while (type != XmlPullParser.END_DOCUMENT) {
                 switch (type) {
                     case XmlPullParser.START_TAG:
-                        if(ROOT.equals(parser.getName())){
+                        if (ROOT.equals(parser.getName())) {
                             rootInfo = new RootInfo();
-                        }else if(SECTION.equals(parser.getName())){
+                        } else if (SECTION.equals(parser.getName())) {
                             section = new BillboardSection();
-                        }else if("kubillboard".equals(parser.getName())){
+                        } else if ("kubillboard".equals(parser.getName())) {
                             KubillboardInfo kubillboardInfo = new KubillboardInfo();
                             parseOnlineInfo(parser, kubillboardInfo);
                             String name1 = getFormatAttributeValue(parser, "name1");
@@ -253,7 +255,7 @@ public class XmlParse {
                             kubillboardInfo.setArtist3(artist3);
                             kubillboardInfo.setKuimg(kuimg);
                             onlineInfo = kubillboardInfo;
-                        }else if("billboard".equals(parser.getName())){
+                        } else if ("billboard".equals(parser.getName())) {
                             BillboardInfo billboardInfo = new BillboardInfo();
                             parseOnlineInfo(parser, billboardInfo);
                             long radio_id = getDefaultLong(parser, "radio_id", 0);
@@ -271,7 +273,7 @@ public class XmlParse {
                             billboardInfo.setArtist3(artist3);
                             billboardInfo.setRadio_id(radio_id);
                             onlineInfo = billboardInfo;
-                        }else if("hitbillboard".equals(parser.getName())){
+                        } else if ("hitbillboard".equals(parser.getName())) {
                             HitbillboardInfo hitbillboardInfo = new HitbillboardInfo();
                             parseOnlineInfo(parser, hitbillboardInfo);
                             String name1 = getFormatAttributeValue(parser, "name1");
@@ -279,9 +281,9 @@ public class XmlParse {
                             hitbillboardInfo.setName1(name1);
                             hitbillboardInfo.setUrl(url);
                             onlineInfo = hitbillboardInfo;
-                        }else if("tab".equals(parser.getName())){
+                        } else if ("tab".equals(parser.getName())) {
                             tabInfo = new TabInfo();
-                            long id = getDefaultLong(parser, "id",-1);
+                            long id = getDefaultLong(parser, "id", -1);
                             String desc = getFormatAttributeValue(parser, "desc");
                             String publish = getFormatAttributeValue(parser, "publish");
                             String img = getFormatAttributeValue(parser, "img");
@@ -308,24 +310,82 @@ public class XmlParse {
                         }
                         break;
                     case XmlPullParser.END_TAG:
-                        if(SECTION.equals(parser.getName())){
+                        if (SECTION.equals(parser.getName())) {
                             rootInfo.add(section);
-                        }else if("kubillboard".equals(parser.getName())){
-                            if(section != null){
+                        } else if ("kubillboard".equals(parser.getName())) {
+                            if (section != null) {
                                 section.add(onlineInfo);
                             }
-                        }else if("billboard".equals(parser.getName())){
-                            if(section != null){
+                        } else if ("billboard".equals(parser.getName())) {
+                            if (section != null) {
                                 section.add(onlineInfo);
                             }
-                        }else if("hitbillboard".equals(parser.getName())){
-                            if(section != null){
+                        } else if ("hitbillboard".equals(parser.getName())) {
+                            if (section != null) {
                                 section.add(onlineInfo);
                             }
-                        }else if(ROOT.equals(parser.getName())){
+                        } else if (ROOT.equals(parser.getName())) {
 
-                        }else if("tab".equals(parser.getName())){
+                        } else if ("tab".equals(parser.getName())) {
                             onlineInfo.add(tabInfo);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                type = parser.next();
+            }
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return rootInfo;
+    }
+
+    public static RootInfo parseClassifyXml(String datas) {
+        ClassifySection classifySection = null;
+        RootInfo rootInfo = null;
+        OnlineInfo onlineInfo = null;
+        XmlPullParser parser = Xml.newPullParser();
+        try {
+            InputStream is = new ByteArrayInputStream(datas.getBytes());
+            int type = parser.getEventType();
+            parser.setInput(is, "utf-8");
+            while (type != XmlPullParser.END_DOCUMENT) {
+                switch (type) {
+                    case XmlPullParser.START_TAG:
+                        if (ROOT.equals(parser.getName())) {
+                            rootInfo = new RootInfo();
+                        } else if (SECTION.equals(parser.getName())) {
+                            classifySection = new ClassifySection();
+                            String img = getFormatAttributeValue(parser, "img");
+                            String name = getFormatAttributeValue(parser, "name");
+                            classifySection.setImg(img);
+                            classifySection.setName(name);
+                        }else if("qz_list".equals(parser.getName())){
+                            QzListInfo qzListInfo = new QzListInfo();
+                            parseOnlineInfo(parser, qzListInfo);
+                            onlineInfo = qzListInfo;
+                        }else if("list".equals(parser.getName())){
+                            ListInfo listInfo = new ListInfo();
+                            parseOnlineInfo(parser, listInfo);
+                            int isnew = getDefaultInteger(parser, "isnew", 0);
+                            listInfo.setIsnew(isnew);
+                            onlineInfo = listInfo;
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if (SECTION.equals(parser.getName())) {
+                            if (classifySection != null) {
+                                rootInfo.add(classifySection);
+                            }
+                        } else if (ROOT.equals(parser.getName())) {
+
+                        } else {
+                            if (classifySection != null) {
+                                classifySection.add(onlineInfo);
+                            }
                         }
                         break;
                     default:
@@ -357,7 +417,7 @@ public class XmlParse {
             mSection = new KlistSection();
         } else if (LIST.equals(type)) {
             mSection = new ListSection();
-        }else if("artist".equals(type)){
+        } else if ("artist".equals(type)) {
             mSection = new ArtistSection();
         } else if ("business".equals(type)) {
             mSection = null;
