@@ -28,6 +28,9 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
     private FrameLayout mContentContainer;
     private FragmentState mInitFragmentState;
     private FragmentState mLastFragmentState;
+    private boolean mVisibleToUser;//是否可见
+    private boolean mExecuteOnCreateView;//是否执行过onCreateView
+    private boolean mExecuteInOnCreateViewCompleted;//是否执行过executeInOnCreateView
     private boolean mSecondDecode = true;
     private LayoutInflater mInflater;
     private Handler mHandler = new Handler();
@@ -71,7 +74,10 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
         if(titleViewGroup != null && isFragmentAlive()){
             mTitleContainer.addView(titleViewGroup);
         }
-        executeInOnCreateView();
+        mExecuteOnCreateView = true;
+        if(mVisibleToUser){
+            executeInOnCreateView();
+        }
         return view;
     }
 
@@ -114,6 +120,18 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
 
     public abstract View onCreateContentView(LayoutInflater inflater, ViewGroup container,T t);
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()){
+            mVisibleToUser = true;
+            if(mExecuteOnCreateView && !mExecuteInOnCreateViewCompleted){
+                executeInOnCreateView();
+            }
+        }else {
+            mVisibleToUser = false;
+        }
+    }
 
     protected void executeInOnCreateView(){
         if(mInitFragmentState == FragmentState.EMPTY){
@@ -132,6 +150,7 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
                 showOnlineView(FragmentState.NET_UNAVAILABLE,null);
             }
         }
+        mExecuteInOnCreateViewCompleted = true;
     }
 
     private void requestNetData(){

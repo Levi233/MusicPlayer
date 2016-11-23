@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,13 @@ public class ClassifyMainAdapter extends SingleRecyclerAdapter<ClassifySection> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.e("chenhaolog", mSimpleName + " [onCreateViewHolder] viewType ::: " + viewType);
         return new ClassifyHolder(LayoutInflater.from(getContext()).inflate(R.layout.classify_main_fragment_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        long start = System.currentTimeMillis();
         if(((ClassifyHolder)holder).adapter == null){
             ((ClassifyHolder)holder).adapter = new RecyclerViewAdapter(getContext(), getItem());
             ((ClassifyHolder)holder).recyclerview.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
@@ -36,12 +39,13 @@ public class ClassifyMainAdapter extends SingleRecyclerAdapter<ClassifySection> 
             ((ClassifyHolder)holder).adapter.setData(getItem());
             ((ClassifyHolder)holder).adapter.notifyDataSetChanged();
         }
+        long end = System.currentTimeMillis();
+        Log.e("chenhaolog", mSimpleName + getItem().getName()+" [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
     }
 
     private static class ClassifyHolder extends RecyclerView.ViewHolder {
         RecyclerView recyclerview;
         RecyclerViewAdapter adapter;
-
         public ClassifyHolder(View itemView) {
             super(itemView);
             recyclerview = (RecyclerView) itemView.findViewById(R.id.recyclerview);

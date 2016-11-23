@@ -36,6 +36,7 @@ public class OnlineMusicMainFragment extends Fragment {
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager());
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(mTitles.length-1);
     }
     private class MyFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
