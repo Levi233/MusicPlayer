@@ -12,7 +12,17 @@ import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.adapter.MultiAdapter;
 import com.chenhao.musicplayer.bean.RootInfo;
 import com.chenhao.musicplayer.fragment.BaseFragment;
+import com.chenhao.musicplayer.utils.MyUtils;
+import com.chenhao.musicplayer.utils.OnlineUrlUtil;
 import com.chenhao.musicplayer.utils.XmlParse;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by chenhao on 2016/11/15.
@@ -20,19 +30,24 @@ import com.chenhao.musicplayer.utils.XmlParse;
 
 public class SingerFragment extends BaseFragment<RootInfo> {
     private RecyclerView mRecyclerView;
-    public static SingerFragment newInstance(){
+    private LinearLayoutManager mLinearLayoutManager;
+    private MultiAdapter mAdapter;
+    private boolean mLoadMore = true;
+    private RootInfo mRootInfo;
+    private Handler mHandler = new Handler();
+    public static SingerFragment newInstance() {
         return new SingerFragment();
     }
 
     @Override
     protected String getRequestUrl() {
-        return "http://nmsublist.kuwo.cn/mobi.s?f=kuwo&q=2S5ec7LNX+pQWCHXaOs5nvnnWqyaughtHbUI3IEkHudHoPfxpFuJZY6OI9KVO/SJxQskru/aVoLIKjvXNwwUHjxFEOPVi1swkQHEb1KoQHYAYmUV/VSoO1HLcjTE+WA+W1D1fLBcpmuQ3pzdb8dh7RFQdfp5JZAUKFYkIwf6k9bOn9AmweAsoXf8yCKF9v6VQN4iHq6T5o5MnqBCOxYj9mWA2cLeA9MkdIQrEeb7Bq8ncUbAt+D07iIGI/+72M0Cwb9fFhOT8tlcYZX+Bz4jkn20Sg/Tl9Cg60f8OA3MHkSiQ45IBfHkkVwp1sIyQeXY7/vk/Vi/eAiC1emsxSQCs9jJZkHHp6P54ifT81/xYEfMbtvSNsd5rYqF7Fh27z9cj3VZBKlps484Qczy3vUIpcfWAUjxUYJw";
+        return OnlineUrlUtil.getSingerUrl();
     }
 
     @Override
     protected RootInfo onBackgroundParser(String datas) throws Exception {
-        RootInfo rootInfo = XmlParse.parseXml(datas);
-        return rootInfo;
+        mRootInfo = XmlParse.parseXml(datas);
+        return mRootInfo;
     }
 
     @Override
@@ -40,7 +55,7 @@ public class SingerFragment extends BaseFragment<RootInfo> {
         View view = inflater.inflate(R.layout.fragment_singer, container, false);
         initView(view);
         setAdapter(infos);
-        Log.e("chenhaolog","SingerFragment---infos : "+ infos.toString());
+        Log.e("chenhaolog", "SingerFragment---infos : " + infos.toString());
         return view;
     }
 
@@ -48,9 +63,55 @@ public class SingerFragment extends BaseFragment<RootInfo> {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
     }
 
-    public void setAdapter(RootInfo infos) {
-        MultiAdapter adapter = new MultiAdapter(getContext(), infos, new Handler());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(adapter);
+    public void setAdapter(final RootInfo infos) {
+        mAdapter = new MultiAdapter(getContext(), infos, new Handler());
+        mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int itemCount = mAdapter.getItemCount();
+                if(recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset()
+                        >= recyclerView.computeVerticalScrollRange() && mLoadMore){
+                    loadMore(itemCount);
+                    mLoadMore = false;
+                }
+            }
+        });
+    }
+
+    private void loadMore(int start) {
+        String url = OnlineUrlUtil.getRequest("sub_list", 0, start, 30, "3");
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final byte[] bytes = response.body().bytes();
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String datas = MyUtils.decode(bytes);
+                        RootInfo rootInfo = XmlParse.parseXml(datas);
+                        mAdapter.setData(rootInfo);
+                        mAdapter.notifyDataSetChanged();
+                        mLoadMore = true;
+                    }
+                });
+            }
+        });
     }
 }

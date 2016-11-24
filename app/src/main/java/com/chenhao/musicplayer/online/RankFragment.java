@@ -13,6 +13,7 @@ import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.adapter.MultiAdapter;
 import com.chenhao.musicplayer.bean.RootInfo;
 import com.chenhao.musicplayer.fragment.BaseFragment;
+import com.chenhao.musicplayer.utils.OnlineUrlUtil;
 import com.chenhao.musicplayer.utils.XmlParse;
 
 /**
@@ -28,7 +29,7 @@ public class RankFragment extends BaseFragment<RootInfo> {
 
     @Override
     protected String getRequestUrl() {
-        return "http://nmsublist.kuwo.cn/mobi.s?f=kuwo&q=2S5ec7LNX+pQWCHXaOs5nvnnWqyaughtHbUI3IEkHudHoPfxpFuJZY6OI9KVO/SJxQskru/aVoLIKjvXNwwUHjxFEOPVi1swkQHEb1KoQHYAYmUV/VSoO1HLcjTE+WA+W1D1fLBcpmuQ3pzdb8dh7RFQdfp5JZAUKFYkIwf6k9bOn9AmweAsoXf8yCKF9v6VQN4iHq6T5o5MnqBCOxYj9mWA2cLeA9MkdIQrEeb7Bq8ncUbAt+D07hKTkXx081Ffwb9fFhOT8tlcYZX+Bz4jkpC4QSu7b1/I60f8OA3MHkSiQ45IBfHkkVwp1sIyQeXY7/vk/Vi/eAiC1emsxSQCs9jJZkHHp6P54ifT81/xYEfMbtvSNsd5rYqF7Fh27z9cj3VZBKlps484Qczy3vUIpcfWAUjxUYJw";
+        return OnlineUrlUtil.getRankRul();
     }
 
     @Override

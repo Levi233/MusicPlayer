@@ -12,6 +12,7 @@ import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.adapter.MultiAdapter;
 import com.chenhao.musicplayer.bean.RootInfo;
 import com.chenhao.musicplayer.fragment.BaseFragment;
+import com.chenhao.musicplayer.utils.OnlineUrlUtil;
 import com.chenhao.musicplayer.utils.XmlParse;
 
 /**
@@ -26,7 +27,7 @@ public class SortFragment extends BaseFragment<RootInfo> {
 
     @Override
     protected String getRequestUrl() {
-        return "http://nmobi.kuwo.cn/mobi.s?f=kuwo&q=2S5ec7LNX+pQWCHXaOs5nvnnWqyaughtHbUI3IEkHudHoPfxpFuJZY6OI9KVO/SJxQskru/aVoLIKjvXNwwUHjxFEOPVi1swkQHEb1KoQHYAYmUV/VSoO1HLcjTE+WA+W1D1fLBcpmuQ3pzdb8dh7RFQdfp5JZAU+vpLzsg1CWspJCU3OBc2beefATWgtiuRqPbmK0iphOWFIFBXIXk+wah+ySyvrWhNqmBVJgSRnuPsli8g40y8IzaFbuazOwwY8qAHJO8GnFQZNAgndIKyid6aBJASHLoXgB5dBs5yqzhpkkZsPYvKBGnBFYo33zYYKGrmRSHoCoLkrJ0twztVy0TEnGUXvPY+SjRKgtnzKsHviR2F6uCy5TckmQUZT7hCSlhutIPFo5c=";
+        return OnlineUrlUtil.getClassifyUrl();
     }
 
     @Override
