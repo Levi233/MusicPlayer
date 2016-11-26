@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.OnlineInfo;
 import com.chenhao.musicplayer.bean.RadioInfo;
+import com.chenhao.musicplayer.utils.JumpUtils;
 import com.chenhao.musicplayer.utils.MyUtils;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  * Created by chenhao on 2016/11/17.
  */
 
-public class SquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>> {
+public class SquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>> implements View.OnClickListener{
 
     public SquareAdapter(Context context, ArrayList<OnlineInfo> onlineInfos, int type, Handler handler) {
         super(context, onlineInfos, type, handler);
@@ -67,9 +68,27 @@ public class SquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>> 
             ((SquareHolder)holder).listencnt_rl_2.setVisibility(View.GONE);
             ((SquareHolder)holder).listencnt_rl_3.setVisibility(View.GONE);
         }
+        ((SquareHolder)holder).picImg1.setOnClickListener(this);
+        ((SquareHolder)holder).picImg2.setOnClickListener(this);
+        ((SquareHolder)holder).picImg3.setOnClickListener(this);
         long end = System.currentTimeMillis();
         Log.i("chenhaolog", mSimpleName + " [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
+    }
 
+    @Override
+    public void onClick(View v) {
+        ArrayList<OnlineInfo> infos = getItem();
+        switch (v.getId()){
+            case R.id.pic_img_1:
+                JumpUtils.jumpFragment(infos.get(0));
+                break;
+            case R.id.pic_img_2:
+                JumpUtils.jumpFragment(infos.get(1));
+                break;
+            case R.id.pic_img_3:
+                JumpUtils.jumpFragment(infos.get(2));
+                break;
+        }
     }
 
     private static class SquareHolder extends RecyclerView.ViewHolder{

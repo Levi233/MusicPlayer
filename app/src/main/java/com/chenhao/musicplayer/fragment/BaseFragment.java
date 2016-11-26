@@ -39,6 +39,9 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
         view.setClickable(true);
     }
 
+    public void setVisible(){
+        this.mVisibleToUser = true;
+    }
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return true;

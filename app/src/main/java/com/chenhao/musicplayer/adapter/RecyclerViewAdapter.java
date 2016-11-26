@@ -25,6 +25,7 @@ import com.chenhao.musicplayer.utils.BItmapUtil;
 public class RecyclerViewAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private ClassifySection mSection;
+    private static int num = 0;
     public RecyclerViewAdapter(Context context, ClassifySection section){
         this.mContext = context;
         this.mSection = section;
@@ -35,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.i("chenhaolog","------------>RecyclerViewAdapter  [onCreateViewHolder] viewType ::: " + viewType);
+        Log.i("chenhaolog","------------>RecyclerViewAdapter  [onCreateViewHolder] viewType ::: " + ++num);
         return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.classify_item,parent,false));
     }
 

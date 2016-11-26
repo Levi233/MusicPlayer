@@ -1,7 +1,12 @@
 package com.chenhao.musicplayer.utils;
 
+import android.text.TextUtils;
+
 import com.chenhao.musicplayer.utils.crypt.Base64Coder;
 import com.chenhao.musicplayer.utils.crypt.KuwoDES;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Created by chenhao on 2016/11/24.
@@ -50,6 +55,27 @@ public class OnlineUrlUtil {
         sb.append("&isg=1");
         String params = sb.toString();
         return createURL_SubList(params.getBytes());
+    }
+
+    public static String getSongListInfoUrl(String ids, String flagType, int position) {
+        StringBuilder builder = new StringBuilder(
+                "http://mobilebasedata.kuwo.cn/basedata.s?type=get_songlist_info2&");
+        builder.append("user=866479021253520&prod=kwplayer_ar_8.3.0.0&corp=kuwo&vipver=8.3.0.0&source=kwplayer_ar_8.3.0.0_kwdebug.apk&p2p=1&")
+                .append("id=")//不要加&，createCommonParams有
+                .append(ids);
+
+        if (!TextUtils.isEmpty(flagType)) {
+            builder.append("&flagtype=").append(flagType);
+        }
+        builder.append("&pos=" + position);
+        try {
+            String city = "北京市";
+            builder.append("&province=").append(URLEncoder.encode("北京市", "utf-8"));
+            builder.append("&city=").append(URLEncoder.encode(city, "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return builder.toString();
     }
 
     private static String createURL_SubList(byte[] paramsBytes) {

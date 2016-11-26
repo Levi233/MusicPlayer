@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class BannerAdapter extends SingleRecyclerAdapter<BannerSection> {
 
-    private static ArrayList<View> dotsList = new ArrayList<>();
+    private ArrayList<View> dotsList = new ArrayList<>();
 
     public BannerAdapter(Context context, BannerSection bannerSection, int type, Handler handler) {
         super(context, bannerSection, type, handler);
@@ -55,7 +55,7 @@ public class BannerAdapter extends SingleRecyclerAdapter<BannerSection> {
         Log.i("chenhaolog", mSimpleName + " [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
     }
 
-    private static class BannerViewHolder extends RecyclerView.ViewHolder {
+    private class BannerViewHolder extends RecyclerView.ViewHolder {
         ViewPager viewPager;
         ViewPagerAdapter adapter;
         AutoRunningTask autoRunningTask;

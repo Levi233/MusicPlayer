@@ -34,6 +34,20 @@ public class ClassifyMainAdapter extends SingleRecyclerAdapter<ClassifySection> 
         if(((ClassifyHolder)holder).adapter == null){
             ((ClassifyHolder)holder).adapter = new RecyclerViewAdapter(getContext(), getItem());
             ((ClassifyHolder)holder).recyclerview.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+
+            RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool(){
+                @Override
+                public void putRecycledView(RecyclerView.ViewHolder scrap) {
+                    super.putRecycledView(scrap);
+                }
+
+                @Override
+                public RecyclerView.ViewHolder getRecycledView(int viewType) {
+                    return super.getRecycledView(viewType);
+                }
+            };
+            pool.setMaxRecycledViews(((ClassifyHolder)holder).adapter.getItemViewType(0),19);
+            ((ClassifyHolder)holder).recyclerview.setRecycledViewPool(pool);
             ((ClassifyHolder)holder).recyclerview.setAdapter(((ClassifyHolder)holder).adapter);
         }else{
             ((ClassifyHolder)holder).adapter.setData(getItem());
