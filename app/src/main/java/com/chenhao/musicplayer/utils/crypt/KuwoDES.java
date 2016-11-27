@@ -75,6 +75,7 @@ public final class KuwoDES {
 	private static int SOut;
 	private static int t;
 	private static int sbi;
+	public static final byte[] KSING_SECRET_KEY = "kwks&@69".getBytes();
 
 	private static long DES64(long subkeys[], long data) {
 		// private static int i;
@@ -212,5 +213,164 @@ public final class KuwoDES {
 		//return new String(Base64Coder.encode(result, result.length, null));
 		return result;
 	}
+	
+	// 兼容汉字符
+	public synchronized static byte[] encrypt2(byte[] src, int srcLength, byte[] key, int keyLength) {
+
+		// long keyl = Long.valueOf(new String(key));
+		long keyl = 0;
+		for (int i = 0; i < 8; i++) {
+			long temp = (long) key[i] << (i * 8);
+			keyl |= temp;
+		}
+
+		int num = srcLength / 8;
+		// byte[] szEncrypt = new byte[(num + 1) * 8 + 1];
+
+		// 子密钥（临时数据）
+		long[] subKey = new long[16];
+		// for(Long tempKey:subKey){
+		for (int i = 0; i < 16; i++) {
+			subKey[i] = 0;
+		}
+
+		// 加密
+		long[] pSrc = new long[num];
+		for (int i = 0; i < num; i++) {
+			for (int j = 0; j < 8; j++) {
+				pSrc[i] |= (long) (src[i * 8 + j]&0xff) << (j * 8);
+			}
+		}
+		long[] pEncyrpt = new long[((num + 1) * 8 + 1) / 8];
+
+		DESSubKeys(keyl, subKey, DES_MODE_ENCRYPT);
+
+		for (int i = 0; i < num; i++) {
+			// pEncyrpt[i] = DES64(subKey, (pSrc>>(56-i*8))&0xff);
+			pEncyrpt[i] = DES64(subKey, pSrc[i]);
+		}
+
+		// 处理结尾处不够8个字节的部分
+		int len = srcLength;
+		int tail_num = len % 8;
+		byte[] szTail = new byte[srcLength - num * 8];
+
+		System.arraycopy(src, num * 8, szTail, 0, srcLength - num * 8);
+
+		long tail64 = 0;
+		for (int i = 0; i < tail_num; i++)
+			tail64 = tail64 | ((long) (szTail[i]&0xff)) << (i * 8);
+
+		pEncyrpt[num] = DES64(subKey, tail64);
+
+		// Base64编码
+		// char szOut[1024]; //实验性质，需要多大空间需要计算，1024不一定够
+		byte[] result = new byte[pEncyrpt.length * 8];
+		int temp = 0;
+		for (int i = 0; i < pEncyrpt.length; i++) {
+			for (int j = 0; j < 8; ++j) {
+				result[temp] = (byte) (0xff & (pEncyrpt[i] >> (j * 8)));
+				temp++;
+			}
+		}
+
+		//return new String(Base64Coder.encode(result, result.length, null));
+		return result;
+	}
+
+	// 兼容汉字符
+	public synchronized static byte[] encryptKSing(byte[] src, byte[] key) {
+		int srcLength = src.length;
+		int keyLength = key.length;
+		// 子密钥（临时数据）
+		long[] subKey = new long[16];
+		// for(Long tempKey:subKey){
+		for (int i = 0; i < 16; i++) {
+			subKey[i] = 0;
+		}
+		long keyl = 0;
+		for (int i = 0; i < 8; i++) {
+			long temp = (long) key[i] << (i * 8);
+			keyl |= temp;
+		}
+		DESSubKeys(keyl, subKey, DES_MODE_ENCRYPT);
+		// 加密
+		int num = srcLength / 8;
+		long[] pSrc = new long[num];
+		for (int i = 0; i < num; i++) {
+			for (int j = 0; j < 8; j++) {
+				pSrc[i] |= (long) (src[i * 8 + j]&0xff) << (j * 8);
+			}
+		}
+		long[] pEncyrpt = new long[((num + 1) * 8 + 1) / 8];
+		for (int i = 0; i < num; i++) {
+			// pEncyrpt[i] = DES64(subKey, (pSrc>>(56-i*8))&0xff);
+			pEncyrpt[i] = DES64(subKey, pSrc[i]);
+		}
+		// 处理结尾处不够8个字节的部分
+		int len = srcLength;
+		int tail_num = len % 8;
+		byte[] szTail = new byte[srcLength - num * 8];
+		System.arraycopy(src, num * 8, szTail, 0, srcLength - num * 8);
+		long tail64 = 0;
+		for (int i = 0; i < tail_num; i++)
+			tail64 = tail64 | ((long) (szTail[i]&0xff)) << (i * 8);
+		pEncyrpt[num] = DES64(subKey, tail64);
+		// Base64编码
+		// char szOut[1024]; //实验性质，需要多大空间需要计算，1024不一定够
+		byte[] result = new byte[pEncyrpt.length * 8];
+		int temp = 0;
+		for (int i = 0; i < pEncyrpt.length; i++) {
+			for (int j = 0; j < 8; ++j) {
+				result[temp] = (byte) (0xff & (pEncyrpt[i] >> (j * 8)));
+				temp++;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @param src 加密数组，注：如果加密串已经进行base64，src是base64解码后的内容
+	 * @param srcLength 对于解密来说，srcLength必须是8的倍数，这个需要上层来保证
+	 * @param key
+	 * @param keyLength
+	 * @return 解密的结果，注：返回值尾部可能会有多余的0，需要上层决定有效数据的长度
+	 */
+	public synchronized static byte[] decryptKSing(byte[] src, byte[] key) { // 1. 计算密钥
+		int srcLength = src.length;
+		int keyLength = key.length;
+		// 子密钥（临时数据）
+		// 用于之后的解密过程
+		long[] subKey = new long[16];
+		long keyl = 0;
+		for (int i = 0; i < 8; i++) {
+			long temp = (long) key[i] << (i * 8);
+			keyl |= temp;
+		}
+		for (int i = 0; i < 16; i++) {
+			subKey[i] = 0;
+		}
+		DESSubKeys(keyl, subKey, DES_MODE_DECRYPT);
+		// 2. des解密
+		int num = srcLength / 8;
+		long[] encryptData = new long[num];
+		for (int i = 0; i < num; i++) {
+			for (int j = 0; j < 8; j++) {
+				encryptData[i] |= (long) (src[i * 8 + j]&0xff) << (j * 8);
+			}
+		}
+		long[] planeData = new long[num];
+		for (int i = 0; i < num; i++) {
+			planeData[i] = DES64(subKey, encryptData[i]);
+		}
+		byte[] result = new byte[num * 8];
+		for (int i = 0; i < num; ++i) {
+			for (int j = 0; j < 8; ++j) {
+				result[i * 8 + j] = (byte)(0xff & (planeData[i] >> j * 8) );
+			}
+		}
+		return result;
+	}
+
 }
 

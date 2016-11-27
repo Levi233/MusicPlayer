@@ -20,6 +20,8 @@ import com.chenhao.musicplayer.bean.KsquareSection;
 import com.chenhao.musicplayer.bean.KubillboardInfo;
 import com.chenhao.musicplayer.bean.ListInfo;
 import com.chenhao.musicplayer.bean.ListSection;
+import com.chenhao.musicplayer.bean.MusicInfo;
+import com.chenhao.musicplayer.bean.MusicSection;
 import com.chenhao.musicplayer.bean.MvInfo;
 import com.chenhao.musicplayer.bean.MvSquareSection;
 import com.chenhao.musicplayer.bean.OnlineInfo;
@@ -192,6 +194,29 @@ public class XmlParse {
                             artistInfo.setRadio_id(radio_id);
                             artistInfo.setMvcnt(mvcnt);
                             mOnlineInfo = artistInfo;
+                        }else if("music".equals(parser.getName())){
+                            MusicInfo musicInfo = new MusicInfo();
+                            long rid = getDefaultLong(parser, "rid", -1);
+                            String name = getFormatAttributeValue(parser, "name");
+                            String artist = getFormatAttributeValue(parser, "artist");
+                            String album = getFormatAttributeValue(parser, "album");
+                            int duration = getDefaultInteger(parser, "duration", -1);
+                            String format = getFormatAttributeValue(parser, "format");
+                            int hot = getDefaultInteger(parser, "hot",-1);
+                            String res = getFormatAttributeValue(parser, "res");
+                            int pay_flag = getDefaultInteger(parser, "pay_flag", -1);
+                            String img = getFormatAttributeValue(parser, "img");
+                            musicInfo.setRid(rid);
+                            musicInfo.setArtist(artist);
+                            musicInfo.setName(name);
+                            musicInfo.setAlbum(album);
+                            musicInfo.setDuration(duration);
+                            musicInfo.setFormat(format);
+                            musicInfo.setHot(hot);
+                            musicInfo.setRes(res);
+                            musicInfo.setPay_flag(pay_flag);
+                            musicInfo.setImg(img);
+                            mOnlineInfo = musicInfo;
                         }
                         break;
                     case XmlPullParser.END_TAG:
@@ -422,6 +447,8 @@ public class XmlParse {
         } else if ("business".equals(type)) {
             mSection = null;
             return;
+        }else if("music".equals(type)){
+            mSection = new MusicSection();
         }
         mSection.setLabel(label);
         mSection.setMtype(mtype);

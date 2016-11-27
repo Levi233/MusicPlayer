@@ -51,13 +51,15 @@ public class SongListTabFragment extends BaseFragment<SingleDataInfo> {
     private long mId;
     private String mTitle;
     private String mImg;
+    private int mDigest;
 
-    public static SongListTabFragment newInstance(long id,String name,String img){
+    public static SongListTabFragment newInstance(long id,String name,String img,int digest){
         SongListTabFragment f = new SongListTabFragment();
         Bundle bundle = new Bundle();
         bundle.putLong("id", id);
         bundle.putString("title",name);
         bundle.putString("img",img);
+        bundle.putInt("digest",digest);
         f.setArguments(bundle);
         return f;
     }
@@ -72,6 +74,7 @@ public class SongListTabFragment extends BaseFragment<SingleDataInfo> {
             mId = bundle.getLong("id");
             mTitle = bundle.getString("title");
             mImg = bundle.getString("img");
+            mDigest = bundle.getInt("digest");
         }
     }
 
@@ -163,10 +166,10 @@ public class SongListTabFragment extends BaseFragment<SingleDataInfo> {
             Fragment f = null;
             switch (position){
                 case 0:
-                    f = RecommendFragment.newInstance();
+                    f = SongListFragment.newInstance(mId,mDigest);
                     break;
                 case 1:
-                    f = RankFragment.newInstance();
+                    f = CommentListFragment.newInstance(mId,mDigest);
                     break;
             }
             return f;

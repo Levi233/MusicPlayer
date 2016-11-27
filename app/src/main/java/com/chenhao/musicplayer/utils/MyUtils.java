@@ -2,7 +2,10 @@ package com.chenhao.musicplayer.utils;
 
 import android.util.Log;
 
+import com.chenhao.musicplayer.App;
+import com.chenhao.musicplayer.utils.crypt.Base64Coder;
 import com.chenhao.musicplayer.utils.crypt.IOUtils;
+import com.chenhao.musicplayer.utils.crypt.KuwoDES;
 
 import java.io.UnsupportedEncodingException;
 import java.util.zip.Inflater;
@@ -112,6 +115,18 @@ public class MyUtils {
             byteResult = byteResultTrimed;
         }
         return new String(byteResult);
+    }
+
+    public static String decodeKSing(String data) {
+        String str = "";
+        try {
+            // 防止服务器秘钥错误,解密失败
+            byte[] b64Data = Base64Coder.decode(data);
+            str = new String(KuwoDES.decryptKSing(b64Data, App.mSecretKey.getBytes())).trim();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 
     public static String numFormat(int i){

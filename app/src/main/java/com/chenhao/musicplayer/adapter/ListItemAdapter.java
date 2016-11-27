@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.OnlineInfo;
+import com.chenhao.musicplayer.utils.JumpUtils;
 
 /**
  * Created by chenhao on 2016/11/17.
@@ -42,6 +44,12 @@ public class ListItemAdapter extends SingleRecyclerAdapter<OnlineInfo> {
                 .into(((ListItemHolder)holder).klistImg);
         ((ListItemHolder)holder).klistName.setText(getItem().getName());
         ((ListItemHolder)holder).klistDesc.setText(getItem().getDesc());
+        ((ListItemHolder)holder).rl_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpUtils.jumpFragment(getItem());
+            }
+        });
         long end = System.currentTimeMillis();
         Log.i("chenhaolog", mSimpleName + " [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
     }
@@ -51,8 +59,10 @@ public class ListItemAdapter extends SingleRecyclerAdapter<OnlineInfo> {
         ImageView klistImg;
         TextView klistName;
         TextView klistDesc;
+        RelativeLayout rl_layout;
         public ListItemHolder(View itemView) {
             super(itemView);
+            rl_layout = (RelativeLayout) itemView.findViewById(R.id.rl_layout);
             klistImg = (ImageView) itemView.findViewById(R.id.klist_img);
             klistName = (TextView) itemView.findViewById(R.id.klist_name);
             klistDesc = (TextView) itemView.findViewById(R.id.klist_desc);

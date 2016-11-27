@@ -7,10 +7,14 @@ import com.chenhao.musicplayer.bean.ArtistSection;
 import com.chenhao.musicplayer.bean.BannerSection;
 import com.chenhao.musicplayer.bean.BillboardSection;
 import com.chenhao.musicplayer.bean.ClassifySection;
+import com.chenhao.musicplayer.bean.CommentInfo;
+import com.chenhao.musicplayer.bean.CommentSection;
 import com.chenhao.musicplayer.bean.ItemViewType;
 import com.chenhao.musicplayer.bean.KlistSection;
 import com.chenhao.musicplayer.bean.KsquareSection;
 import com.chenhao.musicplayer.bean.ListSection;
+import com.chenhao.musicplayer.bean.MusicInfo;
+import com.chenhao.musicplayer.bean.MusicSection;
 import com.chenhao.musicplayer.bean.MvSquareSection;
 import com.chenhao.musicplayer.bean.OnlineInfo;
 import com.chenhao.musicplayer.bean.RootInfo;
@@ -127,6 +131,16 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
                 if (onlineInfos.size() > 0) {
                     addAdapter(new ClassifyMainAdapter(getContext(), (ClassifySection) section, section.getItemViewType(), getHandler()));
+                }
+            }else if(section instanceof MusicSection){
+                ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
+                for (OnlineInfo info:onlineInfos) {
+                    addAdapter(new MusicAdapter(getContext(), (MusicInfo) info,section.getItemViewType(),getHandler()));
+                }
+            }else if(section instanceof CommentSection){
+                ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
+                for (OnlineInfo onlineInfo:onlineInfos) {
+                    addAdapter(new CommentAdapter(getContext(), (CommentInfo) onlineInfo,section.getItemViewType(),getHandler()));
                 }
             }
         }

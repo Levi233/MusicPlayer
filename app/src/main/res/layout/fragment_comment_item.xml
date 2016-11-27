@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/comment_user_pic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/comment_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/comment_user_pic"
+        android:text="LeviAckerman"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/comment_user_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_user_name"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/comment_user_pic"
+        android:paddingTop="3dp"
+        android:text="233分钟前"
+        android:textColor="@color/gray"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/comment_user_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_user_time"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@id/comment_user_pic"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        android:text="罪域的骨终为王"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+
+    <LinearLayout
+        android:id="@+id/reply_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_user_msg"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@id/comment_user_pic"
+        android:background="@drawable/comment_bg"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/reply_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@安兹乌尔恭:"
+            android:textColor="#3399FF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/reply_msg_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="罪域的骨终为王"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0.5px"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/comment_user_pic"
+        android:background="#CCCCCC" />
+</RelativeLayout>

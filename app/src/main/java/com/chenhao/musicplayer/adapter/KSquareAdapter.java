@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.OnlineInfo;
+import com.chenhao.musicplayer.utils.JumpUtils;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  * Created by chenhao on 2016/11/17.
  */
 
-public class KSquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>> {
+public class KSquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>> implements View.OnClickListener{
 
     public KSquareAdapter(Context context, ArrayList<OnlineInfo> onlineInfos, int type, Handler handler) {
         super(context, onlineInfos, type, handler);
@@ -50,9 +51,27 @@ public class KSquareAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>>
         ((KSquareHolder)holder).nameTextView1.setText(getItem().get(0).getName());
         ((KSquareHolder)holder).nameTextView2.setText(getItem().get(1).getName());
         ((KSquareHolder)holder).nameTextView3.setText(getItem().get(2).getName());
+        ((KSquareHolder)holder).picImg1.setOnClickListener(this);
+        ((KSquareHolder)holder).picImg2.setOnClickListener(this);
+        ((KSquareHolder)holder).picImg3.setOnClickListener(this);
         long end = System.currentTimeMillis();
         Log.i("chenhaolog", mSimpleName + " [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.pic_img_1:
+                JumpUtils.jumpFragment(getItem().get(0));
+                break;
+            case R.id.pic_img_2:
+                JumpUtils.jumpFragment(getItem().get(1));
+                break;
+            case R.id.pic_img_3:
+                JumpUtils.jumpFragment(getItem().get(2));
+                break;
+        }
     }
 
     private static class KSquareHolder extends RecyclerView.ViewHolder{

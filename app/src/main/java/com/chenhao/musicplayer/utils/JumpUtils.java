@@ -12,7 +12,7 @@ import com.chenhao.musicplayer.online.SongListTabFragment;
 public class JumpUtils {
     public static void jumpFragment( OnlineInfo info){
         if(info instanceof SongListInfo){
-            SongListTabFragment f = SongListTabFragment.newInstance(info.getId(), info.getName(), info.getImg());
+            SongListTabFragment f = SongListTabFragment.newInstance(info.getId(), info.getName(), info.getImg(),info.getDigest());
             FragmentControl.getInstance().showSubFrag(f,SongListTabFragment.class.getName());
         }
     }

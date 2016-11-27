@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.OnlineInfo;
+import com.chenhao.musicplayer.utils.JumpUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -42,7 +43,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         ImageView imageView;
         if(mImgs.size() > 0){
             imageView = mImgs.removeFirst();
@@ -55,6 +56,12 @@ public class ViewPagerAdapter extends PagerAdapter {
                 .placeholder(R.mipmap.ic_launcher)
                 .into(imageView);
         container.addView(imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpUtils.jumpFragment(mInfos.get(position%mInfos.size()));
+            }
+        });
         return imageView;
     }
 

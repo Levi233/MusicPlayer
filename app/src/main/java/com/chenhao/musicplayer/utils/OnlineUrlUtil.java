@@ -2,6 +2,7 @@ package com.chenhao.musicplayer.utils;
 
 import android.text.TextUtils;
 
+import com.chenhao.musicplayer.App;
 import com.chenhao.musicplayer.utils.crypt.Base64Coder;
 import com.chenhao.musicplayer.utils.crypt.KuwoDES;
 
@@ -15,6 +16,7 @@ import java.net.URLEncoder;
 public class OnlineUrlUtil {
 
     public static String HOST_SUB_LIST = "http://nmsublist.kuwo.cn/mobi.s?f=kuwo&q=";
+    public static String HOST = "http://comment.kuwo.cn/com.s?f=ar&q=";
 
     public static String getRecommendUrl(){
         return "http://nmobi.kuwo.cn/mobi.s?f=kuwo&q=2S5ec7LNX+pQWCHXaOs5nvnnWqyaughtHbUI3IEkHudHoPfxpFuJZY6OI9KVO/SJxQskru/aVoLIKjvXNwwUHjxFEOPVi1swkQHEb1KoQHYAYmUV/VSoO1HLcjTE+WA+W1D1fLBcpmuQ3pzdb8dh7RFQdfp5JZAUH/+jpWYq+jsxMiRDNVX8ufVa18zxSJFA8gZaVc/cq4SfU8+CbuTwXLhrFqI62sahOSpyH+57sg0eThhiFdco+1ebIdQOLFJ9WxC98fCtz/W2Rv9/BBkqhDo6CrYD5H1j2aHDplxND6/upuKIhFBKlzk4RFzONrTjG5u0CcvvkPhOHL+3bG4f9zk4RFzONrTjG5u0CcvvkPjfocDUxrRLcs5A+MNXow5iGwMo+VE+lbFFcflWKsKYFCosPy1nrcuRoqDappqcGE0QaL5+mMEluxjkKJeeQZ8Rk65c0A/A2Zav4ntNwywtnZv6VmjR/nKUVc8A3qqFevKsffRgan1mjE21o4AOAcII/o9vwYRbdKgi4Zhoht7jhssmGsVDg8ZLcPa9gmHvUkjsl7e5SuvcDVZ2VW0fG/gHP/M+dP90G8ImNIRKfKMRo3Sfno5HHcD9ZDxcmnFfv78xMMacAYTMstjJZkHHp6P54ifT81/xYEfMbtvSNsd5rYqF7Fh27z9cj3VZBKlps484Qczy3vUIpcfWAUjxUYJw";
@@ -34,6 +36,7 @@ public class OnlineUrlUtil {
         sb.append("user=866479021253520&prod=kwplayer_ar_8.3.0.0&corp=kuwo&vipver=8.3.0.0&source=kwplayer_ar_8.3.0.0_kwdebug.apk&p2p=1&");
         sb.append("type=").append(type);//type加载更多 = sub_list
         sb.append("&uid=").append("78161491");
+        sb.append("&vipsec=1");
         sb.append("&hasrecgd=1");
         sb.append("&kubb=2");
         sb.append("&fs=1");
@@ -54,7 +57,8 @@ public class OnlineUrlUtil {
         sb.append("&supportfan=1");
         sb.append("&isg=1");
         String params = sb.toString();
-        return createURL_SubList(params.getBytes());
+        String url = createURL_SubList(params.getBytes());
+        return url;
     }
 
     public static String getSongListInfoUrl(String ids, String flagType, int position) {
@@ -76,6 +80,31 @@ public class OnlineUrlUtil {
             e.printStackTrace();
         }
         return builder.toString();
+    }
+
+    public static String getCommentListUrl(String sessionId, long uid,String digest, long sid, int startIdx, int pageCount) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("type=get_comment");
+        builder.append("&prod=").append("kwplayer_ar_8.3.0.0");
+        builder.append("&deviceId=").append("866479021253520");
+        builder.append("&source=").append("kwplayer_ar_8.3.0.0_kwdebug.apk");
+        builder.append("&sesID=").append(sessionId);
+        builder.append("&uid=").append(uid);
+        builder.append("&digest=").append(digest);
+        builder.append("&sid=").append(sid);
+        builder.append("&start=").append(startIdx);
+        builder.append("&msgflag=1");
+        builder.append("&count=").append(pageCount);
+        builder.append("&sx=").append(App.mSecretKey);
+        String url = createUrl(builder.toString().getBytes());
+        return url;
+    }
+
+    public static String createUrl(byte[] parameters){
+        byte[] keys = "kwks&@69".getBytes();
+        byte[] encryptParameters = KuwoDES.encryptKSing(parameters, keys);
+        String b64Params = new String(Base64Coder.encode(encryptParameters, encryptParameters.length));
+        return HOST + b64Params;
     }
 
     private static String createURL_SubList(byte[] paramsBytes) {
