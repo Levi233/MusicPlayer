@@ -3,6 +3,9 @@ package com.chenhao.musicplayer.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +47,14 @@ public class CommentAdapter extends SingleRecyclerAdapter<CommentInfo> {
 
         CommentInfo reply = getItem().getReply();
         if(reply != null){
+            SpannableStringBuilder sb = new SpannableStringBuilder();
+            SpannableStringBuilder name = new SpannableStringBuilder();
             ((CommentHolder)holder).reply_layout.setVisibility(View.VISIBLE);
-            ((CommentHolder)holder).reply_name_tv.setText("@"+reply.getU_name()+":");
-            ((CommentHolder)holder).reply_msg_tv.setText(reply.getMsg());
+            name.append("@").append(reply.getU_name()).append(": ");
+            sb.append(name);
+            sb.append(reply.getMsg());
+            sb.setSpan(new ForegroundColorSpan(getContext().getResources().getColor(R.color.color_1da0ef)),0, name.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            ((CommentHolder)holder).reply_msg_tv.setText(sb);
         }else{
             ((CommentHolder)holder).reply_layout.setVisibility(View.GONE);
         }
@@ -58,7 +66,6 @@ public class CommentAdapter extends SingleRecyclerAdapter<CommentInfo> {
         TextView comment_user_time;
         TextView comment_user_msg;
         LinearLayout reply_layout;
-        TextView reply_name_tv;
         TextView reply_msg_tv;
 
         public CommentHolder(View itemView) {
@@ -67,7 +74,6 @@ public class CommentAdapter extends SingleRecyclerAdapter<CommentInfo> {
             comment_user_name = (TextView) itemView.findViewById(R.id.comment_user_name);
             comment_user_time = (TextView) itemView.findViewById(R.id.comment_user_time);
             comment_user_msg = (TextView) itemView.findViewById(R.id.comment_user_msg);
-            reply_name_tv = (TextView) itemView.findViewById(R.id.reply_name_tv);
             reply_msg_tv = (TextView) itemView.findViewById(R.id.reply_msg_tv);
             reply_layout = (LinearLayout) itemView.findViewById(R.id.reply_layout);
         }

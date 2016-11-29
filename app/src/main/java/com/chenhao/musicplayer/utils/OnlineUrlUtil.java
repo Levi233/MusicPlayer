@@ -15,8 +15,9 @@ import java.net.URLEncoder;
 
 public class OnlineUrlUtil {
 
-    public static String HOST_SUB_LIST = "http://nmsublist.kuwo.cn/mobi.s?f=kuwo&q=";
-    public static String HOST = "http://comment.kuwo.cn/com.s?f=ar&q=";
+    private static String HOST_SUB_LIST = "http://nmsublist.kuwo.cn/mobi.s?f=kuwo&q=";
+    private static String HOST = "http://comment.kuwo.cn/com.s?f=ar&q=";
+    private static final String MOBI = "http://mobi.kuwo.cn/mobi.s?f=kuwo&q=";
 
     public static String getRecommendUrl(){
         return "http://nmobi.kuwo.cn/mobi.s?f=kuwo&q=2S5ec7LNX+pQWCHXaOs5nvnnWqyaughtHbUI3IEkHudHoPfxpFuJZY6OI9KVO/SJxQskru/aVoLIKjvXNwwUHjxFEOPVi1swkQHEb1KoQHYAYmUV/VSoO1HLcjTE+WA+W1D1fLBcpmuQ3pzdb8dh7RFQdfp5JZAUH/+jpWYq+jsxMiRDNVX8ufVa18zxSJFA8gZaVc/cq4SfU8+CbuTwXLhrFqI62sahOSpyH+57sg0eThhiFdco+1ebIdQOLFJ9WxC98fCtz/W2Rv9/BBkqhDo6CrYD5H1j2aHDplxND6/upuKIhFBKlzk4RFzONrTjG5u0CcvvkPhOHL+3bG4f9zk4RFzONrTjG5u0CcvvkPjfocDUxrRLcs5A+MNXow5iGwMo+VE+lbFFcflWKsKYFCosPy1nrcuRoqDappqcGE0QaL5+mMEluxjkKJeeQZ8Rk65c0A/A2Zav4ntNwywtnZv6VmjR/nKUVc8A3qqFevKsffRgan1mjE21o4AOAcII/o9vwYRbdKgi4Zhoht7jhssmGsVDg8ZLcPa9gmHvUkjsl7e5SuvcDVZ2VW0fG/gHP/M+dP90G8ImNIRKfKMRo3Sfno5HHcD9ZDxcmnFfv78xMMacAYTMstjJZkHHp6P54ifT81/xYEfMbtvSNsd5rYqF7Fh27z9cj3VZBKlps484Qczy3vUIpcfWAUjxUYJw";
@@ -97,6 +98,41 @@ public class OnlineUrlUtil {
         builder.append("&count=").append(pageCount);
         builder.append("&sx=").append(App.mSecretKey);
         String url = createUrl(builder.toString().getBytes());
+        return url;
+    }
+
+    public static String getMusicUrl(long rid) {
+        StringBuilder buffer = createCommonParams();
+        buffer.append("type=convert_url2");
+        buffer.append("&br=").append("128kmp3");
+        buffer.append("&format=").append("aac|mp3|flac");
+        buffer.append("&sig=").append("0");
+        buffer.append("&rid=").append(rid);
+        buffer.append("&network=").append("WIFI");
+        String url = createURL(buffer.toString());
+//		LogMgr.e("xiaoniu","songUrl " + url);
+        return url;
+    }
+
+    private static StringBuilder createCommonParams() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("user=").append("359614043034441");
+        sb.append("&prod=").append("kwplayer_ar_6.3.4.0");
+        sb.append("&corp=kuwo");
+        sb.append("&source=").append("kwplayer_ar_6.3.4.0_u.apk");
+        sb.append("&");
+        return sb;
+    }
+
+    private static String createURL(String param) {
+        StringBuilder sb = createCommonParams();
+        sb.append(param);
+        String params = sb.toString();
+
+        byte[] paramsBytes = params.getBytes();
+        byte[] bytes = KuwoDES.encrypt(paramsBytes, paramsBytes.length, KuwoDES.SECRET_KEY, KuwoDES.SECRET_KEY_LENGTH);
+        String b64Params = new String(Base64Coder.encode(bytes, bytes.length));
+        String url = MOBI + b64Params;
         return url;
     }
 

@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.adapter.MultiAdapter;
 import com.chenhao.musicplayer.bean.RootInfo;
+import com.chenhao.musicplayer.bean.Section;
 import com.chenhao.musicplayer.fragment.BaseFragment;
 import com.chenhao.musicplayer.utils.MyUtils;
 import com.chenhao.musicplayer.utils.OnlineUrlUtil;
 import com.chenhao.musicplayer.utils.XmlParse;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -97,6 +99,7 @@ public class SingerFragment extends BaseFragment<RootInfo> {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                mLoadMore = true;
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -106,9 +109,13 @@ public class SingerFragment extends BaseFragment<RootInfo> {
                     public void run() {
                         String datas = MyUtils.decode(bytes);
                         RootInfo rootInfo = XmlParse.parseXml(datas);
-                        mAdapter.setData(rootInfo);
+                        mAdapter.setData(rootInfo,null);
                         mAdapter.notifyDataSetChanged();
-                        mLoadMore = true;
+                        List<Section> sections = rootInfo.getSections();
+                        Section section = sections.get(0);
+                        if(section.getOnlineInfos().size() == 30){
+                            mLoadMore = true;
+                        }
                     }
                 });
             }

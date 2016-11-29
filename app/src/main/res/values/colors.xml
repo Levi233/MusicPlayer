@@ -9,6 +9,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="blue">#0000FF</color>
+    <color name="color_1da0ef">#1DA0EF</color>
     <color name="seekBarProgress">#EE2C2C</color>
     <color name="colorTransparency">#00000000</color>
 </resources>

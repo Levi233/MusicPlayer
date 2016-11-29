@@ -13,7 +13,6 @@ import com.chenhao.musicplayer.bean.ItemViewType;
 import com.chenhao.musicplayer.bean.KlistSection;
 import com.chenhao.musicplayer.bean.KsquareSection;
 import com.chenhao.musicplayer.bean.ListSection;
-import com.chenhao.musicplayer.bean.MusicInfo;
 import com.chenhao.musicplayer.bean.MusicSection;
 import com.chenhao.musicplayer.bean.MvSquareSection;
 import com.chenhao.musicplayer.bean.OnlineInfo;
@@ -34,8 +33,8 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
         super(context, rootInfo, handler);
     }
 
-    public void setData(RootInfo rootInfo) {
-        loadMore(rootInfo);
+    public void setData(RootInfo rootInfo,ArrayList<OnlineInfo> infos) {
+        loadMore(rootInfo,infos);
     }
 
     @Override
@@ -135,7 +134,7 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
             }else if(section instanceof MusicSection){
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
                 for (OnlineInfo info:onlineInfos) {
-                    addAdapter(new MusicAdapter(getContext(), (MusicInfo) info,section.getItemViewType(),getHandler()));
+                    addAdapter(new MusicAdapter(getContext(),onlineInfos,section.getItemViewType(),getHandler()));
                 }
             }else if(section instanceof CommentSection){
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
@@ -146,13 +145,18 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
         }
     }
 
-    private void loadMore(RootInfo rootInfo) {
+    private void loadMore(RootInfo rootInfo,ArrayList<OnlineInfo> infos) {
         List<Section> sections = rootInfo.getSections();
         for (Section section : sections) {
             if (section instanceof ArtistSection) {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
                 for (OnlineInfo onlineInfo : onlineInfos) {
                     addAdapter(new ArtistAdapter(getContext(), onlineInfo, section.getItemViewType(), getHandler()));
+                }
+            }else if(section instanceof MusicSection){
+                ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
+                for (OnlineInfo info:onlineInfos) {
+                    addAdapter(new MusicAdapter(getContext(), infos,section.getItemViewType(),getHandler()));
                 }
             }
         }

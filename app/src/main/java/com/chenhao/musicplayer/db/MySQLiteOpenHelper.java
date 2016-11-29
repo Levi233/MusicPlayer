@@ -16,7 +16,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table info(rid,name,artist,url)");
+        db.execSQL("create table info(rid primary key,name,artist,url)");
     }
 
     @Override

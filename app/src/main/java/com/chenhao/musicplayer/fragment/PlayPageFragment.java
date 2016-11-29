@@ -40,6 +40,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
     private ImageView mNextMusic;
     private ImageView mPlayModel;
     private ImageView mMusicList;
+    private int mMusicDuration;
 
     private String mName;
     private Call mCall = null;
@@ -53,8 +54,8 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
             mMusicName.setText(infos.get(position).getName());
             mPlayAndPause.setImageResource(R.mipmap.btn_pause);
             mSeekBar.setMax(MediaPlayerManager.getInstance().getMusicDuration());
-            int musicDuration = MediaPlayerManager.getInstance().getMusicDuration();
-            mMusicTotalTime.setText(DateUtils.millisecondFormat(musicDuration));
+            mMusicDuration = MediaPlayerManager.getInstance().getMusicDuration();
+            mMusicTotalTime.setText(DateUtils.millisecondFormat(mMusicDuration));
             if (mThread == null) {
                 mCall = new Call();
                 mThread = new Thread(mCall);
@@ -66,6 +67,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
         public void stopMusic() {
             mPlayAndPause.setImageResource(R.mipmap.btn_play);
             mSeekBar.setProgress(0);
+            mSeekBar.setSecondaryProgress(0);
         }
 
         @Override
@@ -78,7 +80,9 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
         }
 
         @Override
-        public void onBuffering(int i) {}
+        public void onBuffering(int i) {
+            mSeekBar.setSecondaryProgress(mMusicDuration/100*i);
+        }
 
         @Override
         public void onPrepared(List<MusicInfo> infos, int position) {

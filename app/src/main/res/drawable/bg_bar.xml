@@ -4,8 +4,16 @@
     <item android:id="@android:id/background">
         <shape>
             <corners android:radius="5dip" />
-            <solid android:color="@color/seekBarBackground" />
+            <solid android:color="#D9D9D9" />
         </shape>
+    </item>
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="5dip" />
+                <solid android:color="@color/gray" />
+            </shape>
+        </clip>
     </item>
     <item android:id="@android:id/progress">
         <clip>
