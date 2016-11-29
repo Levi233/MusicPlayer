@@ -68,7 +68,7 @@ public class MediaPlayerManager {
         return mInfos;
     }
 
-    public int getMediaPlayState(){
+    public int getMediaPlayState() {
         return mState;
     }
 
@@ -84,6 +84,7 @@ public class MediaPlayerManager {
                     @Override
                     public void call() {
                         ob.onBuffering(i);
+                        ob.onPrepared(mInfos, mPosition);
                     }
                 });
                 Log.i("chenhaolog", "mMediaPlayer [onBufferingUpdate]" + mMediaPlayer.getClass().hashCode());
@@ -130,15 +131,22 @@ public class MediaPlayerManager {
 
     public void setMediaPlayerUrl(int position, boolean bufferCompletePlay) {
         try {
+            MessageManager.getInstance().asyncNotify(MessageID.OBSERVER_MEDIA_PLAYER, new MessageManager.Caller<MediaPlayerObserver>() {
+                @Override
+                public void call() {
+                    ob.onRefreshUI(mInfos, mPosition);
+                }
+            });
             mBufferCompletePlay = bufferCompletePlay;
             mPosition = position;
             long rid = mInfos.get(position).getRid();
-            if(rid > 0){
+            if (rid > 0) {
                 String url = getUrl(rid);
-            }else{
+            } else {
                 mMediaPlayer.setDataSource(mInfos.get(position).getUrl());
                 mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mMediaPlayer.prepareAsync();
+                mState = MEDIA_PLAY_PREPARE;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -155,25 +163,25 @@ public class MediaPlayerManager {
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
 
-                         @Override
-                         public void onFailure(Call call, IOException e) {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
-                         }
+            }
 
-                         @Override
-                         public void onResponse(Call call, Response response) throws IOException {
-                             byte[] bytes = response.body().bytes();
-                             String s = new String(bytes);
-                             String[] split = s.split("\r\n");
-                             String str = split[2];
-                             String[] split2 = str.split("rl=");
-                             String s1 = split2[1];
-                             musicUrl[0] = s1;
-                             mMediaPlayer.setDataSource(s1);
-                             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                             mMediaPlayer.prepareAsync();
-                         }
-                     });
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                byte[] bytes = response.body().bytes();
+                String s = new String(bytes);
+                String[] split = s.split("\r\n");
+                String str = split[2];
+                String[] split2 = str.split("rl=");
+                String s1 = split2[1];
+                musicUrl[0] = s1;
+                mMediaPlayer.setDataSource(s1);
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mMediaPlayer.prepareAsync();
+            }
+        });
         return musicUrl[0];
     }
 

@@ -48,6 +48,7 @@ public class SplashActivity extends Activity {
                 String name = cursor.getString(1);
                 String artist = cursor.getString(2);
                 String url = cursor.getString(3);
+                musicInfo.setRid(rid);
                 musicInfo.setName(name);
                 musicInfo.setArtist(artist);
                 musicInfo.setUrl(url);

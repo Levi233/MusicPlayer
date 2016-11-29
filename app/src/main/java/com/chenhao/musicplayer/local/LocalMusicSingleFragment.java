@@ -63,6 +63,11 @@ public class LocalMusicSingleFragment extends Fragment {
             mAdapter.setSelected(position);
             mAdapter.notifyDataSetChanged();
         }
+
+        @Override
+        public void onRefreshUI(List<MusicInfo> infos, int position) {
+
+        }
     };
 
     @Nullable

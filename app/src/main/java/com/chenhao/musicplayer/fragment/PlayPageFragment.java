@@ -3,6 +3,7 @@ package com.chenhao.musicplayer.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
     private int mMusicDuration;
 
     private String mName;
+    private String mArtist;
     private Call mCall = null;
     private Thread mThread = null;
     private int mProgress;
@@ -53,8 +55,8 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
         public void startMusic(List<MusicInfo> infos, int position) {
             mMusicName.setText(infos.get(position).getName());
             mPlayAndPause.setImageResource(R.mipmap.btn_pause);
-            mSeekBar.setMax(MediaPlayerManager.getInstance().getMusicDuration());
             mMusicDuration = MediaPlayerManager.getInstance().getMusicDuration();
+            mSeekBar.setMax(mMusicDuration);
             mMusicTotalTime.setText(DateUtils.millisecondFormat(mMusicDuration));
             if (mThread == null) {
                 mCall = new Call();
@@ -81,18 +83,32 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onBuffering(int i) {
-            mSeekBar.setSecondaryProgress(mMusicDuration/100*i);
+            int currentBuffer = mMusicDuration / 100 * i;
+            mMusicDuration =  MediaPlayerManager.getInstance().getMusicDuration();
+            mSeekBar.setSecondaryProgress(currentBuffer > mMusicDuration ? mMusicDuration:currentBuffer);
         }
 
         @Override
         public void onPrepared(List<MusicInfo> infos, int position) {
         }
+
+        @Override
+        public void onRefreshUI(List<MusicInfo> infos, int position) {
+            mMusicName.setText(infos.get(position).getName());
+            if(!TextUtils.isEmpty(infos.get(position).getArtist())){
+                mSingerName.setText(infos.get(position).getArtist());
+                mSingerName.setVisibility(View.VISIBLE);
+            }else{
+                mSingerName.setVisibility(View.GONE);
+            }
+        }
     };
 
-    public static PlayPageFragment getInstance(String name) {
+    public static PlayPageFragment getInstance(String name,String artist) {
         PlayPageFragment f = new PlayPageFragment();
         Bundle bundle = new Bundle();
         bundle.putString("MusicName", name);
+        bundle.putString("Artist", artist);
         f.setArguments(bundle);
         return f;
     }
@@ -105,6 +121,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
         Bundle args = getArguments();
         if (args != null) {
             mName = args.getString("MusicName");
+            mArtist = args.getString("Artist");
         }
         initView(view);
         setListener();
@@ -116,7 +133,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
         int musicDuration = MediaPlayerManager.getInstance().getMusicDuration();
         int musicCurrentPosition = MediaPlayerManager.getInstance().getMusicCurrentPosition();
         Log.e("chenhaolog", "当前播放 : " + musicCurrentPosition);
-        mSeekBar.setMax(MediaPlayerManager.getInstance().getMusicDuration());
+        mSeekBar.setMax(musicDuration);
         mSeekBar.setProgress(musicCurrentPosition);
         mMusicTotalTime.setText(DateUtils.millisecondFormat(musicDuration));
         if (MediaPlayerManager.getInstance().isPlaying()) {
@@ -128,7 +145,12 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
             }
         }
         mMusicName.setText(mName);
-
+        if(!TextUtils.isEmpty(mArtist)){
+            mSingerName.setText(mArtist);
+            mSingerName.setVisibility(View.VISIBLE);
+        }else{
+            mSingerName.setVisibility(View.GONE);
+        }
     }
 
     private void setListener() {
@@ -186,8 +208,8 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
                 MainActivity.getInstance().getSupportFragmentManager().popBackStack();
                 break;
             case R.id.play_and_pause_img:
-                if(MediaPlayerManager.getInstance().getMediaPlayState() == MediaPlayerManager.MEDIA_PLAY_DEFAULT){
-                    Toast.makeText(getContext(),"当前无歌曲播放",Toast.LENGTH_LONG).show();
+                if (MediaPlayerManager.getInstance().getMediaPlayState() == MediaPlayerManager.MEDIA_PLAY_DEFAULT) {
+                    Toast.makeText(getContext(), "当前无歌曲播放", Toast.LENGTH_LONG).show();
                     return;
                 }
                 MediaPlayerManager.getInstance().pauseOrPlay();
@@ -222,7 +244,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
         public void run() {
             //设置当前进度
             while (flag) {
-                if(MediaPlayerManager.getInstance().getMediaPlayState() != MediaPlayerManager.MEDIA_PLAY_RESET){
+                if (MediaPlayerManager.getInstance().getMediaPlayState() != MediaPlayerManager.MEDIA_PLAY_RESET) {
                     int p = MediaPlayerManager.getInstance().getMusicCurrentPosition();
                     mSeekBar.setProgress(p);
                 }

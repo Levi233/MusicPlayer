@@ -14,4 +14,5 @@ public interface MediaPlayerObserver extends IObserverBase {
     public void onPause();
     public void onBuffering(int i);
     public void onPrepared(List<MusicInfo> infos, int position);
+    public void onRefreshUI(List<MusicInfo> infos, int position);
 }

@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="----"
                 android:visibility="gone"
-                android:textColor="#A9A9A9"
+                android:textColor="#F1F1F1"
                 android:textSize="12sp" />
         </LinearLayout>
     </RelativeLayout>

@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void startMusic(List<MusicInfo> infos, int position) {
             Log.e("chenhaolog", "MainActivity [startMusic] " + position);
+            ObjectSaveUtil.saveInteger(MainActivity.this, "CurrentPosition", position);
             mPlayAndPause.setImageResource(R.mipmap.playbar_btn_pause);
             mProgress.setMax(MediaPlayerManager.getInstance().getMusicDuration());
             if (mThread == null) {
@@ -92,10 +94,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void onPrepared(List<MusicInfo> infos, int position) {
+        }
+
+        @Override
+        public void onRefreshUI(List<MusicInfo> infos, int position) {
             mCurrentPosition = position;
             mMusicName.setText(infos.get(position).getName());
             mCurrentMusicName = infos.get(position).getName();
             mMusicName.setText(mCurrentMusicName);
+            if(!TextUtils.isEmpty(infos.get(position).getArtist())){
+                mSingerName.setText(infos.get(position).getArtist());
+                mSingerName.setVisibility(View.VISIBLE);
+            }else{
+                mSingerName.setVisibility(View.GONE);
+            }
         }
     };
 
@@ -225,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 MediaPlayerManager.getInstance().playerNext();
                 break;
             case R.id.playback_control_bar:
-                FragmentControl.getInstance().showSubFrag(PlayPageFragment.getInstance(mCurrentMusicName), PlayPageFragment.class.getName());
+                FragmentControl.getInstance().showSubFrag(PlayPageFragment.getInstance(mCurrentMusicName,mSingerName.getText().toString().trim()), PlayPageFragment.class.getName());
                 break;
             case R.id.Lateral_dropdown_img:
                 mDrawerLayout.openDrawer(Gravity.LEFT);
