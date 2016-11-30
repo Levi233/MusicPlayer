@@ -94,7 +94,7 @@ public class XmlParse {
                             String url = getFormatAttributeValue(parser, "url");
                             adInfo.setUrl(url);
                             String small_img = getFormatAttributeValue(parser, "small_img");
-                            adInfo.setUrl(small_img);
+                            adInfo.setSmall_img(small_img);
                             String version = getFormatAttributeValue(parser, "version");
                             adInfo.setVersion(version);
                             String provider = getFormatAttributeValue(parser, "provider");

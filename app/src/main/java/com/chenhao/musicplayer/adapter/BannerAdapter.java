@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.BannerSection;
+import com.chenhao.musicplayer.bean.OnlineInfo;
+import com.chenhao.musicplayer.utils.JumpUtils;
 
 import java.util.ArrayList;
 
@@ -32,7 +34,7 @@ public class BannerAdapter extends SingleRecyclerAdapter<BannerSection> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         long start = System.currentTimeMillis();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.banner_item, parent, false);
-        BannerViewHolder holder = new BannerViewHolder(view,getHandler());
+        BannerViewHolder holder = new BannerViewHolder(view,getHandler(),getItem().getOnlineInfos());
         long end = System.currentTimeMillis();
         Log.e("chenhaolog", mSimpleName + " [onCreateViewHolder] viewType ::: " + viewType+" cost :: "+(end - start));
         return holder;
@@ -60,7 +62,8 @@ public class BannerAdapter extends SingleRecyclerAdapter<BannerSection> {
         ViewPagerAdapter adapter;
         AutoRunningTask autoRunningTask;
         LinearLayout dotsLayout;
-        public BannerViewHolder(View view ,Handler handler) {
+        boolean flag = true;
+        public BannerViewHolder(final View view , Handler handler, final ArrayList<OnlineInfo> infos) {
             super(view);
             viewPager = (ViewPager) view.findViewById(R.id.view_pager);
             dotsLayout = (LinearLayout) view.findViewById(R.id.dots_ll);
@@ -95,10 +98,18 @@ public class BannerAdapter extends SingleRecyclerAdapter<BannerSection> {
                         case MotionEvent.ACTION_DOWN:
                             autoRunningTask.stop();
                             break;
+                        case MotionEvent.ACTION_MOVE:
+                            flag = false;
+                            break;
                         case MotionEvent.ACTION_CANCEL:
+                            flag = false;
                             autoRunningTask.start();
                             break;
                         case MotionEvent.ACTION_UP:
+                            if(flag){
+                                JumpUtils.jumpFragment(infos.get(viewPager.getCurrentItem()%infos.size()));
+                            }
+                            flag = true;
                             autoRunningTask.start();
                             break;
                     }

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
-            app:contentScrim="#46a8ba"
+            app:contentScrim="@color/seekBarProgress"
             app:expandedTitleMarginEnd="48dp"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextAppearance="@style/transparentText"
