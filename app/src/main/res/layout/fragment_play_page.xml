@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/front_img"
-            android:background="@mipmap/btn_list" />
+            android:src="@mipmap/btn_list" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_above="@id/rl_layout"

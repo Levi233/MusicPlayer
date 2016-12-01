@@ -12,6 +12,7 @@ import com.chenhao.musicplayer.bean.MusicInfo;
 import com.chenhao.musicplayer.db.MusicDao;
 import com.chenhao.musicplayer.messagemgr.MessageManager;
 import com.chenhao.musicplayer.mod.MediaPlayerManager;
+import com.chenhao.musicplayer.utils.ObjectSaveUtil;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,8 @@ public class SplashActivity extends Activity {
         //透明导航栏  
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         MediaPlayerManager.getInstance().init();
+        int mode = ObjectSaveUtil.readInteger(this, "play_mode", 0);
+        MediaPlayerManager.getInstance().setmPlayMode(mode);
         new Thread(new MessageManager.Runner() {
             @Override
             public void call() {

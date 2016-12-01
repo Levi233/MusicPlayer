@@ -21,6 +21,7 @@ import com.chenhao.musicplayer.messagemgr.MessageID;
 import com.chenhao.musicplayer.messagemgr.MessageManager;
 import com.chenhao.musicplayer.mod.MediaPlayerManager;
 import com.chenhao.musicplayer.utils.DateUtils;
+import com.chenhao.musicplayer.utils.ObjectSaveUtil;
 
 import java.util.List;
 
@@ -130,6 +131,8 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
     }
 
     private void init() {
+        int mode = MediaPlayerManager.getInstance().getmPlayMode();
+        setPlayModePic(mode);
         int musicDuration = MediaPlayerManager.getInstance().getMusicDuration();
         int musicCurrentPosition = MediaPlayerManager.getInstance().getMusicCurrentPosition();
         Log.e("chenhaolog", "当前播放 : " + musicCurrentPosition);
@@ -158,6 +161,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
         mPlayAndPause.setOnClickListener(this);
         mFrontMusic.setOnClickListener(this);
         mNextMusic.setOnClickListener(this);
+        mPlayModel.setOnClickListener(this);
 
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -219,6 +223,27 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.front_img:
                 MediaPlayerManager.getInstance().playerFront();
+                break;
+            case R.id.play_model_img:
+                int i = MediaPlayerManager.getInstance().getmPlayMode();
+                int mode = (i + 1) % 3;
+                MediaPlayerManager.getInstance().setmPlayMode(mode);
+                setPlayModePic(mode);
+                ObjectSaveUtil.saveInteger(getContext(), "play_mode", mode);
+                break;
+        }
+    }
+
+    private void setPlayModePic(int mode){
+        switch (mode){
+            case MediaPlayerManager.PLAY_MODE_LIST_CYCLE:
+                mPlayModel.setImageResource(R.mipmap.btn_list);
+                break;
+            case MediaPlayerManager.PLAY_MODE_SINGLE_CYCLE:
+                mPlayModel.setImageResource(R.mipmap.btn_single);
+                break;
+            case MediaPlayerManager.PLAY_MODE_RANDOM_CYCLE:
+                mPlayModel.setImageResource(R.mipmap.btn_random);
                 break;
         }
     }

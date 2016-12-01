@@ -13,6 +13,7 @@ import com.chenhao.musicplayer.utils.OnlineUrlUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,18 +27,22 @@ import okhttp3.Response;
 
 public class MediaPlayerManager {
     public final static int MEDIA_PLAY_DEFAULT = 0;
-    private final static int MEDIA_PLAY_PLAYING = 1;
-    private final static int MEDIA_PLAY_PAUSE = 2;
-    private final static int MEDIA_PLAY_STOP = 3;
-    private final static int MEDIA_PLAY_PREPARE = 4;
+    public final static int MEDIA_PLAY_PLAYING = 1;
+    public final static int MEDIA_PLAY_PAUSE = 2;
+    public final static int MEDIA_PLAY_STOP = 3;
+    public final static int MEDIA_PLAY_PREPARE = 4;
     public final static int MEDIA_PLAY_RESET = 5;
-    private final static int MEDIA_PLAY_RELEASE = 6;
+    public final static int MEDIA_PLAY_RELEASE = 6;
+    public final static int PLAY_MODE_LIST_CYCLE = 0;
+    public final static int PLAY_MODE_SINGLE_CYCLE = 1;
+    public final static int PLAY_MODE_RANDOM_CYCLE = 2;
     private List<MusicInfo> mInfos = new ArrayList<>();
     private int mPosition = -1;
     private static MediaPlayerManager mInstance = null;
     private static android.media.MediaPlayer mMediaPlayer = null;
     private boolean mBufferCompletePlay = true;
     private int mState = MEDIA_PLAY_DEFAULT;
+    private int mPlayMode = PLAY_MODE_LIST_CYCLE;
 
     private static String mClassName;
 
@@ -58,6 +63,14 @@ public class MediaPlayerManager {
             }
         }
         return mInstance;
+    }
+
+    public int getmPlayMode() {
+        return mPlayMode;
+    }
+
+    public void setmPlayMode(int mPlayMode) {
+        this.mPlayMode = mPlayMode;
     }
 
     public void setInfos(List<MusicInfo> infos) {
@@ -123,10 +136,18 @@ public class MediaPlayerManager {
     }
 
     public void setMediaPlayerUrlAndStart(List<MusicInfo> infos, final int position) {
-        setInfos(infos);
-        resetMediaPlayer();
-        Log.i("chenhaolog", mClassName + "[setMediaPlayerUrlAndStart]" + position);
-        setMediaPlayerUrl(position, true);
+        if(infos.get(position).getRid() == mInfos.get(mPosition).getRid()){
+            mMediaPlayer.seekTo(0);
+            if(!isPlaying()){
+                startMediaPlayer();
+            }
+            setInfos(infos);
+        }else {
+            setInfos(infos);
+            resetMediaPlayer();
+            Log.i("chenhaolog", mClassName + "[setMediaPlayerUrlAndStart]" + position);
+            setMediaPlayerUrl(position, true);
+        }
     }
 
     public void setMediaPlayerUrl(int position, boolean bufferCompletePlay) {
@@ -204,8 +225,28 @@ public class MediaPlayerManager {
     }
 
     public void playerNext() {
-        if (mMediaPlayer != null && (mPosition + 1) > 0 && (mPosition + 1) < mInfos.size()) {
-            setMediaPlayerUrlAndStart(mInfos, mPosition + 1);
+        switch (mPlayMode){
+            case PLAY_MODE_LIST_CYCLE:
+                if (mMediaPlayer != null && (mPosition + 1) > 0 && mPosition< mInfos.size()) {
+                    if(mPosition == mInfos.size()-1){
+                        setMediaPlayerUrlAndStart(mInfos,0);
+                    }else{
+                        setMediaPlayerUrlAndStart(mInfos,mPosition + 1);
+                    }
+                }
+                break;
+            case PLAY_MODE_SINGLE_CYCLE:
+                if (mMediaPlayer != null && mPosition > -1 && mPosition < mInfos.size()) {
+                    setMediaPlayerUrlAndStart(mInfos,mPosition);
+                }
+                break;
+            case PLAY_MODE_RANDOM_CYCLE:
+                if (mMediaPlayer != null && mPosition > -1 && mPosition < mInfos.size()) {
+                    Random random = new Random();
+                    int position = random.nextInt(mInfos.size());
+                    setMediaPlayerUrlAndStart(mInfos,position);
+                }
+                break;
         }
     }
 
