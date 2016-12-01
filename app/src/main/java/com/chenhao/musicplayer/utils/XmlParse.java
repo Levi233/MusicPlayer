@@ -5,6 +5,7 @@ import android.util.Xml;
 
 import com.chenhao.musicplayer.bean.AdArInfo;
 import com.chenhao.musicplayer.bean.AdInfo;
+import com.chenhao.musicplayer.bean.AlbumInfo;
 import com.chenhao.musicplayer.bean.ArtistInfo;
 import com.chenhao.musicplayer.bean.ArtistSection;
 import com.chenhao.musicplayer.bean.BannerSection;
@@ -217,6 +218,18 @@ public class XmlParse {
                             musicInfo.setPay_flag(pay_flag);
                             musicInfo.setImg(img);
                             mOnlineInfo = musicInfo;
+                        }else if("album".equals(parser.getName())){
+                            AlbumInfo albumInfo = new AlbumInfo();
+                            parseOnlineInfo(parser, albumInfo);
+                            String artist = getFormatAttributeValue(parser, "artist");
+                            albumInfo.setArtist(artist);
+                            mOnlineInfo = albumInfo;
+                        }else if("list".equals(parser.getName())){
+                            ListInfo listInfo = new ListInfo();
+                            parseOnlineInfo(parser, listInfo);
+                            int child = getDefaultInteger(parser, "child", -1);
+                            listInfo.setChild(child);
+                            mOnlineInfo = listInfo;
                         }
                         break;
                     case XmlPullParser.END_TAG:
@@ -429,6 +442,7 @@ public class XmlParse {
     private static void getSection(XmlPullParser parser) {
         String type = getFormatAttributeValue(parser, TYPE);
         String label = getFormatAttributeValue(parser, LABEL);
+        int mdigest = getDefaultInteger(parser, "mdigest",-1);
         String mtype = getFormatAttributeValue(parser, "mtype");
         if (BANNER.equals(type)) {
             mSection = new BannerSection();
@@ -452,6 +466,7 @@ public class XmlParse {
         }
         mSection.setLabel(label);
         mSection.setMtype(mtype);
+        mSection.setMdigest(mdigest);
     }
 
     private static void parseOnlineInfo(XmlPullParser parser, OnlineInfo onlineInfo) {

@@ -5,6 +5,7 @@ package com.chenhao.musicplayer.bean;
  */
 
 public class ListInfo extends OnlineInfo {
+    private int child;
     private int isnew;
 
     public int getIsnew() {
@@ -15,10 +16,19 @@ public class ListInfo extends OnlineInfo {
         this.isnew = isnew;
     }
 
+    public int getChild() {
+        return child;
+    }
+
+    public void setChild(int child) {
+        this.child = child;
+    }
+
     @Override
     public String toString() {
         return "ListInfo{" +
-                "isnew=" + isnew +
+                "child=" + child +
+                ", isnew=" + isnew +
                 "} " + super.toString();
     }
 }

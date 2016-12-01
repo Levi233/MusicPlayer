@@ -2,6 +2,7 @@ package com.chenhao.musicplayer.adapter;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.chenhao.musicplayer.bean.ArtistSection;
 import com.chenhao.musicplayer.bean.BannerSection;
@@ -33,8 +34,8 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
         super(context, rootInfo, handler);
     }
 
-    public void setData(RootInfo rootInfo,ArrayList<OnlineInfo> infos) {
-        loadMore(rootInfo,infos);
+    public void setData(RootInfo rootInfo, ArrayList<OnlineInfo> infos) {
+        loadMore(rootInfo, infos);
     }
 
     @Override
@@ -47,42 +48,44 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
                 ArrayList<String> labelInfos = new ArrayList<>();
                 labelInfos.add(section.getLabel());
-                if (!"个性化推荐".equals(section.getLabel())) {
+                if (section.getMdigest() > 0) {
+                    labelInfos.add("更多");
+                } else if ("今日精华".equals(section.getLabel()) || "热门电台".equals(section.getLabel())) {
                     labelInfos.add("更多");
                 }
                 addAdapter(new LabelHeadAdapter(getContext(), labelInfos, ItemViewType.TYPE_HEAD.ordinal(), getHandler()));
-                ArrayList<OnlineInfo> infos1 = new ArrayList<>();
-                ArrayList<OnlineInfo> infos2 = new ArrayList<>();
+                ArrayList<OnlineInfo> infos = null;
                 for (int i = 0; i < onlineInfos.size(); i++) {
-                    if (i < 3) {
-                        infos1.add(onlineInfos.get(i));
-                    } else {
-                        infos2.add(onlineInfos.get(i));
+                    if (i % 3 == 0) {
+                        infos = new ArrayList<>();;
                     }
-                    if (i == 2) {
-                        addAdapter(new SquareAdapter(getContext(), infos1, section.getItemViewType(), getHandler()));
-                    } else if (i == 5) {
-                        addAdapter(new SquareAdapter(getContext(), infos2, section.getItemViewType(), getHandler()));
+                    if(infos != null){
+                        infos.add(onlineInfos.get(i));
+                    }
+                    if (i % 3 == 2) {
+                        addAdapter(new SquareAdapter(getContext(), infos, section.getItemViewType(), getHandler()));
                     }
                 }
             } else if (section instanceof MvSquareSection) {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
                 ArrayList<String> labelInfos = new ArrayList<>();
                 labelInfos.add(section.getLabel());
-                labelInfos.add("更多");
+                if (section.getMdigest() > 0) {
+                    labelInfos.add("更多");
+                } else if ("最潮视频".equals(section.getLabel())) {
+                    labelInfos.add("更多");
+                }
                 addAdapter(new LabelHeadAdapter(getContext(), labelInfos, ItemViewType.TYPE_HEAD.ordinal(), getHandler()));
-                ArrayList<OnlineInfo> infos1 = new ArrayList<>();
-                ArrayList<OnlineInfo> infos2 = new ArrayList<>();
+                ArrayList<OnlineInfo> infos = null;
                 for (int i = 0; i < onlineInfos.size(); i++) {
-                    if (i < 2) {
-                        infos1.add(onlineInfos.get(i));
-                    } else {
-                        infos2.add(onlineInfos.get(i));
+                    if (i % 2 == 0) {
+                        infos = new ArrayList<>();
                     }
-                    if (i == 1) {
-                        addAdapter(new MvSquareAdapter(getContext(), infos1, section.getItemViewType(), getHandler()));
-                    } else if (i == 3) {
-                        addAdapter(new MvSquareAdapter(getContext(), infos2, section.getItemViewType(), getHandler()));
+                    if(infos != null){
+                        infos.add(onlineInfos.get(i));
+                    }
+                    if (i % 2 == 1) {
+                        addAdapter(new MvSquareAdapter(getContext(), infos, section.getItemViewType(), getHandler()));
                     }
                 }
             } else if (section instanceof KsquareSection) {
@@ -107,8 +110,12 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 labelInfos.add(section.getLabel());
                 if ("哔哔社区".equals(section.getLabel())) {
                     labelInfos.add("更多");
+                } else if (section.getMdigest() > 0) {
+                    labelInfos.add("更多");
                 }
-                addAdapter(new LabelHeadAdapter(getContext(), labelInfos, ItemViewType.TYPE_HEAD.ordinal(), getHandler()));
+                if (!TextUtils.isEmpty(section.getLabel())) {
+                    addAdapter(new LabelHeadAdapter(getContext(), labelInfos, ItemViewType.TYPE_HEAD.ordinal(), getHandler()));
+                }
                 for (OnlineInfo infos : onlineInfos) {
                     addAdapter(new ListItemAdapter(getContext(), infos, section.getItemViewType(), getHandler()));
                 }
@@ -131,21 +138,21 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 if (onlineInfos.size() > 0) {
                     addAdapter(new ClassifyMainAdapter(getContext(), (ClassifySection) section, section.getItemViewType(), getHandler()));
                 }
-            }else if(section instanceof MusicSection){
+            } else if (section instanceof MusicSection) {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
-                for (OnlineInfo info:onlineInfos) {
-                    addAdapter(new MusicAdapter(getContext(),onlineInfos,section.getItemViewType(),getHandler()));
+                for (OnlineInfo info : onlineInfos) {
+                    addAdapter(new MusicAdapter(getContext(), onlineInfos, section.getItemViewType(), getHandler()));
                 }
-            }else if(section instanceof CommentSection){
+            } else if (section instanceof CommentSection) {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
-                for (OnlineInfo onlineInfo:onlineInfos) {
-                    addAdapter(new CommentAdapter(getContext(), (CommentInfo) onlineInfo,section.getItemViewType(),getHandler()));
+                for (OnlineInfo onlineInfo : onlineInfos) {
+                    addAdapter(new CommentAdapter(getContext(), (CommentInfo) onlineInfo, section.getItemViewType(), getHandler()));
                 }
             }
         }
     }
 
-    private void loadMore(RootInfo rootInfo,ArrayList<OnlineInfo> infos) {
+    private void loadMore(RootInfo rootInfo, ArrayList<OnlineInfo> infos) {
         List<Section> sections = rootInfo.getSections();
         for (Section section : sections) {
             if (section instanceof ArtistSection) {
@@ -153,10 +160,10 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 for (OnlineInfo onlineInfo : onlineInfos) {
                     addAdapter(new ArtistAdapter(getContext(), onlineInfo, section.getItemViewType(), getHandler()));
                 }
-            }else if(section instanceof MusicSection){
+            } else if (section instanceof MusicSection) {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
-                for (OnlineInfo info:onlineInfos) {
-                    addAdapter(new MusicAdapter(getContext(), infos,section.getItemViewType(),getHandler()));
+                for (OnlineInfo info : onlineInfos) {
+                    addAdapter(new MusicAdapter(getContext(), infos, section.getItemViewType(), getHandler()));
                 }
             }
         }

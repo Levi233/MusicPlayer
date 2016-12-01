@@ -151,14 +151,14 @@ public class BannerAdapter extends SingleRecyclerAdapter<BannerSection> {
               int currentItem = viewPager.getCurrentItem();
               currentItem++;
               viewPager.setCurrentItem(currentItem);
-              handler.postDelayed(this,3000);
+              handler.postDelayed(this,5000);
           }
         }
 
         public void start(){
             if(!flag){
                 flag = true;
-                handler.postDelayed(this,3000);
+                handler.postDelayed(this,5000);
             }
         }
 

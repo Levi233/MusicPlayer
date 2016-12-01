@@ -38,11 +38,20 @@ public class OnlineUrlUtil {
         sb.append("type=").append(type);//type加载更多 = sub_list
         sb.append("&uid=").append("78161491");
         sb.append("&vipsec=1");
-        sb.append("&hasrecgd=1");
-        sb.append("&kubb=2");
-        sb.append("&fs=1");
-        sb.append("&showtype=1");
-        sb.append("&id=").append(id);
+
+        switch (type){
+            case "sub_list":
+                sb.append("&hasrecgd=1");
+                sb.append("&kubb=2");
+                sb.append("&fs=1");
+                sb.append("&showtype=1");
+                sb.append("&id=").append(id);
+                break;
+            case "get_qz_data":
+                sb.append("&id=").append(id);
+                sb.append("&snu=1");
+                break;
+        }
         sb.append("&start=").append(start);
         sb.append("&count=").append(count);
 
@@ -51,15 +60,20 @@ public class OnlineUrlUtil {
         sb.append("&hasmv=1");
         sb.append("&hasinner=1");
 
-        sb.append("&hasad=1");
-        sb.append("&hsy=1");
-        sb.append("&isnew=2");
-        sb.append("&newcate=1");
-        sb.append("&supportfan=1");
-        sb.append("&isg=1");
+        if("sub_list" == type){
+            sb.append("&hasad=1");
+            sb.append("&hsy=1");
+            sb.append("&isnew=2");
+            sb.append("&newcate=1");
+            sb.append("&supportfan=1");
+            sb.append("&isg=1");
+        }
         String params = sb.toString();
-        String url = createURL_SubList(params.getBytes());
-        return url;
+        if("sub_list" == type){
+            return createURL_SubList(params.getBytes());
+        }else {
+            return createURL(params.getBytes());
+        }
     }
 
     public static String getSongListInfoUrl(String ids, String flagType, int position) {
@@ -134,6 +148,10 @@ public class OnlineUrlUtil {
         String b64Params = new String(Base64Coder.encode(bytes, bytes.length));
         String url = MOBI + b64Params;
         return url;
+    }
+
+    private static String createURL(byte[] paramsBytes) {
+        return MOBI + createB64Params(paramsBytes);
     }
 
     public static String createUrl(byte[] parameters){
