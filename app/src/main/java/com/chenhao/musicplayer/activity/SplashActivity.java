@@ -28,7 +28,7 @@ public class SplashActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         MediaPlayerManager.getInstance().init();
         int mode = ObjectSaveUtil.readInteger(this, "play_mode", 0);
-        MediaPlayerManager.getInstance().setmPlayMode(mode);
+        MediaPlayerManager.getInstance().setPlayMode(mode);
         new Thread(new MessageManager.Runner() {
             @Override
             public void call() {

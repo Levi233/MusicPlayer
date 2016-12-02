@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +17,7 @@ import com.chenhao.musicplayer.bean.BillboardInfo;
 import com.chenhao.musicplayer.bean.HitbillboardInfo;
 import com.chenhao.musicplayer.bean.KubillboardInfo;
 import com.chenhao.musicplayer.bean.OnlineInfo;
+import com.chenhao.musicplayer.utils.JumpUtils;
 
 /**
  * Created by chenhao on 2016/11/21.
@@ -60,6 +62,12 @@ public class BillboardAdapter extends SingleRecyclerAdapter<OnlineInfo> {
             ((BillboardHolder)holder).name3.setText(((HitbillboardInfo)info).getName1());
             ((BillboardHolder)holder).name3.setTextColor(Color.BLUE);
         }
+        ((BillboardHolder)holder).rl_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpUtils.jumpFragment(getItem());
+            }
+        });
     }
 
     private static class BillboardHolder extends RecyclerView.ViewHolder{
@@ -69,8 +77,10 @@ public class BillboardAdapter extends SingleRecyclerAdapter<OnlineInfo> {
         TextView name2;
         TextView name3;
         TextView desc;
+        RelativeLayout rl_layout;
         public BillboardHolder(View itemView) {
             super(itemView);
+            rl_layout = (RelativeLayout) itemView.findViewById(R.id.rl_layout);
             billboardImg = (ImageView) itemView.findViewById(R.id.billboard_img);
             name = (TextView) itemView.findViewById(R.id.name);
             name1 = (TextView) itemView.findViewById(R.id.name1);

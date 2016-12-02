@@ -131,7 +131,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
     }
 
     private void init() {
-        int mode = MediaPlayerManager.getInstance().getmPlayMode();
+        int mode = MediaPlayerManager.getInstance().getPlayMode();
         setPlayModePic(mode);
         int musicDuration = MediaPlayerManager.getInstance().getMusicDuration();
         int musicCurrentPosition = MediaPlayerManager.getInstance().getMusicCurrentPosition();
@@ -225,9 +225,9 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
                 MediaPlayerManager.getInstance().playerFront();
                 break;
             case R.id.play_model_img:
-                int i = MediaPlayerManager.getInstance().getmPlayMode();
+                int i = MediaPlayerManager.getInstance().getPlayMode();
                 int mode = (i + 1) % 3;
-                MediaPlayerManager.getInstance().setmPlayMode(mode);
+                MediaPlayerManager.getInstance().setPlayMode(mode);
                 setPlayModePic(mode);
                 ObjectSaveUtil.saveInteger(getContext(), "play_mode", mode);
                 break;

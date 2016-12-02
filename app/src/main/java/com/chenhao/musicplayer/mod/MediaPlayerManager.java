@@ -65,12 +65,12 @@ public class MediaPlayerManager {
         return mInstance;
     }
 
-    public int getmPlayMode() {
+    public int getPlayMode() {
         return mPlayMode;
     }
 
-    public void setmPlayMode(int mPlayMode) {
-        this.mPlayMode = mPlayMode;
+    public void setPlayMode(int playMode) {
+        this.mPlayMode = playMode;
     }
 
     public void setInfos(List<MusicInfo> infos) {

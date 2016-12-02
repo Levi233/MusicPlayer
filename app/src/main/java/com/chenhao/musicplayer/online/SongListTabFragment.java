@@ -112,7 +112,7 @@ public class SongListTabFragment extends BaseFragment<SingleDataInfo> {
         Glide.with(getContext())
                 .load(infos.getUpic())
                 .transform(new GlideRoundTransform(getContext()))
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.img_user_default)
                 .into(mHeadImg);
 
         mNickName.setText(infos.getUname());

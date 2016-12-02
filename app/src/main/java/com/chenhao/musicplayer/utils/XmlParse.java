@@ -25,6 +25,7 @@ import com.chenhao.musicplayer.bean.MusicInfo;
 import com.chenhao.musicplayer.bean.MusicSection;
 import com.chenhao.musicplayer.bean.MvInfo;
 import com.chenhao.musicplayer.bean.MvSquareSection;
+import com.chenhao.musicplayer.bean.MvplInfo;
 import com.chenhao.musicplayer.bean.OnlineInfo;
 import com.chenhao.musicplayer.bean.PictorialInfo;
 import com.chenhao.musicplayer.bean.QzListInfo;
@@ -224,12 +225,20 @@ public class XmlParse {
                             String artist = getFormatAttributeValue(parser, "artist");
                             albumInfo.setArtist(artist);
                             mOnlineInfo = albumInfo;
-                        }else if("list".equals(parser.getName())){
+                        }else if(LIST.equals(parser.getName())){
                             ListInfo listInfo = new ListInfo();
                             parseOnlineInfo(parser, listInfo);
                             int child = getDefaultInteger(parser, "child", -1);
                             listInfo.setChild(child);
                             mOnlineInfo = listInfo;
+                        }else if("billboard".equals(parser.getName())){
+                            BillboardInfo billboardInfo = new BillboardInfo();
+                            parseOnlineInfo(parser, billboardInfo);
+                            mOnlineInfo = billboardInfo;
+                        }else if("mvpl".equals(parser.getName())){
+                            MvplInfo mvplInfo = new MvplInfo();
+                            parseOnlineInfo(parser, mvplInfo);
+                            mOnlineInfo = mvplInfo;
                         }
                         break;
                     case XmlPullParser.END_TAG:
@@ -239,7 +248,9 @@ public class XmlParse {
                             }
                         } else if (ROOT.equals(parser.getName())) {
 
-                        } else {
+                        } else if("tab".equals(parser.getName())){
+
+                        }else {
                             if (mSection != null) {
                                 mSection.add(mOnlineInfo);
                             }

@@ -1,11 +1,12 @@
 package com.chenhao.musicplayer.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by chenhao on 2016/11/16.
  */
-public class OnlineInfo {
+public class OnlineInfo implements Serializable {
     private long id;
     private String name;
     private int digest;
