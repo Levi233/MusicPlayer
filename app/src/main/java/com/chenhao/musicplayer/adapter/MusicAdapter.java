@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chenhao.musicplayer.R;
@@ -39,6 +39,7 @@ public class MusicAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         Log.e("chenhaolog","onBindViewHolder-----position : "+position);
         MusicInfo infos = (MusicInfo) getItem().get(position);
+        ((MusicHolder)holder).num_tv.setText(String.valueOf(position+1));
         ((MusicHolder)holder).music_name_tv.setText(infos.getName());
         if(TextUtils.isEmpty(infos.getAlbum())){
             ((MusicHolder)holder).music_artist_tv.setText(infos.getArtist());
@@ -67,12 +68,14 @@ public class MusicAdapter extends SingleRecyclerAdapter<ArrayList<OnlineInfo>> {
     private static class MusicHolder extends RecyclerView.ViewHolder{
         TextView music_name_tv;
         TextView music_artist_tv;
-        LinearLayout music_layout;
+        TextView num_tv;
+        RelativeLayout music_layout;
         public MusicHolder(View itemView) {
             super(itemView);
             music_artist_tv = (TextView) itemView.findViewById(R.id.music_artist_tv);
             music_name_tv = (TextView) itemView.findViewById(R.id.music_name_tv);
-            music_layout = (LinearLayout) itemView.findViewById(R.id.music_layout);
+            num_tv = (TextView) itemView.findViewById(R.id.num_tv);
+            music_layout = (RelativeLayout) itemView.findViewById(R.id.music_layout);
         }
     }
 }

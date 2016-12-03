@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +38,6 @@ public class KubillboardFragment extends Fragment {
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
     private RelativeLayout head_layout;
-    private TabLayout mTabLayout;
     private TextView mDesc;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private RecyclerView mRecyclerView;
@@ -106,7 +104,6 @@ public class KubillboardFragment extends Fragment {
         mAppBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         head_layout = (RelativeLayout) view.findViewById(R.id.login_layout);
-        mTabLayout = (TabLayout) view.findViewById(R.id.toolbar_tab);
         mDesc = (TextView) view.findViewById(R.id.desc);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);

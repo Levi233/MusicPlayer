@@ -1,39 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#FEFFFF"
     android:layout_height="60dp">
 
-    <LinearLayout
-        android:id="@+id/music_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/music_layout"
         android:clickable="true"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/music_name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:singleLine="true"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"
-            android:text="权御天下"/>
+        android:background="?android:attr/selectableItemBackground">
+        <RelativeLayout
+            android:id="@+id/rl_layout"
+            android:layout_width="40dp"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/music_artist_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:textSize="15sp"
-            android:singleLine="true"
-            android:layout_marginLeft="10dp"
-            android:text="初音未来"/>
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:background="#F0F0F0"
-        android:layout_alignParentBottom="true"
-        android:layout_height="0.5px"/>
-</RelativeLayout>
+            <TextView
+                android:id="@+id/num_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:text="1"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_toRightOf="@id/rl_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/music_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:text="权御天下"/>
+
+            <TextView
+                android:id="@+id/music_artist_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:text="初音未来"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="#F0F0F0"
+            android:layout_alignParentBottom="true"
+            android:layout_height="0.5px"/>
+    </RelativeLayout>
+</FrameLayout>

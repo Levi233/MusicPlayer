@@ -39,15 +39,16 @@ public class SongListFragment extends BaseFragment<RootInfo> {
     private RecyclerView mRecyclerView;
     private long mId;
     private int mDigest;
+    private int mStart = 0;
     private boolean mLoadMore = true;
     private MultiAdapter mAdapter;
     private Handler mHandler = new Handler();
 
-    public static SongListFragment newInstance(long id,int digest) {
+    public static SongListFragment newInstance(long id, int digest) {
         SongListFragment f = new SongListFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong("id",id);
-        bundle.putInt("digest",digest);
+        bundle.putLong("id", id);
+        bundle.putInt("digest", digest);
         f.setArguments(bundle);
         return f;
     }
@@ -64,14 +65,14 @@ public class SongListFragment extends BaseFragment<RootInfo> {
 
     @Override
     protected String getRequestUrl() {
-        String url =  OnlineUrlUtil.getRequest("sub_list",mId,0,30,String.valueOf(mDigest));
-        Log.e("chenhaolog","songlist url:" + url);
+        String url = OnlineUrlUtil.getRequest("sub_list", mId, 0, 30, String.valueOf(mDigest));
+        Log.e("chenhaolog", "songlist url:" + url);
         return url;
     }
 
     @Override
     protected RootInfo onBackgroundParser(String datas) throws Exception {
-        Log.e("chenhaolog","songlist data : "+datas);
+        Log.e("chenhaolog", "songlist data : " + datas);
         RootInfo rootInfo = XmlParse.parseXml(datas);
         return rootInfo;
     }
@@ -97,11 +98,12 @@ public class SongListFragment extends BaseFragment<RootInfo> {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int itemCount = mAdapter.getItemCount();
-                if(recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset()
-                        >= recyclerView.computeVerticalScrollRange() && mLoadMore){
-                    if(itemCount >= 30){
-                        loadMore(itemCount,infos);
+
+                if (recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset()
+                        >= recyclerView.computeVerticalScrollRange() && mLoadMore) {
+                    Section section = infos.getSections().get(0);
+                    if (mStart+30 < section.getTotal()) {
+                        loadMore(mStart+30,infos);
                     }
                     mLoadMore = false;
                 }
@@ -125,6 +127,7 @@ public class SongListFragment extends BaseFragment<RootInfo> {
             public void onFailure(Call call, IOException e) {
                 mLoadMore = true;
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final byte[] bytes = response.body().bytes();
@@ -134,14 +137,13 @@ public class SongListFragment extends BaseFragment<RootInfo> {
                         String datas = MyUtils.decode(bytes);
                         RootInfo rootInfo = XmlParse.parseXml(datas);
                         List<Section> sections = rootInfo.getSections();
+                        mStart = sections.get(0).getStart();
                         ArrayList<OnlineInfo> onlines = sections.get(0).getOnlineInfos();
                         ArrayList<OnlineInfo> onlineInfos = infos.getSections().get(0).getOnlineInfos();
                         onlineInfos.addAll(onlines);
-                        mAdapter.setData(rootInfo,onlineInfos);
+                        mAdapter.setData(rootInfo, onlineInfos);
                         mAdapter.notifyDataSetChanged();
-                        if(onlines.size() == 30){
-                            mLoadMore = true;
-                        }
+                        mLoadMore = true;
                     }
                 });
             }

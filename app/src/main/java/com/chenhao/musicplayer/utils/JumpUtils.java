@@ -2,11 +2,14 @@ package com.chenhao.musicplayer.utils;
 
 import com.chenhao.musicplayer.bean.AdArInfo;
 import com.chenhao.musicplayer.bean.AdInfo;
+import com.chenhao.musicplayer.bean.BillboardInfo;
 import com.chenhao.musicplayer.bean.KubillboardInfo;
 import com.chenhao.musicplayer.bean.OnlineInfo;
 import com.chenhao.musicplayer.bean.QzListInfo;
 import com.chenhao.musicplayer.bean.SongListInfo;
+import com.chenhao.musicplayer.bean.TabInfo;
 import com.chenhao.musicplayer.mod.FragmentControl;
+import com.chenhao.musicplayer.online.BillboardFragment;
 import com.chenhao.musicplayer.online.KubillboardFragment;
 import com.chenhao.musicplayer.online.QzListFragment;
 import com.chenhao.musicplayer.online.SongListTabFragment;
@@ -33,6 +36,12 @@ public class JumpUtils {
         }else if(info instanceof KubillboardInfo){
             KubillboardFragment f = KubillboardFragment.newInstance(info);
             FragmentControl.getInstance().showWithPlayBarSubFrag(f,KubillboardFragment.class.getSimpleName());
+        }else if(info instanceof BillboardInfo){
+            BillboardFragment f = BillboardFragment.newInstance(info);
+            FragmentControl.getInstance().showWithPlayBarSubFrag(f,BillboardFragment.class.getSimpleName());
+        }else if(info instanceof TabInfo){
+            BillboardFragment f = BillboardFragment.newInstance(info);
+            FragmentControl.getInstance().showWithPlayBarSubFrag(f,BillboardFragment.class.getSimpleName());
         }
     }
 }

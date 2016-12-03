@@ -1,10 +1,12 @@
 package com.chenhao.musicplayer.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by chenhao on 2016/11/21.
  */
 
-public class TabInfo {
+public class TabInfo extends OnlineInfo implements Serializable{
     private long id;
     private String name;
     private String desc;
@@ -17,6 +19,15 @@ public class TabInfo {
     private String artist1;
     private String artist2;
     private String artist3;
+    private int digest;
+
+    public int getDigest() {
+        return digest;
+    }
+
+    public void setDigest(int digest) {
+        this.digest = digest;
+    }
 
     public String getUrl() {
         return url;
@@ -129,6 +140,7 @@ public class TabInfo {
                 ", artist1='" + artist1 + '\'' +
                 ", artist2='" + artist2 + '\'' +
                 ", artist3='" + artist3 + '\'' +
+                ", digest=" + digest +
                 '}';
     }
 }

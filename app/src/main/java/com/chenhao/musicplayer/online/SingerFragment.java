@@ -36,6 +36,7 @@ public class SingerFragment extends BaseFragment<RootInfo> {
     private MultiAdapter mAdapter;
     private boolean mLoadMore = true;
     private RootInfo mRootInfo;
+    private int mStart = 0;
     private Handler mHandler = new Handler();
     public static SingerFragment newInstance() {
         return new SingerFragment();
@@ -82,7 +83,10 @@ public class SingerFragment extends BaseFragment<RootInfo> {
                 int itemCount = mAdapter.getItemCount();
                 if(recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset()
                         >= recyclerView.computeVerticalScrollRange() && mLoadMore){
-                    loadMore(itemCount);
+                    Section section =infos.getSections().get(0);
+                    if(mStart+30 < section.getTotal()){
+                        loadMore(mStart+30);
+                    }
                     mLoadMore = false;
                 }
             }
@@ -113,9 +117,8 @@ public class SingerFragment extends BaseFragment<RootInfo> {
                         mAdapter.notifyDataSetChanged();
                         List<Section> sections = rootInfo.getSections();
                         Section section = sections.get(0);
-                        if(section.getOnlineInfos().size() == 30){
-                            mLoadMore = true;
-                        }
+                        mStart = section.getStart();
+                        mLoadMore = true;
                     }
                 });
             }

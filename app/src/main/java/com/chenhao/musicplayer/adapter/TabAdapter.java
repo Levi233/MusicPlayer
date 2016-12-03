@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.TabInfo;
+import com.chenhao.musicplayer.utils.JumpUtils;
 
 /**
  * Created by chenhao on 2016/12/2.
@@ -39,6 +41,12 @@ public class TabAdapter extends SingleRecyclerAdapter<TabInfo> {
         ((TabHolder)holder).name1.setText("1."+getItem().getName1()+" - "+getItem().getArtist1());
         ((TabHolder)holder).name2.setText("2."+getItem().getName2()+" - "+getItem().getArtist2());
         ((TabHolder)holder).name3.setText("3."+getItem().getName3()+" - "+getItem().getArtist3());
+        ((TabHolder)holder).rl_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpUtils.jumpFragment(getItem());
+            }
+        });
     }
     private static class TabHolder extends RecyclerView.ViewHolder{
         ImageView billboardImg;
@@ -47,8 +55,10 @@ public class TabAdapter extends SingleRecyclerAdapter<TabInfo> {
         TextView name2;
         TextView name3;
         TextView desc;
+        RelativeLayout rl_layout;
         public TabHolder(View itemView) {
             super(itemView);
+            rl_layout = (RelativeLayout) itemView.findViewById(R.id.rl_layout);
             billboardImg = (ImageView) itemView.findViewById(R.id.billboard_img);
             name = (TextView) itemView.findViewById(R.id.name);
             name1 = (TextView) itemView.findViewById(R.id.name1);

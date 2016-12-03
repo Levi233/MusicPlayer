@@ -136,7 +136,7 @@ public class MediaPlayerManager {
     }
 
     public void setMediaPlayerUrlAndStart(List<MusicInfo> infos, final int position) {
-        if(infos.get(position).getRid() == mInfos.get(mPosition).getRid()){
+        if(mInfos != null && !(mPosition < 0) &&infos.get(position).getRid() == mInfos.get(mPosition).getRid()){
             mMediaPlayer.seekTo(0);
             if(!isPlaying()){
                 startMediaPlayer();

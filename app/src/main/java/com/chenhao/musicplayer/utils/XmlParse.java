@@ -344,6 +344,8 @@ public class XmlParse {
                             String artist1 = getFormatAttributeValue(parser, "artist1");
                             String artist2 = getFormatAttributeValue(parser, "artist2");
                             String artist3 = getFormatAttributeValue(parser, "artist3");
+                            int digest = getDefaultInteger(parser, "digest", -1);
+                            tabInfo.setDigest(digest);
                             tabInfo.setId(id);
                             tabInfo.setName(name);
                             tabInfo.setDesc(desc);
@@ -455,6 +457,8 @@ public class XmlParse {
         String label = getFormatAttributeValue(parser, LABEL);
         int mdigest = getDefaultInteger(parser, "mdigest",-1);
         String mtype = getFormatAttributeValue(parser, "mtype");
+        int total = getDefaultInteger(parser, "total",0);
+        int start = getDefaultInteger(parser, "start",0);
         if (BANNER.equals(type)) {
             mSection = new BannerSection();
         } else if (SQUARE.equals(type)) {
@@ -473,11 +477,13 @@ public class XmlParse {
             mSection = null;
             return;
         }else if("music".equals(type)){
-            mSection = new MusicSection();
+            mSection =  new MusicSection();
         }
         mSection.setLabel(label);
         mSection.setMtype(mtype);
         mSection.setMdigest(mdigest);
+        mSection.setStart(start);
+        mSection.setTotal(total);
     }
 
     private static void parseOnlineInfo(XmlPullParser parser, OnlineInfo onlineInfo) {

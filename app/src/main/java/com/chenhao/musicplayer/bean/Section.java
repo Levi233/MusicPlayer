@@ -10,7 +10,25 @@ public abstract class Section {
     private String label;
     private long mid;
     private int mdigest;
+    private int start;
     private String mtype;
+    private int total;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
 
     public abstract int getItemViewType();
     private ArrayList<OnlineInfo> onlineInfos = new ArrayList<OnlineInfo>();
