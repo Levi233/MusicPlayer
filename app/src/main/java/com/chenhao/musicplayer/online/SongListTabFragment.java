@@ -182,25 +182,27 @@ public class SongListTabFragment extends Fragment{
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mHeadImg.setVisibility(View.VISIBLE);
-                            mNickName.setVisibility(View.VISIBLE);
-                            mPlayNum.setVisibility(View.VISIBLE);
-                            String big_pic = info.getBig_pic();
-                            Glide.with(getContext()).load(big_pic).asBitmap().into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                    head_layout.setBackgroundDrawable(new BitmapDrawable(resource));
-                                    mCollapsingToolbarLayout.setContentScrim(new BitmapDrawable(resource));
-                                }
-                            });
-                            Glide.with(getContext())
-                                    .load(info.getUpic())
-                                    .transform(new GlideRoundTransform(getContext()))
-                                    .placeholder(R.mipmap.img_user_default)
-                                    .into(mHeadImg);
+                            if(isFragmentAlive()){
+                                mHeadImg.setVisibility(View.VISIBLE);
+                                mNickName.setVisibility(View.VISIBLE);
+                                mPlayNum.setVisibility(View.VISIBLE);
+                                String big_pic = info.getBig_pic();
+                                Glide.with(getContext()).load(big_pic).asBitmap().into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                        head_layout.setBackgroundDrawable(new BitmapDrawable(resource));
+                                        mCollapsingToolbarLayout.setContentScrim(new BitmapDrawable(resource));
+                                    }
+                                });
+                                Glide.with(getContext())
+                                        .load(info.getUpic())
+                                        .transform(new GlideRoundTransform(getContext()))
+                                        .placeholder(R.mipmap.img_user_default)
+                                        .into(mHeadImg);
 
-                            mNickName.setText(info.getUname());
-                            mPlayNum.setText(MyUtils.numFormat(info.getPlay_num()));
+                                mNickName.setText(info.getUname());
+                                mPlayNum.setText(MyUtils.numFormat(info.getPlay_num()));
+                            }
                         }
                     });
                 } catch (JSONException e) {
@@ -208,5 +210,9 @@ public class SongListTabFragment extends Fragment{
                 }
             }
         });
+    }
+
+    protected final boolean isFragmentAlive() {
+        return (getActivity() != null && !getActivity().isFinishing() && !isDetached());
     }
 }

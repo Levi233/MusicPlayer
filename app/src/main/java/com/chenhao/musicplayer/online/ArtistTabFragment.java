@@ -1,7 +1,6 @@
 package com.chenhao.musicplayer.online;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -92,9 +91,6 @@ public class ArtistTabFragment extends Fragment{
     }
 
     private void initControl() {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        mHeadLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
-        mCollapsingToolbarLayout.setContentScrim(new BitmapDrawable(bitmap));
         mHeadImg.setVisibility(View.GONE);
         mNickName.setVisibility(View.GONE);
         mPlayNum.setVisibility(View.GONE);
@@ -197,14 +193,16 @@ public class ArtistTabFragment extends Fragment{
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mDesc.setText("粉丝:"+MyUtils.numFormat(Integer.parseInt(strings[2])));
-                            Glide.with(getContext()).load(img).asBitmap().into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                    mHeadLayout.setBackgroundDrawable(new BitmapDrawable(resource));
-                                    mCollapsingToolbarLayout.setContentScrim(new BitmapDrawable(resource));
-                                }
-                            });
+                            if (isFragmentAlive()){
+                                mDesc.setText("粉丝:"+MyUtils.numFormat(Integer.parseInt(strings[2])));
+                                Glide.with(getContext()).load(img).asBitmap().into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                        mHeadLayout.setBackgroundDrawable(new BitmapDrawable(resource));
+                                        mCollapsingToolbarLayout.setContentScrim(new BitmapDrawable(resource));
+                                    }
+                                });
+                            }
                         }
                     });
 
@@ -213,5 +211,9 @@ public class ArtistTabFragment extends Fragment{
                 }
             }
         });
+    }
+
+    protected final boolean isFragmentAlive() {
+        return (getActivity() != null && !getActivity().isFinishing() && !isDetached());
     }
 }
