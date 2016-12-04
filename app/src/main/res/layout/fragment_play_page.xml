@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:paddingTop="20dp"
-    android:background="@mipmap/play_del_bg">
+    android:background="@drawable/play_del_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@mipmap/btn_back" />
+            android:src="@drawable/btn_back" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,12 +58,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@mipmap/play_cd_bg" />
+            android:src="@drawable/play_cd_bg" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@mipmap/play_cd" />
+            android:src="@drawable/play_cd" />
 
     </RelativeLayout>
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginBottom="10dp"
-            android:src="@mipmap/btn_play" />
+            android:src="@drawable/btn_play" />
 
         <ImageView
             android:id="@+id/front_img"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/play_and_pause_img"
-            android:background="@mipmap/btn_front" />
+            android:background="@drawable/btn_front" />
 
         <ImageView
             android:id="@+id/next_img"
@@ -95,7 +95,7 @@
             android:layout_height="70dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/play_and_pause_img"
-            android:background="@mipmap/btn_next" />
+            android:background="@drawable/btn_next" />
 
         <ImageView
             android:id="@+id/music_list_img"
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/next_img"
-            android:background="@mipmap/btn_music_list" />
+            android:background="@drawable/btn_music_list" />
 
         <ImageView
             android:id="@+id/play_model_img"
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/front_img"
-            android:src="@mipmap/btn_list" />
+            android:src="@drawable/btn_list" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_above="@id/rl_layout"

@@ -197,7 +197,7 @@ public class SongListTabFragment extends Fragment{
                                 Glide.with(getContext())
                                         .load(info.getUpic())
                                         .transform(new GlideRoundTransform(getContext()))
-                                        .placeholder(R.mipmap.img_user_default)
+                                        .placeholder(R.drawable.img_user_default)
                                         .into(mHeadImg);
 
                                 mNickName.setText(info.getUname());

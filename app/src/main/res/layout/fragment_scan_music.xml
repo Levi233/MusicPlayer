@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/btn_back" />
+            android:src="@drawable/btn_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,12 +36,12 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/scan_bg"/>
+            android:src="@drawable/scan_bg"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@mipmap/scan_img"/>
+            android:src="@drawable/scan_img"/>
     </RelativeLayout>
 
     <TextView

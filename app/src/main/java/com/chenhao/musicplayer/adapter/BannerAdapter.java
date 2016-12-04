@@ -79,9 +79,9 @@ public class BannerAdapter extends SingleRecyclerAdapter<BannerSection> {
                     for (int i = 0;i < dotsList.size();i++){
                         View view = dotsList.get(i);
                         if(i == position%dotsList.size()){
-                            view.setBackgroundResource(R.mipmap.dot_focus);
+                            view.setBackgroundResource(R.drawable.dot_focus);
                         }else{
-                            view.setBackgroundResource(R.mipmap.dot_normal);
+                            view.setBackgroundResource(R.drawable.dot_normal);
                         }
                     }
                 }
@@ -125,9 +125,9 @@ public class BannerAdapter extends SingleRecyclerAdapter<BannerSection> {
         for(int i = 0;i < getItem().getOnlineInfos().size();i++){
             View view = new View(getContext());
             if(i == 0){
-                view.setBackgroundResource(R.mipmap.dot_focus);
+                view.setBackgroundResource(R.drawable.dot_focus);
             }else{
-                view.setBackgroundResource(R.mipmap.dot_normal);
+                view.setBackgroundResource(R.drawable.dot_normal);
             }
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(18, 18);
             layoutParams.setMargins(0, 0, 25, 0);

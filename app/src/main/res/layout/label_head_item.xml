@@ -15,7 +15,7 @@
         android:layout_centerInParent="true"
         android:layout_height="wrap_content"
         android:drawablePadding="3dp"
-        android:drawableRight="@mipmap/right_btn"
+        android:drawableRight="@drawable/right_btn"
         android:text="更多"/>
 
     <TextView

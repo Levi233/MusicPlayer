@@ -1,6 +1,8 @@
 package com.chenhao.musicplayer.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +17,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -24,14 +25,14 @@ import android.widget.Toast;
 
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.MusicInfo;
-import com.chenhao.musicplayer.local.MineMainFragment;
-import com.chenhao.musicplayer.online.OnlineMusicMainFragment;
 import com.chenhao.musicplayer.fragment.PlayPageFragment;
+import com.chenhao.musicplayer.local.MineMainFragment;
 import com.chenhao.musicplayer.messagemgr.MediaPlayerObserver;
 import com.chenhao.musicplayer.messagemgr.MessageID;
 import com.chenhao.musicplayer.messagemgr.MessageManager;
 import com.chenhao.musicplayer.mod.FragmentControl;
 import com.chenhao.musicplayer.mod.MediaPlayerManager;
+import com.chenhao.musicplayer.online.OnlineMusicMainFragment;
 import com.chenhao.musicplayer.utils.ObjectSaveUtil;
 
 import java.util.List;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void startMusic(List<MusicInfo> infos, int position) {
             Log.e("chenhaolog", "MainActivity [startMusic] " + position);
             ObjectSaveUtil.saveInteger(MainActivity.this, "CurrentPosition", position);
-            mPlayAndPause.setImageResource(R.mipmap.playbar_btn_pause);
+            mPlayAndPause.setImageResource(R.drawable.playbar_btn_pause);
             mProgress.setMax(MediaPlayerManager.getInstance().getMusicDuration());
             if (mThread == null) {
                 mCall = new Call();
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void stopMusic() {
-            mPlayAndPause.setImageResource(R.mipmap.playbar_btn_play);
+            mPlayAndPause.setImageResource(R.drawable.playbar_btn_play);
             mProgress.setProgress(0);
         }
 
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mCall.cancel();
                 mThread = null;
             }
-            mPlayAndPause.setImageResource(R.mipmap.playbar_btn_play);
+            mPlayAndPause.setImageResource(R.drawable.playbar_btn_play);
         }
 
         @Override
@@ -144,9 +145,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //透明导航栏  
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setNavigationBarColor(Color.TRANSPARENT);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         instance = this;
         MessageManager.getInstance().attachMessage(MessageID.OBSERVER_MEDIA_PLAYER, mObserver);
         initView();
@@ -179,12 +188,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onPageSelected(int position) {
                 switch (position){
                     case 0:
-                        mRecommendedPage.setImageResource(R.mipmap.actionbar_discover_normal);
-                        mMyPage.setImageResource(R.mipmap.actionbar_music_selected);
+                        mRecommendedPage.setImageResource(R.drawable.actionbar_discover_normal);
+                        mMyPage.setImageResource(R.drawable.actionbar_music_selected);
                         break;
                     case 1:
-                        mRecommendedPage.setImageResource(R.mipmap.actionbar_discover_selected);
-                        mMyPage.setImageResource(R.mipmap.actionbar_music_normal);
+                        mRecommendedPage.setImageResource(R.drawable.actionbar_discover_selected);
+                        mMyPage.setImageResource(R.drawable.actionbar_music_normal);
                         break;
                 }
             }
@@ -244,13 +253,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.recommended_page:
                 mViewPager.setCurrentItem(1);
-                mRecommendedPage.setImageResource(R.mipmap.actionbar_discover_selected);
-                mMyPage.setImageResource(R.mipmap.actionbar_music_normal);
+                mRecommendedPage.setImageResource(R.drawable.actionbar_discover_selected);
+                mMyPage.setImageResource(R.drawable.actionbar_music_normal);
                 break;
             case R.id.my_page:
                 mViewPager.setCurrentItem(0);
-                mRecommendedPage.setImageResource(R.mipmap.actionbar_discover_normal);
-                mMyPage.setImageResource(R.mipmap.actionbar_music_selected);
+                mRecommendedPage.setImageResource(R.drawable.actionbar_discover_normal);
+                mMyPage.setImageResource(R.drawable.actionbar_music_selected);
                 break;
             case R.id.exit_text:
                 android.os.Process.killProcess(android.os.Process.myPid());

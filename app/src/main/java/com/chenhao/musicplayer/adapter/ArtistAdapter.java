@@ -39,7 +39,7 @@ public class ArtistAdapter extends SingleRecyclerAdapter<OnlineInfo> {
         Glide.with(getContext())
                 .load(info.getImg())
                 .transform(new GlideRoundTransform(getContext()))
-                .placeholder(R.mipmap.img_user_default)
+                .placeholder(R.drawable.img_user_default)
                 .into(((ArtistHolder)holder).artistImg);
         ((ArtistHolder)holder).artistName.setText(getItem().getName());
         ((ArtistHolder)holder).artistFollowers.setText("粉丝："+ MyUtils.numFormat(info.getFollowers()));

@@ -39,7 +39,7 @@ public class CommentAdapter extends SingleRecyclerAdapter<CommentInfo> {
         Glide.with(getContext())
                 .load(getItem().getU_pic())
                 .transform(new GlideRoundTransform(getContext()))
-                .placeholder(R.mipmap.img_user_default)
+                .placeholder(R.drawable.img_user_default)
                 .into(((CommentHolder)holder).comment_user_pic);
         ((CommentHolder)holder).comment_user_name.setText(getItem().getU_name());
         ((CommentHolder)holder).comment_user_time.setText(DateUtils.commentTimeFormat(getItem().getTime()*1000,true));

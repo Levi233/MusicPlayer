@@ -72,7 +72,7 @@
                     android:maxLines="2"
                     android:text="233万"
                     android:drawablePadding="5dp"
-                    android:drawableLeft="@mipmap/hear_img"
+                    android:drawableLeft="@drawable/hear_img"
                     android:textColor="#ffffff"
                     android:textSize="14sp"
                     android:visibility="gone"/>

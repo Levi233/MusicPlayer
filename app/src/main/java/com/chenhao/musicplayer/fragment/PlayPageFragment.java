@@ -55,7 +55,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
         @Override
         public void startMusic(List<MusicInfo> infos, int position) {
             mMusicName.setText(infos.get(position).getName());
-            mPlayAndPause.setImageResource(R.mipmap.btn_pause);
+            mPlayAndPause.setImageResource(R.drawable.btn_pause);
             mMusicDuration = MediaPlayerManager.getInstance().getMusicDuration();
             mSeekBar.setMax(mMusicDuration);
             mMusicTotalTime.setText(DateUtils.millisecondFormat(mMusicDuration));
@@ -68,14 +68,14 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void stopMusic() {
-            mPlayAndPause.setImageResource(R.mipmap.btn_play);
+            mPlayAndPause.setImageResource(R.drawable.btn_play);
             mSeekBar.setProgress(0);
             mSeekBar.setSecondaryProgress(0);
         }
 
         @Override
         public void onPause() {
-            mPlayAndPause.setImageResource(R.mipmap.btn_play);
+            mPlayAndPause.setImageResource(R.drawable.btn_play);
             if (mCall != null) {
                 mCall.cancel();
                 mThread = null;
@@ -140,7 +140,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
         mSeekBar.setProgress(musicCurrentPosition);
         mMusicTotalTime.setText(DateUtils.millisecondFormat(musicDuration));
         if (MediaPlayerManager.getInstance().isPlaying()) {
-            mPlayAndPause.setImageResource(R.mipmap.btn_pause);
+            mPlayAndPause.setImageResource(R.drawable.btn_pause);
             if (mThread == null) {
                 mCall = new Call();
                 mThread = new Thread(mCall);
@@ -237,13 +237,13 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
     private void setPlayModePic(int mode){
         switch (mode){
             case MediaPlayerManager.PLAY_MODE_LIST_CYCLE:
-                mPlayModel.setImageResource(R.mipmap.btn_list);
+                mPlayModel.setImageResource(R.drawable.btn_list);
                 break;
             case MediaPlayerManager.PLAY_MODE_SINGLE_CYCLE:
-                mPlayModel.setImageResource(R.mipmap.btn_single);
+                mPlayModel.setImageResource(R.drawable.btn_single);
                 break;
             case MediaPlayerManager.PLAY_MODE_RANDOM_CYCLE:
-                mPlayModel.setImageResource(R.mipmap.btn_random);
+                mPlayModel.setImageResource(R.drawable.btn_random);
                 break;
         }
     }
