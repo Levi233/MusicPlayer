@@ -24,6 +24,7 @@ import com.chenhao.musicplayer.bean.ListSection;
 import com.chenhao.musicplayer.bean.MusicInfo;
 import com.chenhao.musicplayer.bean.MusicSection;
 import com.chenhao.musicplayer.bean.MvInfo;
+import com.chenhao.musicplayer.bean.MvSection;
 import com.chenhao.musicplayer.bean.MvSquareSection;
 import com.chenhao.musicplayer.bean.MvplInfo;
 import com.chenhao.musicplayer.bean.OnlineInfo;
@@ -77,7 +78,7 @@ public class XmlParse {
     private static OnlineInfo mOnlineInfo;
 
     public static RootInfo parseXml(String datas) {
-
+        TabInfo tabInfo  = null;
         XmlPullParser parser = Xml.newPullParser();
         try {
             InputStream is = new ByteArrayInputStream(datas.getBytes());
@@ -224,6 +225,12 @@ public class XmlParse {
                             parseOnlineInfo(parser, albumInfo);
                             String artist = getFormatAttributeValue(parser, "artist");
                             albumInfo.setArtist(artist);
+                            String publish = getFormatAttributeValue(parser, "publish");
+                            if(TextUtils.isEmpty(publish)) {
+                                albumInfo.setDesc("未知");
+                            }else{
+                                albumInfo.setDesc(publish);
+                            }
                             mOnlineInfo = albumInfo;
                         }else if(LIST.equals(parser.getName())){
                             ListInfo listInfo = new ListInfo();
@@ -239,6 +246,34 @@ public class XmlParse {
                             MvplInfo mvplInfo = new MvplInfo();
                             parseOnlineInfo(parser, mvplInfo);
                             mOnlineInfo = mvplInfo;
+                        }else if("tab".equals(parser.getName())){
+                            tabInfo = new TabInfo();
+                            long id = getDefaultLong(parser, "id", -1);
+                            String desc = getFormatAttributeValue(parser, "desc");
+                            String publish = getFormatAttributeValue(parser, "publish");
+                            String img = getFormatAttributeValue(parser, "img");
+                            String url = getFormatAttributeValue(parser, "url");
+                            String name = getFormatAttributeValue(parser, "name");
+                            String name1 = getFormatAttributeValue(parser, "name1");
+                            String name2 = getFormatAttributeValue(parser, "name2");
+                            String name3 = getFormatAttributeValue(parser, "name3");
+                            String artist1 = getFormatAttributeValue(parser, "artist1");
+                            String artist2 = getFormatAttributeValue(parser, "artist2");
+                            String artist3 = getFormatAttributeValue(parser, "artist3");
+                            int digest = getDefaultInteger(parser, "digest", -1);
+                            tabInfo.setDigest(digest);
+                            tabInfo.setId(id);
+                            tabInfo.setName(name);
+                            tabInfo.setDesc(desc);
+                            tabInfo.setPublish(publish);
+                            tabInfo.setImg(img);
+                            tabInfo.setUrl(url);
+                            tabInfo.setName1(name1);
+                            tabInfo.setName2(name2);
+                            tabInfo.setName3(name3);
+                            tabInfo.setArtist1(artist1);
+                            tabInfo.setArtist2(artist2);
+                            tabInfo.setArtist3(artist3);
                         }
                         break;
                     case XmlPullParser.END_TAG:
@@ -249,7 +284,7 @@ public class XmlParse {
                         } else if (ROOT.equals(parser.getName())) {
 
                         } else if("tab".equals(parser.getName())){
-
+                            mOnlineInfo.add(tabInfo);
                         }else {
                             if (mSection != null) {
                                 mSection.add(mOnlineInfo);
@@ -478,6 +513,8 @@ public class XmlParse {
             return;
         }else if("music".equals(type)){
             mSection =  new MusicSection();
+        }else if("mv".equals(type)){
+            mSection = new MvSection();
         }
         mSection.setLabel(label);
         mSection.setMtype(mtype);

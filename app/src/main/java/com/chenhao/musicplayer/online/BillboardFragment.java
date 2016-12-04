@@ -87,7 +87,7 @@ public class BillboardFragment extends BaseFragment<RootInfo> {
             mId = mInfo.getTabInfos().get(0).getId();
             mDigest = mInfo.getTabInfos().get(0).getDigest();
         }
-        return OnlineUrlUtil.getRequest("sub_list",mId,0,30,String.valueOf(mDigest));
+        return OnlineUrlUtil.getRequest("sub_list",null,mId,0,30,String.valueOf(mDigest));
     }
 
     @Override
@@ -171,7 +171,7 @@ public class BillboardFragment extends BaseFragment<RootInfo> {
     }
 
     private void loadMore(int start , final RootInfo infos) {
-        String url = OnlineUrlUtil.getRequest("sub_list",mId , start, 30, String.valueOf(mDigest));
+        String url = OnlineUrlUtil.getRequest("sub_list",null,mId , start, 30, String.valueOf(mDigest));
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)

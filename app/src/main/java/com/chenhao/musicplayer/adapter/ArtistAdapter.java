@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.ArtistInfo;
 import com.chenhao.musicplayer.bean.OnlineInfo;
+import com.chenhao.musicplayer.utils.JumpUtils;
 import com.chenhao.musicplayer.utils.MyUtils;
 import com.chenhao.musicplayer.view.GlideRoundTransform;
 
@@ -41,14 +43,22 @@ public class ArtistAdapter extends SingleRecyclerAdapter<OnlineInfo> {
                 .into(((ArtistHolder)holder).artistImg);
         ((ArtistHolder)holder).artistName.setText(getItem().getName());
         ((ArtistHolder)holder).artistFollowers.setText("粉丝："+ MyUtils.numFormat(info.getFollowers()));
+        ((ArtistHolder)holder).rl_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpUtils.jumpFragment(getItem());
+            }
+        });
     }
 
     private static class ArtistHolder extends RecyclerView.ViewHolder{
         ImageView artistImg;
         TextView artistName;
         TextView artistFollowers;
+        RelativeLayout rl_layout;
         public ArtistHolder(View itemView) {
             super(itemView);
+            rl_layout = (RelativeLayout) itemView.findViewById(R.id.rl_layout);
             artistImg = (ImageView) itemView.findViewById(R.id.artist_img);
             artistName = (TextView) itemView.findViewById(R.id.artist_name);
             artistFollowers = (TextView) itemView.findViewById(R.id.artist_followers);

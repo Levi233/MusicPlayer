@@ -52,7 +52,7 @@ public class QzListFragment extends BaseFragment<RootInfo> implements View.OnCli
 
     @Override
     protected String getRequestUrl() {
-        return OnlineUrlUtil.getRequest("get_qz_data", mId, 0, 30, String.valueOf(mDigest));
+        return OnlineUrlUtil.getRequest("get_qz_data",null, mId, 0, 30, String.valueOf(mDigest));
     }
 
     @Override

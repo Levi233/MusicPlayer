@@ -1,5 +1,6 @@
 package com.chenhao.musicplayer.utils;
 
+import com.chenhao.musicplayer.bean.AlbumInfo;
 import com.chenhao.musicplayer.bean.CommentInfo;
 import com.chenhao.musicplayer.bean.CommentSection;
 import com.chenhao.musicplayer.bean.RootInfo;
@@ -61,11 +62,11 @@ public class ParserJson {
         for (int i = 0; i < info.length(); i++) {
             CommentInfo commentInfo = new CommentInfo();
             JSONObject obj1 = info.getJSONObject(i);
-            setCommentInfo(obj1,commentInfo);
+            setCommentInfo(obj1, commentInfo);
             JSONObject reply = obj1.optJSONObject("reply");
-            if(reply != null){
+            if (reply != null) {
                 CommentInfo replyInfo = new CommentInfo();
-                setCommentInfo(reply,replyInfo);
+                setCommentInfo(reply, replyInfo);
                 commentInfo.setReply(replyInfo);
             }
             commentSection.add(commentInfo);
@@ -74,7 +75,32 @@ public class ParserJson {
         return rootInfo;
     }
 
-    private static void setCommentInfo(JSONObject obj,CommentInfo info) throws UnsupportedEncodingException {
+    public static String[] parserDescJson(String json) throws JSONException {
+        JSONObject jsonObject;
+        jsonObject = new JSONObject(json);
+        String desc = jsonObject.getString("desc");
+        String big_pic = jsonObject.getString("big_pic");
+        String likenum = jsonObject.getString("likenum");
+        String[] strings = new String[]{desc,big_pic,likenum};
+        return strings;
+    }
+
+    public static AlbumInfo parserAlbumInfo(String json) throws JSONException{
+        JSONObject jsonObject;
+        jsonObject = new JSONObject(json);
+        AlbumInfo albumInfo = new AlbumInfo();
+        String big_pic = jsonObject.getString("big_pic");
+        int com_num = jsonObject.getInt("com_num");
+        int mcnum = jsonObject.getInt("mcnum");
+        String pulish = jsonObject.getString("pulish");
+        albumInfo.setBig_pic(big_pic);
+        albumInfo.setCom_num(com_num);
+        albumInfo.setMcnum(mcnum);
+        albumInfo.setPublish(pulish);
+        return albumInfo;
+    }
+
+    private static void setCommentInfo(JSONObject obj, CommentInfo info) throws UnsupportedEncodingException {
         int id = getDefaultInteger(obj, "id");
         boolean is_like = getDefaultBoolean(obj, "is_like");
         int like_num = getDefaultInteger(obj, "like_num");
@@ -131,11 +157,11 @@ public class ParserJson {
         return i;
     }
 
-    private static boolean getDefaultBoolean(JSONObject obj, String key){
+    private static boolean getDefaultBoolean(JSONObject obj, String key) {
         boolean b = false;
-        try{
+        try {
             b = obj.getBoolean(key);
-        }catch (JSONException e){
+        } catch (JSONException e) {
             return b;
         }
         return b;

@@ -39,6 +39,7 @@
                     android:id="@+id/head_img"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:visibility="gone"
                     android:layout_marginTop="60dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
@@ -55,6 +56,7 @@
                     android:layout_marginTop="10dp"
                     android:singleLine="true"
                     android:textColor="#ffffff"
+                    android:visibility="gone"
                     android:textSize="14sp"/>
 
                 <TextView
@@ -73,7 +75,19 @@
                     android:drawableLeft="@mipmap/hear_img"
                     android:textColor="#ffffff"
                     android:textSize="14sp"
-                    android:visibility="visible"/>
+                    android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="酷我流行榜"
+                    android:textColor="#EFFFFF"
+                    android:visibility="gone"
+                    android:textSize="15sp" />
             </RelativeLayout>
 
             <android.support.v7.widget.Toolbar

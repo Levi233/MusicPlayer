@@ -17,6 +17,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.ClassifySection;
 import com.chenhao.musicplayer.utils.BItmapUtil;
+import com.chenhao.musicplayer.utils.JumpUtils;
 
 /**
  * Created by chenhao on 2016/11/23.
@@ -41,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         long start = System.currentTimeMillis();
         String name ="";
         if(position == 0){
@@ -64,6 +65,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             ((ViewHolder)holder).list_name.setVisibility(View.VISIBLE);
             ((ViewHolder)holder).list_name.setText(mSection.getOnlineInfos().get(position-1).getName());
             name =mSection.getOnlineInfos().get(position-1).getName();
+        }
+        if(position > 0){
+            ((ViewHolder)holder).list_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    JumpUtils.jumpFragment(mSection.getOnlineInfos().get(position-1));
+                }
+            });
         }
         long end = System.currentTimeMillis();
         Log.i("chenhaolog", "name"+name+"--------------->RecyclerViewAdapter  [onBindViewHolder] cost  " + (end - start) + " :::position : " + position);

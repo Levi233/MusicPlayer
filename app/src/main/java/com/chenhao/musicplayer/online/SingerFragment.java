@@ -94,7 +94,7 @@ public class SingerFragment extends BaseFragment<RootInfo> {
     }
 
     private void loadMore(int start) {
-        String url = OnlineUrlUtil.getRequest("sub_list", 0, start, 30, "3");
+        String url = OnlineUrlUtil.getRequest("sub_list",null, 0, start, 30, "3");
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)

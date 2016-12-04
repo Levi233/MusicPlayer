@@ -2,13 +2,18 @@ package com.chenhao.musicplayer.utils;
 
 import com.chenhao.musicplayer.bean.AdArInfo;
 import com.chenhao.musicplayer.bean.AdInfo;
+import com.chenhao.musicplayer.bean.AlbumInfo;
+import com.chenhao.musicplayer.bean.ArtistInfo;
 import com.chenhao.musicplayer.bean.BillboardInfo;
+import com.chenhao.musicplayer.bean.HitbillboardInfo;
 import com.chenhao.musicplayer.bean.KubillboardInfo;
 import com.chenhao.musicplayer.bean.OnlineInfo;
 import com.chenhao.musicplayer.bean.QzListInfo;
 import com.chenhao.musicplayer.bean.SongListInfo;
 import com.chenhao.musicplayer.bean.TabInfo;
 import com.chenhao.musicplayer.mod.FragmentControl;
+import com.chenhao.musicplayer.online.AlbumTabFragment;
+import com.chenhao.musicplayer.online.ArtistTabFragment;
 import com.chenhao.musicplayer.online.BillboardFragment;
 import com.chenhao.musicplayer.online.KubillboardFragment;
 import com.chenhao.musicplayer.online.QzListFragment;
@@ -42,6 +47,15 @@ public class JumpUtils {
         }else if(info instanceof TabInfo){
             BillboardFragment f = BillboardFragment.newInstance(info);
             FragmentControl.getInstance().showWithPlayBarSubFrag(f,BillboardFragment.class.getSimpleName());
+        }else if(info instanceof HitbillboardInfo){
+            WebFragment f = WebFragment.newInstance(((HitbillboardInfo) info).getUrl(),info.getName());
+            FragmentControl.getInstance().showWithPlayBarSubFrag(f,WebFragment.class.getSimpleName());
+        }else if(info instanceof ArtistInfo){
+            ArtistTabFragment f = ArtistTabFragment.newInstance(info);
+            FragmentControl.getInstance().showWithPlayBarSubFrag(f,ArtistTabFragment.class.getSimpleName());
+        }else if(info instanceof AlbumInfo){
+            AlbumTabFragment f = AlbumTabFragment.newInstance(info);
+            FragmentControl.getInstance().showWithPlayBarSubFrag(f,AlbumTabFragment.class.getSimpleName());
         }
     }
 }

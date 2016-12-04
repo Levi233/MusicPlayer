@@ -15,6 +15,7 @@ import com.chenhao.musicplayer.bean.KlistSection;
 import com.chenhao.musicplayer.bean.KsquareSection;
 import com.chenhao.musicplayer.bean.ListSection;
 import com.chenhao.musicplayer.bean.MusicSection;
+import com.chenhao.musicplayer.bean.MvSection;
 import com.chenhao.musicplayer.bean.MvSquareSection;
 import com.chenhao.musicplayer.bean.OnlineInfo;
 import com.chenhao.musicplayer.bean.RootInfo;
@@ -148,6 +149,11 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 for (OnlineInfo onlineInfo : onlineInfos) {
                     addAdapter(new CommentAdapter(getContext(), (CommentInfo) onlineInfo, section.getItemViewType(), getHandler()));
                 }
+            }else if(section instanceof MvSection){
+                ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
+                for (OnlineInfo onlineInfo:onlineInfos) {
+                    addAdapter(new MvAdapter(getContext(),onlineInfo,section.getItemViewType(),getHandler()));
+                }
             }
         }
     }
@@ -164,6 +170,16 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
                 for (OnlineInfo info : onlineInfos) {
                     addAdapter(new MusicAdapter(getContext(), infos, section.getItemViewType(), getHandler()));
+                }
+            }else if(section instanceof ListSection){
+                ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
+                for (OnlineInfo info : onlineInfos) {
+                    addAdapter(new ListItemAdapter(getContext(), info, section.getItemViewType(), getHandler()));
+                }
+            }else if(section instanceof MvSection){
+                ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
+                for (OnlineInfo onlineInfo:onlineInfos) {
+                    addAdapter(new MvAdapter(getContext(),onlineInfo,section.getItemViewType(),getHandler()));
                 }
             }
         }

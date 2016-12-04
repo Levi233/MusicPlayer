@@ -1,6 +1,7 @@
 package com.chenhao.musicplayer.online;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,11 +26,11 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.activity.MainActivity;
-import com.chenhao.musicplayer.bean.SingleDataInfo;
+import com.chenhao.musicplayer.bean.ArtistInfo;
+import com.chenhao.musicplayer.bean.OnlineInfo;
 import com.chenhao.musicplayer.utils.MyUtils;
 import com.chenhao.musicplayer.utils.OnlineUrlUtil;
 import com.chenhao.musicplayer.utils.ParserJson;
-import com.chenhao.musicplayer.view.GlideRoundTransform;
 
 import org.json.JSONException;
 
@@ -40,34 +41,28 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
- * Created by chenhao on 2016/11/24.
+ * Created by chenhao on 2016/12/4.
  */
 
-public class SongListTabFragment extends Fragment{
+public class ArtistTabFragment extends Fragment{
     private AppBarLayout mAppBarLayout;
+    private ImageView mHeadImg;
     private Toolbar mToolbar;
     private ViewPager mViewPager;
-    private RelativeLayout head_layout;
-    private TabLayout mTabLayout;
-    private ImageView mHeadImg;
     private TextView mNickName;
     private TextView mPlayNum;
+    private TextView mDesc;
+    private RelativeLayout mHeadLayout;
+    private TabLayout mTabLayout;
+    private OnlineInfo mInfo;
     private Handler mHandler = new Handler();
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private String[] mTitles = new String[]{"单曲","评论"};
+    private String[] mTitles = new String[]{"单曲","专辑","MV","详情"};
 
-    private long mId;
-    private String mTitle;
-    private String mImg;
-    private int mDigest;
-
-    public static SongListTabFragment newInstance(long id,String name,String img,int digest){
-        SongListTabFragment f = new SongListTabFragment();
+    public static ArtistTabFragment newInstance(OnlineInfo info){
+        ArtistTabFragment f = new ArtistTabFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong("id", id);
-        bundle.putString("title",name);
-        bundle.putString("img",img);
-        bundle.putInt("digest",digest);
+        bundle.putSerializable("info",info);
         f.setArguments(bundle);
         return f;
     }
@@ -76,11 +71,8 @@ public class SongListTabFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle != null) {
-            mId = bundle.getLong("id");
-            mTitle = bundle.getString("title");
-            mImg = bundle.getString("img");
-            mDigest = bundle.getInt("digest");
+        if(bundle != null){
+            mInfo = (OnlineInfo) bundle.getSerializable("info");
         }
     }
 
@@ -88,13 +80,27 @@ public class SongListTabFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_song_list_tab, container, false);
+        if(((ArtistInfo) mInfo).getMusiccnt() > 0){
+            mTitles[0] = "单曲 "+((ArtistInfo) mInfo).getMusiccnt();
+            mTitles[1] = "专辑 "+((ArtistInfo) mInfo).getAlbumcnt();
+            mTitles[2] = "MV "+((ArtistInfo) mInfo).getMvcnt();
+        }
         initView(view);
         loadHeadInfo();
-        setAdapterAndListener();
+        initControl();
         return view;
     }
 
-    private void setAdapterAndListener() {
+    private void initControl() {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        mHeadLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+        mCollapsingToolbarLayout.setContentScrim(new BitmapDrawable(bitmap));
+        mHeadImg.setVisibility(View.GONE);
+        mNickName.setVisibility(View.GONE);
+        mPlayNum.setVisibility(View.GONE);
+        mDesc.setVisibility(View.VISIBLE);
+        mDesc.setText("粉丝:"+MyUtils.numFormat(((ArtistInfo)mInfo).getFollowers()));
+
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager());
         mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
@@ -108,9 +114,14 @@ public class SongListTabFragment extends Fragment{
         mViewPager=(ViewPager)view.findViewById(R.id.view_pager);
         mNickName = (TextView) view.findViewById(R.id.nick_name);
         mPlayNum = (TextView) view.findViewById(R.id.play_num);
+        mDesc = (TextView) view.findViewById(R.id.desc);
+        mHeadLayout = (RelativeLayout) view.findViewById(R.id.login_layout);
+        mTabLayout = (TabLayout) view.findViewById(R.id.toolbar_tab);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
+
         MainActivity.getInstance().setSupportActionBar(mToolbar);
         MainActivity.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(4);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,21 +130,17 @@ public class SongListTabFragment extends Fragment{
                 getFragmentManager().popBackStack();
             }
         });
-        head_layout = (RelativeLayout) view.findViewById(R.id.login_layout);
-        mTabLayout = (TabLayout) view.findViewById(R.id.toolbar_tab);
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (verticalOffset <= -head_layout.getHeight() / 2) {
-                    mCollapsingToolbarLayout.setTitle(mTitle);
+                if (verticalOffset <= -mHeadLayout.getHeight() / 2) {
+                    mCollapsingToolbarLayout.setTitle(mInfo.getName());
                 } else {
                     mCollapsingToolbarLayout.setTitle(" ");
                 }
             }
         });
     }
-
     private class MyFragmentPagerAdapter extends FragmentStatePagerAdapter {
         public MyFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -144,10 +151,16 @@ public class SongListTabFragment extends Fragment{
             Fragment f = null;
             switch (position){
                 case 0:
-                    f = SongListFragment.newInstance(mId,null,mDigest,"sub_list");
+                    f = SongListFragment.newInstance(mInfo.getId(),"artist",mInfo.getDigest(),"music_list");
                     break;
                 case 1:
-                    f = CommentListFragment.newInstance(mId,mDigest);
+                    f = AlbumListFragment.newInstance(mInfo.getId(),mInfo.getDigest(),"album_list");
+                    break;
+                case 2:
+                    f = ArtistMVFragment.newInstance(mInfo.getId(),"music_list");
+                    break;
+                case 3:
+                    f = ArtistDescFragment.newInstance(mInfo.getId());
                     break;
             }
             return f;
@@ -165,9 +178,10 @@ public class SongListTabFragment extends Fragment{
             return super.getPageTitle(position);
         }
     }
+
     private void loadHeadInfo(){
 
-        MyUtils.loadPic(OnlineUrlUtil.getSongListInfoUrl(String.valueOf(mId), "", -1),new Callback() {
+        MyUtils.loadPic(OnlineUrlUtil.getArtistInfoUrl(String.valueOf(mInfo.getId())),new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -176,33 +190,24 @@ public class SongListTabFragment extends Fragment{
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String datas = response.body().string();
+                final String string = response.body().string();
                 try {
-                    final SingleDataInfo info = ParserJson.parserSingleDataJson(datas);
+                    final String[] strings = ParserJson.parserDescJson(string);
+                    final String img = strings[1];
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mHeadImg.setVisibility(View.VISIBLE);
-                            mNickName.setVisibility(View.VISIBLE);
-                            mPlayNum.setVisibility(View.VISIBLE);
-                            String big_pic = info.getBig_pic();
-                            Glide.with(getContext()).load(big_pic).asBitmap().into(new SimpleTarget<Bitmap>() {
+                            mDesc.setText("粉丝:"+MyUtils.numFormat(Integer.parseInt(strings[2])));
+                            Glide.with(getContext()).load(img).asBitmap().into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                    head_layout.setBackgroundDrawable(new BitmapDrawable(resource));
+                                    mHeadLayout.setBackgroundDrawable(new BitmapDrawable(resource));
                                     mCollapsingToolbarLayout.setContentScrim(new BitmapDrawable(resource));
                                 }
                             });
-                            Glide.with(getContext())
-                                    .load(info.getUpic())
-                                    .transform(new GlideRoundTransform(getContext()))
-                                    .placeholder(R.mipmap.img_user_default)
-                                    .into(mHeadImg);
-
-                            mNickName.setText(info.getUname());
-                            mPlayNum.setText(MyUtils.numFormat(info.getPlay_num()));
                         }
                     });
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

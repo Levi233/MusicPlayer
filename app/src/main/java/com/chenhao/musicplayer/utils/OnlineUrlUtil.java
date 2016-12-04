@@ -32,7 +32,7 @@ public class OnlineUrlUtil {
         return "http://nmobi.kuwo.cn/mobi.s?f=kuwo&q=2S5ec7LNX+pQWCHXaOs5nvnnWqyaughtHbUI3IEkHudHoPfxpFuJZY6OI9KVO/SJxQskru/aVoLIKjvXNwwUHjxFEOPVi1swkQHEb1KoQHYAYmUV/VSoO1HLcjTE+WA+W1D1fLBcpmuQ3pzdb8dh7RFQdfp5JZAU+vpLzsg1CWspJCU3OBc2beefATWgtiuRqPbmK0iphOWFIFBXIXk+wah+ySyvrWhNqmBVJgSRnuPsli8g40y8IzaFbuazOwwY8qAHJO8GnFQZNAgndIKyid6aBJASHLoXgB5dBs5yqzhpkkZsPYvKBGnBFYo33zYYKGrmRSHoCoLkrJ0twztVy0TEnGUXvPY+SjRKgtnzKsHviR2F6uCy5TckmQUZT7hCSlhutIPFo5c=";
     }
 
-    public static String getRequest(String type,long id ,int start,int count,String digest){
+    public static String getRequest(String type,String key,long id ,int start,int count,String digest){
         StringBuilder sb = new StringBuilder();
         sb.append("user=866479021253520&prod=kwplayer_ar_8.3.0.0&corp=kuwo&vipver=8.3.0.0&source=kwplayer_ar_8.3.0.0_kwdebug.apk&p2p=1&");
         sb.append("type=").append(type);//type加载更多 = sub_list
@@ -51,11 +51,20 @@ public class OnlineUrlUtil {
                 sb.append("&id=").append(id);
                 sb.append("&snu=1");
                 break;
+            case "music_list":
+                sb.append("&id=").append(id);
+                sb.append("&key=").append(key);
+                break;
+            case "album_list":
+                sb.append("&artist_id=").append(id);
+                break;
         }
         sb.append("&start=").append(start);
         sb.append("&count=").append(count);
 
-        sb.append("&digest=").append(digest);
+        if("music_list" != type && !TextUtils.isEmpty(digest)){
+            sb.append("&digest=").append(digest);
+        }
 
         sb.append("&hasmv=1");
         sb.append("&hasinner=1");
@@ -94,6 +103,15 @@ public class OnlineUrlUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        return builder.toString();
+    }
+
+    public static String getAlbumInfoUrl(String ids) {
+        StringBuilder builder = new StringBuilder(
+                "http://mobilebasedata.kuwo.cn/basedata.s?type=get_album_info&");
+        builder.append("user=866479021253520&prod=kwplayer_ar_8.3.0.0&corp=kuwo&vipver=8.3.0.0&source=kwplayer_ar_8.3.0.0_kwdebug.apk&p2p=1&")
+                .append("id=")//不要加&，createCommonParams有
+                .append(ids);
         return builder.toString();
     }
 
@@ -136,6 +154,15 @@ public class OnlineUrlUtil {
         sb.append("&source=").append("kwplayer_ar_6.3.4.0_u.apk");
         sb.append("&");
         return sb;
+    }
+
+    public static String getArtistInfoUrl(String ids) {
+        StringBuilder builder = new StringBuilder(
+                "http://mobilebasedata.kuwo.cn/basedata.s?type=get_artist_info&");
+        builder.append("user=866479021253520&prod=kwplayer_ar_8.3.0.0&corp=kuwo&vipver=8.3.0.0&source=kwplayer_ar_8.3.0.0_kwdebug.apk&p2p=1&")
+                .append("id=")//不要加&，createCommonParams有
+                .append(ids).append("&fans=1");
+        return builder.toString();
     }
 
     private static String createURL(String param) {

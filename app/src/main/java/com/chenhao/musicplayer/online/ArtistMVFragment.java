@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,28 +30,24 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by chenhao on 2016/11/27.
+ * Created by chenhao on 2016/12/4.
  */
 
-public class SongListFragment extends BaseFragment<RootInfo> {
+public class ArtistMVFragment extends BaseFragment<RootInfo> {
 
-    private RecyclerView mRecyclerView;
     private long mId;
-    private String mDigest;
     private String mType;
-    private String mKey;
     private int mStart = 0;
     private boolean mLoadMore = true;
+    private RecyclerView mRecyclerView;
     private MultiAdapter mAdapter;
     private Handler mHandler = new Handler();
 
-    public static SongListFragment newInstance(long id,String key, int digest,String type) {
-        SongListFragment f = new SongListFragment();
+    public static ArtistMVFragment newInstance(long id,String type){
+        ArtistMVFragment f = new ArtistMVFragment();
         Bundle bundle = new Bundle();
         bundle.putLong("id", id);
-        bundle.putInt("digest", digest);
         bundle.putString("type",type);
-        bundle.putString("key",key);
         f.setArguments(bundle);
         return f;
     }
@@ -61,30 +56,22 @@ public class SongListFragment extends BaseFragment<RootInfo> {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle != null) {
+        if(bundle != null){
             mId = bundle.getLong("id");
-            int digest = bundle.getInt("digest");
-            if(digest < 0){
-                mDigest = "";
-            }else{
-                mDigest = String.valueOf(digest);
-            }
-
             mType = bundle.getString("type");
-            mKey = bundle.getString("key");
         }
     }
 
     @Override
     protected String getRequestUrl() {
-        String url = OnlineUrlUtil.getRequest(mType,mKey, mId, 0, 30, mDigest);
-        Log.e("chenhaolog", "songlist url:" + url);
-        return url;
+        return OnlineUrlUtil.getRequest(mType,"mv",mId,0,30,"");
     }
 
     @Override
     protected RootInfo onBackgroundParser(String datas) throws Exception {
-        Log.e("chenhaolog", "songlist data : " + datas);
+        if("TP=none".equals(datas)){
+            throw new EmptyStateViewException();
+        }
         RootInfo rootInfo = XmlParse.parseXml(datas);
         return rootInfo;
     }
@@ -93,11 +80,11 @@ public class SongListFragment extends BaseFragment<RootInfo> {
     public View onCreateContentView(LayoutInflater inflater, ViewGroup container, RootInfo infos) {
         View view = inflater.inflate(R.layout.fragment_song_list, container, false);
         initView(view);
-        setAdapter(infos);
+        initControl(infos);
         return view;
     }
 
-    private void setAdapter(final RootInfo infos) {
+    private void initControl(final RootInfo infos) {
         mAdapter = new MultiAdapter(getContext(), infos, mHandler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
@@ -128,7 +115,7 @@ public class SongListFragment extends BaseFragment<RootInfo> {
     }
 
     private void loadMore(int start, final RootInfo infos) {
-        String url = OnlineUrlUtil.getRequest(mType,mKey, mId, start, 30, mDigest);
+        String url = OnlineUrlUtil.getRequest(mType,"mv", mId, start, 30, "");
         OkHttpClient okHttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
                 .url(url)
