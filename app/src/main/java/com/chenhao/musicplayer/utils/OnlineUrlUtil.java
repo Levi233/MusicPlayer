@@ -18,6 +18,7 @@ public class OnlineUrlUtil {
     private static String HOST_SUB_LIST = "http://nmsublist.kuwo.cn/mobi.s?f=kuwo&q=";
     private static String HOST = "http://comment.kuwo.cn/com.s?f=ar&q=";
     private static final String MOBI = "http://mobi.kuwo.cn/mobi.s?f=kuwo&q=";
+    private static final String HOST_N = "http://nmobi.kuwo.cn/mobi.s?f=kuwo&q=";
 
     public static String getRecommendUrl(){
         return "http://nmobi.kuwo.cn/mobi.s?f=kuwo&q=2S5ec7LNX+pQWCHXaOs5nvnnWqyaughtHbUI3IEkHudHoPfxpFuJZY6OI9KVO/SJxQskru/aVoLIKjvXNwwUHjxFEOPVi1swkQHEb1KoQHYAYmUV/VSoO1HLcjTE+WA+W1D1fLBcpmuQ3pzdb8dh7RFQdfp5JZAUH/+jpWYq+jsxMiRDNVX8ufVa18zxSJFA8gZaVc/cq4SfU8+CbuTwXLhrFqI62sahOSpyH+57sg0eThhiFdco+1ebIdQOLFJ9WxC98fCtz/W2Rv9/BBkqhDo6CrYD5H1j2aHDplxND6/upuKIhFBKlzk4RFzONrTjG5u0CcvvkPhOHL+3bG4f9zk4RFzONrTjG5u0CcvvkPjfocDUxrRLcs5A+MNXow5iGwMo+VE+lbFFcflWKsKYFCosPy1nrcuRoqDappqcGE0QaL5+mMEluxjkKJeeQZ8Rk65c0A/A2Zav4ntNwywtnZv6VmjR/nKUVc8A3qqFevKsffRgan1mjE21o4AOAcII/o9vwYRbdKgi4Zhoht7jhssmGsVDg8ZLcPa9gmHvUkjsl7e5SuvcDVZ2VW0fG/gHP/M+dP90G8ImNIRKfKMRo3Sfno5HHcD9ZDxcmnFfv78xMMacAYTMstjJZkHHp6P54ifT81/xYEfMbtvSNsd5rYqF7Fh27z9cj3VZBKlps484Qczy3vUIpcfWAUjxUYJw";
@@ -175,6 +176,28 @@ public class OnlineUrlUtil {
         String b64Params = new String(Base64Coder.encode(bytes, bytes.length));
         String url = MOBI + b64Params;
         return url;
+    }
+
+    public static String getMVUrl(final long rid, final String quality) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("user=866479021253520&prod=kwplayer_ar_8.3.0.0&corp=kuwo&vipver=8.3.0.0&source=kwplayer_ar_8.3.0.0_kwdebug.apk&p2p=1&");
+        sb.append("type=convert_mv_url2");
+        sb.append("&rid=").append(rid);
+        sb.append("&quality=").append(quality);
+        sb.append("&network=").append("WIFI");
+        sb.append("&mode=audition");
+        sb.append("&format=mp4");
+        // sb.append("&mem=").append(DeviceInfo.TOTAL_MEM_MB);
+        // sb.append("&cpu=").append(DeviceInfo.CPU_MAX);
+        // sb.append("&resolution=").append(DeviceInfo.HEIGHT+"*"+DeviceInfo.WIDTH);
+        sb.append("&br=");
+        sb.append("&sig=");
+        String antiUrl = createURL_N(sb.toString().getBytes());
+        return 	antiUrl;
+    }
+
+    private static String createURL_N(byte[] paramsBytes) {
+        return HOST_N + createB64Params(paramsBytes);
     }
 
     private static String createURL(byte[] paramsBytes) {

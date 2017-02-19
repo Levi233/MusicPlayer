@@ -1,5 +1,9 @@
 package com.chenhao.musicplayer.utils;
 
+import android.content.Intent;
+
+import com.chenhao.musicplayer.activity.MVActivity;
+import com.chenhao.musicplayer.activity.MainActivity;
 import com.chenhao.musicplayer.bean.AdArInfo;
 import com.chenhao.musicplayer.bean.AdInfo;
 import com.chenhao.musicplayer.bean.AlbumInfo;
@@ -7,6 +11,9 @@ import com.chenhao.musicplayer.bean.ArtistInfo;
 import com.chenhao.musicplayer.bean.BillboardInfo;
 import com.chenhao.musicplayer.bean.HitbillboardInfo;
 import com.chenhao.musicplayer.bean.KubillboardInfo;
+import com.chenhao.musicplayer.bean.ListInfo;
+import com.chenhao.musicplayer.bean.MvInfo;
+import com.chenhao.musicplayer.bean.MvplInfo;
 import com.chenhao.musicplayer.bean.OnlineInfo;
 import com.chenhao.musicplayer.bean.QzListInfo;
 import com.chenhao.musicplayer.bean.SongListInfo;
@@ -16,6 +23,7 @@ import com.chenhao.musicplayer.online.AlbumTabFragment;
 import com.chenhao.musicplayer.online.ArtistTabFragment;
 import com.chenhao.musicplayer.online.BillboardFragment;
 import com.chenhao.musicplayer.online.KubillboardFragment;
+import com.chenhao.musicplayer.online.ListFragment;
 import com.chenhao.musicplayer.online.QzListFragment;
 import com.chenhao.musicplayer.online.SongListTabFragment;
 import com.chenhao.musicplayer.online.WebFragment;
@@ -56,6 +64,17 @@ public class JumpUtils {
         }else if(info instanceof AlbumInfo){
             AlbumTabFragment f = AlbumTabFragment.newInstance(info);
             FragmentControl.getInstance().showWithPlayBarSubFrag(f,AlbumTabFragment.class.getSimpleName());
+        }else if(info instanceof ListInfo){
+            ListFragment f = ListFragment.newInstance(info.getId(), info.getDigest(),info.getName(), "sub_list");
+            FragmentControl.getInstance().showWithPlayBarSubFrag(f,ListFragment.class.getSimpleName());
+        }else if(info instanceof MvInfo){
+            Intent intent = new Intent();
+            intent.putExtra("rid",((MvInfo) info).getRid());
+            intent.setClass(MainActivity.getInstance(), MVActivity.class);
+            MainActivity.getInstance().startActivity(intent);
+        }else if(info instanceof MvplInfo){
+            ListFragment f = ListFragment.newInstance(info.getId(), info.getDigest(),info.getName(), "sub_list");
+            FragmentControl.getInstance().showWithPlayBarSubFrag(f,ListFragment.class.getSimpleName());
         }
     }
 }

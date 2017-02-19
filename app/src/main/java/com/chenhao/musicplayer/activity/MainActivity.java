@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.bean.MusicInfo;
@@ -34,6 +33,7 @@ import com.chenhao.musicplayer.mod.FragmentControl;
 import com.chenhao.musicplayer.mod.MediaPlayerManager;
 import com.chenhao.musicplayer.online.OnlineMusicMainFragment;
 import com.chenhao.musicplayer.utils.ObjectSaveUtil;
+import com.chenhao.musicplayer.utils.ToastUtil;
 
 import java.util.List;
 
@@ -233,14 +233,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_play_and_pause:
                 if(MediaPlayerManager.getInstance().getMediaPlayState() == MediaPlayerManager.MEDIA_PLAY_DEFAULT){
-                    Toast.makeText(this,"当前无歌曲播放",Toast.LENGTH_LONG).show();
+                    ToastUtil.showToast(this,"当前无歌曲播放");
                     return;
                 }
                 MediaPlayerManager.getInstance().pauseOrPlay();
                 break;
             case R.id.btn_next:
                 if(MediaPlayerManager.getInstance().getMediaPlayState() == MediaPlayerManager.MEDIA_PLAY_DEFAULT){
-                    Toast.makeText(this,"当前无歌曲播放",Toast.LENGTH_LONG).show();
+                    ToastUtil.showToast(this,"当前无歌曲播放");
                     return;
                 }
                 MediaPlayerManager.getInstance().playerNext();

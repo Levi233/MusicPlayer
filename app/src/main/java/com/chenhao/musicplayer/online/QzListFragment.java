@@ -67,7 +67,7 @@ public class QzListFragment extends BaseFragment<RootInfo> implements View.OnCli
         ImageView btn_back = (ImageView) view.findViewById(R.id.btn_back);
         TextView title_name = (TextView) view.findViewById(R.id.title_name);
         btn_back.setOnClickListener(this);
-        title_name.setText(mName);
+        title_name.setText(mName.trim());
         return view;
     }
 

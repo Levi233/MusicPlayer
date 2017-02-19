@@ -54,13 +54,16 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 } else if ("今日精华".equals(section.getLabel()) || "热门电台".equals(section.getLabel())) {
                     labelInfos.add("更多");
                 }
-                addAdapter(new LabelHeadAdapter(getContext(), labelInfos, ItemViewType.TYPE_HEAD.ordinal(), getHandler()));
+                if (!TextUtils.isEmpty(section.getLabel())) {
+                    addAdapter(new LabelHeadAdapter(getContext(), labelInfos, ItemViewType.TYPE_HEAD.ordinal(), getHandler()));
+                }
                 ArrayList<OnlineInfo> infos = null;
                 for (int i = 0; i < onlineInfos.size(); i++) {
                     if (i % 3 == 0) {
-                        infos = new ArrayList<>();;
+                        infos = new ArrayList<>();
+                        ;
                     }
-                    if(infos != null){
+                    if (infos != null) {
                         infos.add(onlineInfos.get(i));
                     }
                     if (i % 3 == 2) {
@@ -82,7 +85,7 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                     if (i % 2 == 0) {
                         infos = new ArrayList<>();
                     }
-                    if(infos != null){
+                    if (infos != null) {
                         infos.add(onlineInfos.get(i));
                     }
                     if (i % 2 == 1) {
@@ -149,10 +152,10 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 for (OnlineInfo onlineInfo : onlineInfos) {
                     addAdapter(new CommentAdapter(getContext(), (CommentInfo) onlineInfo, section.getItemViewType(), getHandler()));
                 }
-            }else if(section instanceof MvSection){
+            } else if (section instanceof MvSection) {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
-                for (OnlineInfo onlineInfo:onlineInfos) {
-                    addAdapter(new MvAdapter(getContext(),onlineInfo,section.getItemViewType(),getHandler()));
+                for (OnlineInfo onlineInfo : onlineInfos) {
+                    addAdapter(new MvAdapter(getContext(), onlineInfo, section.getItemViewType(), getHandler()));
                 }
             }
         }
@@ -171,15 +174,15 @@ public class MultiAdapter extends RecyclerAdapterFactory<RootInfo> {
                 for (OnlineInfo info : onlineInfos) {
                     addAdapter(new MusicAdapter(getContext(), infos, section.getItemViewType(), getHandler()));
                 }
-            }else if(section instanceof ListSection){
+            } else if (section instanceof ListSection) {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
                 for (OnlineInfo info : onlineInfos) {
                     addAdapter(new ListItemAdapter(getContext(), info, section.getItemViewType(), getHandler()));
                 }
-            }else if(section instanceof MvSection){
+            } else if (section instanceof MvSection) {
                 ArrayList<OnlineInfo> onlineInfos = section.getOnlineInfos();
-                for (OnlineInfo onlineInfo:onlineInfos) {
-                    addAdapter(new MvAdapter(getContext(),onlineInfo,section.getItemViewType(),getHandler()));
+                for (OnlineInfo onlineInfo : onlineInfos) {
+                    addAdapter(new MvAdapter(getContext(), onlineInfo, section.getItemViewType(), getHandler()));
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.chenhao.musicplayer;
 
 import android.app.Application;
+import android.os.Handler;
 import android.text.TextUtils;
 
 /**
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 public class App extends Application {
 
     public static String mSecretKey = "";
+    private static Handler mainThreadHandler	= new Handler();
 
     private static synchronized void initKsingSecretKey(){
         if (TextUtils.isEmpty(mSecretKey)){
@@ -22,5 +24,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         initKsingSecretKey();
+    }
+
+    public static Handler getMainThreadHandler() {
+        return mainThreadHandler;
     }
 }

@@ -26,4 +26,16 @@
         <item name="android:textColor">#00000000</item>
     </style>
 
+    <style name="dialog_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
+        <!-- 指定显示的动画xml -->
+
+        <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+    <style name="my_dialog">  
+        <item name="android:windowNoTitle">true</item>  
+        <item name="android:backgroundDimEnabled">true</item>  
+    </style>
+
 </resources>

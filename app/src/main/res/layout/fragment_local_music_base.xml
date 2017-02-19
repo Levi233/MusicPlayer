@@ -6,34 +6,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#EFEFEF"
     android:orientation="vertical">
-
+z
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#DE2C2C"
         android:paddingTop="20dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <ImageView
                 android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
                 android:src="@drawable/btn_back" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:gravity="center"
                 android:text="本地音乐"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/more_img"

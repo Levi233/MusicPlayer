@@ -9,7 +9,7 @@
         android:id="@+id/local_music_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:orientation="horizontal">
 
@@ -30,5 +30,27 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#50000000" />
+        android:background="#DEDEDE" />
+
+    <LinearLayout
+        android:id="@+id/local_music_download"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/download_img" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="下载管理"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </LinearLayout>
 </LinearLayout>

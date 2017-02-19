@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chenhao.musicplayer.R;
 import com.chenhao.musicplayer.activity.MainActivity;
@@ -22,6 +21,7 @@ import com.chenhao.musicplayer.messagemgr.MessageManager;
 import com.chenhao.musicplayer.mod.MediaPlayerManager;
 import com.chenhao.musicplayer.utils.DateUtils;
 import com.chenhao.musicplayer.utils.ObjectSaveUtil;
+import com.chenhao.musicplayer.utils.ToastUtil;
 
 import java.util.List;
 
@@ -213,7 +213,7 @@ public class PlayPageFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.play_and_pause_img:
                 if (MediaPlayerManager.getInstance().getMediaPlayState() == MediaPlayerManager.MEDIA_PLAY_DEFAULT) {
-                    Toast.makeText(getContext(), "当前无歌曲播放", Toast.LENGTH_LONG).show();
+                    ToastUtil.showToast(getContext(),"当前无歌曲播放");
                     return;
                 }
                 MediaPlayerManager.getInstance().pauseOrPlay();

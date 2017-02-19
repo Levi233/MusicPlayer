@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="#FEFFFF"
-    android:layout_height="60dp">
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/batch_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="35dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/play_img"
+            android:drawablePadding="5dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"
+            android:text="全部播放"/>
+
+        <ImageView
+            android:id="@+id/batch_operate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/batch_img"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#F3F3F3"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:id="@+id/music_layout"
         android:clickable="true"
         android:background="?android:attr/selectableItemBackground">
@@ -30,6 +66,7 @@
             android:layout_toRightOf="@id/rl_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="40dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
             <TextView
@@ -50,10 +87,21 @@
                 android:singleLine="true"
                 android:text="初音未来"/>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/more_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/more"/>
         <View
             android:layout_width="match_parent"
             android:background="#F0F0F0"
             android:layout_alignParentBottom="true"
             android:layout_height="0.5px"/>
     </RelativeLayout>
-</FrameLayout>
+</LinearLayout>
